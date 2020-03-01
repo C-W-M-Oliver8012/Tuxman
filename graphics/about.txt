@@ -1,0 +1,9 @@
+
+   ============================================================
+   | Hangman is a game where you guess the appropriate letter |
+   | of a word until you have correctly guessed the entire    |
+   | word, or you haven't... then you lose! All guesses       |
+   | should be lowercase and if you want to quit at anytime,  |
+   | press ^ on the input. Thanks for playing!!               |
+   ============================================================
+   
