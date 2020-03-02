@@ -41,11 +41,13 @@ void get_word(char *word)
         wordCount++;
     }
 
-
+    // SEEDS RAND
     time_t t;
     srand((unsigned) time(&t));
+    // PICKS RANDOM NUMBER
     int pickLine = rand() % wordCount + 1;
 
+    // GETS RANDOM WORD
     wordCount = 0;
     file = fopen("data/words.txt", "a+");
     while(fgets(word, 255, (FILE*)file) && wordCount < pickLine)
@@ -144,7 +146,7 @@ void print_guess(char *word, int *wordLength, char *index, int *indexLength, cha
     }
 }
 
-void get_guess(char *word, int *wordLength, char *index, int *indexLength, char *failedGuesses, int *fails)
+void get_guess(char *word, int *wordLength, char *index, int *indexLength, char *failedGuesses, int *fails, char *option)
 {
     // USER INPUT
     char s_choice[7];
@@ -218,9 +220,11 @@ void get_guess(char *word, int *wordLength, char *index, int *indexLength, char 
             *indexLength = *indexLength + 1;
         }
     }
+    // ADDS ABILITY TO EXIT THE GAME
     if(choice == '^')
     {
         *fails = 7;
+        *option = '3';
     }
 }
 
@@ -325,7 +329,7 @@ int main()
             // THIS GETS THE NEXT GUESS IF THE USER HAS NOT WON YET
             if(win == 0)
             {
-                get_guess(word, &wordLength, index, &indexLength, failedGuesses, &fails);
+                get_guess(word, &wordLength, index, &indexLength, failedGuesses, &fails, &option);
             }
             else
             {
