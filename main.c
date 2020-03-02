@@ -156,7 +156,7 @@ void get_guess(char *word, int *wordLength, char *index, int *indexLength, char 
     int matched = 0;
 
     // GETS USER INPUT
-    printf("\n   (Lowercase only) Pick a letter: ");
+    printf("\n   Pick a letter: ");
     fgets(s_choice, 7, stdin);
     choice = s_choice[0];
 
