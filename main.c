@@ -338,15 +338,19 @@ int main()
                 print_guess(word, &wordLength, index, &indexLength, failedGuesses, &fails, &win);
             }
         }
+        // IF THE USER WAS ALREADY PLAYING THE GAME
         if(option == '1')
         {
+            // PROMPTS USER TO PLAY AGAIN
             printf("\n   Play again? (y/n): ");
+            // GETS USER INPUT
             fgets(s_play, 7, stdin);
+            // CHECKS IF INPUT IS VALID
             if(strlen(s_play) <= 2)
             {
                 play = s_play[0];
             }
-
+            // PLAYER WANTS TO PLAY AGAIN
             if(play == 'y')
             {
                 play = '0';
@@ -357,17 +361,21 @@ int main()
                 play = '1';
             }
         }
+        // IF THE USER WAS ON THE ABOUT SCREEN
         else if(option == '2')
         {
+            // CLEARS SCREEN AND GETS USER INPUT
             CLEAR
             print_file("graphics/about.txt");
             printf("   Return to menu? (y/n): ");
             fgets(s_play, 7, stdin);
+            // CHECKS FOR INVALID INPUT
             if(strlen(s_play) <= 2)
             {
                 play = s_play[0];
             }
-
+            // PLAYER DOES NOT WANT TO RETURN TO MENU
+            // ENDS GAME
             if(play == 'y')
             {
                 play = '0';
@@ -378,8 +386,10 @@ int main()
                 play = '1';
             }
         }
+        // THE USER WANTS TO EXIT THE GAME
         else if(option == '3')
         {
+            // ENDS MENU LOOP
             play = '1';
         }
     }
