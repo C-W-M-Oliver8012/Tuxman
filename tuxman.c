@@ -6,6 +6,12 @@
 #define CLEAR for(int i = 0; i < 100; i++){ printf("\n"); }
 #define SIZE 256
 
+struct Penguin
+{
+    char word[SIZE], index[SIZE], failedGuesses[SIZE], s_option[SIZE], option;
+    int wordLength, fails, indexLength, win;
+};
+
 void print_file(char *filename)
 {
     // CREATES POINTER TO FILE
@@ -61,7 +67,7 @@ void get_word(char *word)
     fclose(file);
 }
 
-void print_guess(char *word, int *wordLength, char *index, int *indexLength, char *failedGuesses, int *fails, int *win)
+void print_guess(struct Penguin *tux)
 {
     // USED TO DETERMINE IF A PLAYER HAS WON THE GAME OR NOT
     int letters_guessed = 0;
@@ -70,35 +76,35 @@ void print_guess(char *word, int *wordLength, char *index, int *indexLength, cha
     printf("   ");
 
     // index loop
-    for(int i = 0; i < *wordLength; i++)
+    for(int i = 0; i < tux->wordLength; i++)
     {
         // USED TO DETERMINE IF CHAR IN INDEX WAS FOUND OR NOT && USED TO DETERMINE SPACES
         int matched = 0;
 
         // IF GAME IS OVER AND THE CURRENT LETTER IS NOT A SPACE
-        if((*fails == 7) && (word[i] != ' '))
+        if((tux->fails == 7) && (tux->word[i] != ' '))
         {
-            printf("%c ", word[i]);
+            printf("%c ", tux->word[i]);
             matched++;
         }
         // SAME AS PREVIOUS EXCEPT CURRENT LETTER IS A SPACE
-        else if((*fails == 7) && (word[i] == ' '))
+        else if((tux->fails == 7) && (tux->word[i] == ' '))
         {
             printf("    ");
             matched++;
         }
 
         // IF GAME IS NOT OVER && INDEX LENGTH IS NOT ZERO && LETTER ISN'T A SPACE
-        if(*fails != 7 && *indexLength != 0 && (word[i] != ' '))
+        if(tux->fails != 7 && tux->indexLength != 0 && (tux->word[i] != ' '))
         {
             // INDEX LOOP
-            for(int j = 0; j < *indexLength; j++)
+            for(int j = 0; j < tux->indexLength; j++)
             {
                 // CURRENT LETTER GUESSED MATCHES WORD LETTER AND GUESSES ARE LEFT
-                if(word[i] == index[j])
+                if(tux->word[i] == tux->index[j])
                 {
                     // PRINTS GUESSED LETTER
-                    printf("%c ", word[i]);
+                    printf("%c ", tux->word[i]);
                     // INCREASED LETTERS GUESSED COUNT
                     letters_guessed++;
                     // BREAKS OUT BECAUSE MATCH DETECTED
@@ -113,7 +119,7 @@ void print_guess(char *word, int *wordLength, char *index, int *indexLength, cha
             }
         }
         // IF LETTER IS A SPACE
-        else if((word[i] == ' ') && (*fails != 7))
+        else if((tux->word[i] == ' ') && (tux->fails != 7))
         {
             printf("    ");
             letters_guessed++;
@@ -122,9 +128,9 @@ void print_guess(char *word, int *wordLength, char *index, int *indexLength, cha
 
     // PRINTS THE UNDERSCORES
     printf("\n   ");
-    for(int i = 0; i < *wordLength; i++)
+    for(int i = 0; i < tux->wordLength; i++)
     {
-        if(word[i] != ' ')
+        if(tux->word[i] != ' ')
         {
             printf("- ");
         }
@@ -136,19 +142,19 @@ void print_guess(char *word, int *wordLength, char *index, int *indexLength, cha
 
     // PRINTS THE FAILED GUESES
     printf("\n\n   Bad guesses: ");
-    for(int i = 0; i < *fails; i++)
+    for(int i = 0; i < tux->fails; i++)
     {
-        printf("%c ", failedGuesses[i]);
+        printf("%c ", tux->failedGuesses[i]);
     }
 
     // COMPARES letters_guessed TO THE LENGTH OF THE WORD TO DETERMINE IF PLAYER WON
-    if(letters_guessed == *wordLength)
+    if(letters_guessed == tux->wordLength)
     {
-        *win = 1;
+        tux->win = 1;
     }
 }
 
-void get_guess(char *word, int *wordLength, char *index, int *indexLength, char *failedGuesses, int *fails, char *option)
+void get_guess(struct Penguin *tux)
 {
     // USER INPUT
     char s_choice[SIZE];
@@ -170,18 +176,18 @@ void get_guess(char *word, int *wordLength, char *index, int *indexLength, char 
     }
 
     // CHECKS IF INPUT IS IN INDEX ARRAY
-    for(int i = 0; i < *indexLength; i++)
+    for(int i = 0; i < tux->indexLength; i++)
     {
-        if(choice == index[i])
+        if(choice == tux->index[i])
         {
             checkIndex = 1;
         }
     }
 
     // CHECKS IF INPUT IS IN failedGuesses ARRAY
-    for(int i = 0; i < *fails; i++)
+    for(int i = 0; i < tux->fails; i++)
     {
-        if(choice == failedGuesses[i])
+        if(choice == tux->failedGuesses[i])
         {
             checkIndex = 1;
         }
@@ -191,18 +197,18 @@ void get_guess(char *word, int *wordLength, char *index, int *indexLength, char 
     if(checkIndex != 1)
     {
         // INDEX LOOP
-        for(int i = 0; i <= *indexLength; i++)
+        for(int i = 0; i <= tux->indexLength; i++)
         {
             // WORD LOOP
-            for(int j = 0; j < *wordLength; j++)
+            for(int j = 0; j < tux->wordLength; j++)
             {
                 // IF THE CHOICE MATCHES CURRENT LETTER IN WORD
-                if(choice == word[j])
+                if(choice == tux->word[j])
                 {
                     // MATCH EQUALS 1
                     matched = 1;
                     // CHOICE ADDED TO INDEX
-                    index[*indexLength] = choice;
+                    tux->index[tux->indexLength] = choice;
                     // BREAKS OUT OF LOOP
                     break;
                 }
@@ -213,20 +219,20 @@ void get_guess(char *word, int *wordLength, char *index, int *indexLength, char 
         // FAILS INTEGER INCREASED BY 1
         if(matched == 0)
         {
-            failedGuesses[*fails] = choice;
-            *fails = *fails + 1;
+            tux->failedGuesses[tux->fails] = choice;
+            tux->fails = tux->fails + 1;
         }
         // CHOICE WAS GOOD AND THE indexLength LENGTH INCREASES BY 1
         if(matched == 1)
         {
-            *indexLength = *indexLength + 1;
+            tux->indexLength = tux->indexLength + 1;
         }
     }
     // ADDS ABILITY TO EXIT THE GAME
     if(choice == '^')
     {
-        *fails = 7;
-        *option = '3';
+        tux->fails = 7;
+        tux->option = '3';
     }
 }
 
@@ -236,8 +242,7 @@ int main()
     char play = '0';
     char welcome = '0';
 
-    char word[SIZE], index[SIZE], failedGuesses[SIZE], s_option[SIZE], option;
-    int wordLength, fails, indexLength, win;
+    struct Penguin tux;
 
 
     while(play == '0')
@@ -249,94 +254,94 @@ int main()
             print_file("graphics/Welcome.txt");
             // GETS INPUT FROM THE USER
             printf("   option: ");
-            fgets(s_option, SIZE, stdin);
+            fgets(tux.s_option, SIZE, stdin);
             // GETS SIMPLY CHAR FROM USER INPUT
-            if(strlen(s_option) <= 2)
+            if(strlen(tux.s_option) <= 2)
             {
-                option = s_option[0];
+                tux.option = tux.s_option[0];
             }
         }
         else
         {
-            option = '1';
+            tux.option = '1';
         }
 
         // THIS IS THE WORD TO BE GUESSED IN THE GAME
-        get_word(word);
+        get_word(tux.word);
         // REMOVES NEWLINE
-        strtok(word, "\n");
+        strtok(tux.word, "\n");
         // THIS IS THE LENGTH OF THE WORD BEING GUESSED
-        wordLength = strlen(word);
+        tux.wordLength = strlen(tux.word);
         // THIS IS HOW MANY TIMES THE USER HAS GUESSED WRONG
-        fails = 0;
+        tux.fails = 0;
         // THE AMOUNT OF CHARS IN index ARRAY
-        indexLength = 0;
+        tux.indexLength = 0;
         // 0 = NOT WON && 1 = HAS WON
-        win = 0;
+        tux.win = 0;
 
         // GAME LOOP
-        while((option == '1') && (fails != 7) && (win == 0))
+        while((tux.option == '1') && (tux.fails != 7) && (tux.win == 0))
         {
             /* the following loops contain all of
                the graphics which are displayed
                based on how often the user failed
             */
-            if(fails == 0)
+            if(tux.fails == 0)
             {
                 CLEAR
                 print_file("graphics/tuxman0.txt");
             }
-            else if(fails == 1)
+            else if(tux.fails == 1)
             {
                 CLEAR
                 print_file("graphics/tuxman1.txt");
             }
-            else if(fails == 2)
+            else if(tux.fails == 2)
             {
                 CLEAR
                 print_file("graphics/tuxman2.txt");
             }
-            else if(fails == 3)
+            else if(tux.fails == 3)
             {
                 CLEAR
                 print_file("graphics/tuxman3.txt");
             }
-            else if(fails == 4)
+            else if(tux.fails == 4)
             {
                 CLEAR
                 print_file("graphics/tuxman4.txt");
             }
-            else if(fails == 5)
+            else if(tux.fails == 5)
             {
                 CLEAR
                 print_file("graphics/tuxman5.txt");
             }
-            else if(fails == 6)
+            else if(tux.fails == 6)
             {
                 CLEAR
                 print_file("graphics/tuxman6.txt");
-                fails = 7;
+                tux.fails = 7;
                 // THIS PRINTS THE LETTERS GUESSED AS WELL AS THE FAILED GUESSES
-                print_guess(word, &wordLength, index, &indexLength, failedGuesses, &fails, &win);
+                print_guess(&tux);
                 break;
             }
 
             // THIS PRINTS THE LETTERS GUESSED AS WELL AS THE FAILED GUESSES
-            print_guess(word, &wordLength, index, &indexLength, failedGuesses, &fails, &win);
+            print_guess(&tux);
             // THIS GETS THE NEXT GUESS IF THE USER HAS NOT WON YET
-            if(win == 0)
+            if(tux.win == 0)
             {
-                get_guess(word, &wordLength, index, &indexLength, failedGuesses, &fails, &option);
+                get_guess(&tux);
             }
             else
             {
                 CLEAR
                 print_file("graphics/tuxman7.txt");
-                print_guess(word, &wordLength, index, &indexLength, failedGuesses, &fails, &win);
+                print_guess(&tux);
             }
         }
         // IF THE USER WAS ALREADY PLAYING THE GAME
-        if(option == '1')
+        if(tux.option == '1')
         {
             // PROMPTS USER TO PLAY AGAIN
             printf("\n   Play again? (y/n): ");
@@ -359,7 +364,7 @@ int main()
             }
         }
         // IF THE USER WAS ON THE ABOUT SCREEN
-        else if(option == '2')
+        else if(tux.option == '2')
         {
             // CLEARS SCREEN AND GETS USER INPUT
             CLEAR
@@ -384,7 +389,7 @@ int main()
             }
         }
         // THE USER WANTS TO EXIT THE GAME
-        else if(option == '3')
+        else if(tux.option == '3')
         {
             // ENDS MENU LOOP
             play = '1';
