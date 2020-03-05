@@ -4,6 +4,7 @@
 #include <string.h>
 
 #define CLEAR for(int i = 0; i < 100; i++){ printf("\n"); }
+#define SIZE 256
 
 void print_file(char *filename)
 {
@@ -11,17 +12,18 @@ void print_file(char *filename)
     FILE *file;
 
     // LINE BUFF OF FILE
-    char buff[255];
+    char buff[SIZE];
 
     // OPENS GRAPHICS FILE
     file = fopen(filename, "a+");
 
     // LOOPS UNTIL EVERY LINE HAS BEEN PRINTED
-    while(fgets(buff, 255, (FILE*)file))
+    while(fgets(buff, SIZE, (FILE*)file))
     {
         // PRINTS EACH LINE
         printf("%s", buff);
     }
+    printf("\n");
 
     // CLOSES FILE
     fclose(file);
@@ -36,7 +38,7 @@ void get_word(char *word)
     file = fopen("data/words.txt", "a+");
 
     int wordCount = 0;
-    while(fgets(word, 255, (FILE*)file))
+    while(fgets(word, SIZE, (FILE*)file))
     {
         wordCount++;
     }
@@ -50,7 +52,7 @@ void get_word(char *word)
     // GETS RANDOM WORD
     wordCount = 0;
     file = fopen("data/words.txt", "a+");
-    while(fgets(word, 255, (FILE*)file) && wordCount < pickLine)
+    while(fgets(word, SIZE, (FILE*)file) && wordCount < pickLine)
     {
         wordCount++;
     }
@@ -149,7 +151,7 @@ void print_guess(char *word, int *wordLength, char *index, int *indexLength, cha
 void get_guess(char *word, int *wordLength, char *index, int *indexLength, char *failedGuesses, int *fails, char *option)
 {
     // USER INPUT
-    char s_choice[7];
+    char s_choice[SIZE];
     // SINGLE CHARACTER THAT USER GUESSED
     char choice;
     // USED TO DETERMINE IF CHOICE IS A GOOD GUESS
@@ -157,7 +159,7 @@ void get_guess(char *word, int *wordLength, char *index, int *indexLength, char 
 
     // GETS USER INPUT
     printf("\n   Pick a letter: ");
-    fgets(s_choice, 7, stdin);
+    fgets(s_choice, SIZE, stdin);
     choice = s_choice[0];
 
     // CHECKS IF INPUT IS VALID BASED ON LENGTH AND NEWLINE
@@ -230,29 +232,24 @@ void get_guess(char *word, int *wordLength, char *index, int *indexLength, char 
 
 int main()
 {
-    char s_play[7];
+    char s_play[SIZE];
     char play = '0';
     char welcome = '0';
 
-    char word[255], index[255], failedGuesses[255];
+    char word[SIZE], index[SIZE], failedGuesses[SIZE], s_option[SIZE], option;
     int wordLength, fails, indexLength, win;
 
 
     while(play == '0')
     {
-        // STRING OF USER INPUT
-        char s_option[7];
-        // CHAR TO DETERMINE OPTION
-        char option;
-
         // CLEAR SCREEN AND PRINTS WELCOME SCREEN
         if(welcome == '0')
         {
             CLEAR
             print_file("graphics/Welcome.txt");
             // GETS INPUT FROM THE USER
-            printf("\n   option: ");
-            fgets(s_option, 7, stdin);
+            printf("   option: ");
+            fgets(s_option, SIZE, stdin);
             // GETS SIMPLY CHAR FROM USER INPUT
             if(strlen(s_option) <= 2)
             {
@@ -344,7 +341,7 @@ int main()
             // PROMPTS USER TO PLAY AGAIN
             printf("\n   Play again? (y/n): ");
             // GETS USER INPUT
-            fgets(s_play, 7, stdin);
+            fgets(s_play, SIZE, stdin);
             // CHECKS IF INPUT IS VALID
             if(strlen(s_play) <= 2)
             {
@@ -368,7 +365,7 @@ int main()
             CLEAR
             print_file("graphics/about.txt");
             printf("   Return to menu? (y/n): ");
-            fgets(s_play, 7, stdin);
+            fgets(s_play, SIZE, stdin);
             // CHECKS FOR INVALID INPUT
             if(strlen(s_play) <= 2)
             {
