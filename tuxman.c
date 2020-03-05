@@ -56,7 +56,7 @@ void get_word(char *word)
     int pickLine = rand() % wordCount + 1;
 
     // GETS RANDOM WORD
-    wordCount = 0;
+    wordCount = 1;
     file = fopen("data/words.txt", "a+");
     while(fgets(word, SIZE, (FILE*)file) && wordCount < pickLine)
     {
@@ -344,7 +344,7 @@ int main()
         if(tux.option == '1')
         {
             // PROMPTS USER TO PLAY AGAIN
-            printf("\n   Play again? (y/n): ");
+            printf("\n   Play again? (Y/n): ");
             // GETS USER INPUT
             fgets(s_play, SIZE, stdin);
             // CHECKS IF INPUT IS VALID
@@ -353,7 +353,7 @@ int main()
                 play = s_play[0];
             }
             // PLAYER WANTS TO PLAY AGAIN
-            if(play == 'y')
+            if((play == 'y') || (play == 'Y'))
             {
                 play = '0';
                 welcome = '1';
@@ -369,7 +369,7 @@ int main()
             // CLEARS SCREEN AND GETS USER INPUT
             CLEAR
             print_file("graphics/about.txt");
-            printf("   Return to menu? (y/n): ");
+            printf("   Return to menu? (Y/n): ");
             fgets(s_play, SIZE, stdin);
             // CHECKS FOR INVALID INPUT
             if(strlen(s_play) <= 2)
@@ -378,7 +378,7 @@ int main()
             }
             // PLAYER DOES NOT WANT TO RETURN TO MENU
             // ENDS GAME
-            if(play == 'y')
+            if((play == 'y') || (play == 'Y'))
             {
                 play = '0';
                 welcome = '0';
