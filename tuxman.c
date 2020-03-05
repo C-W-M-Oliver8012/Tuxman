@@ -287,37 +287,37 @@ int main()
             if(fails == 0)
             {
                 CLEAR
-                print_file("graphics/hangman0.txt");
+                print_file("graphics/tuxman0.txt");
             }
             else if(fails == 1)
             {
                 CLEAR
-                print_file("graphics/hangman1.txt");
+                print_file("graphics/tuxman1.txt");
             }
             else if(fails == 2)
             {
                 CLEAR
-                print_file("graphics/hangman2.txt");
+                print_file("graphics/tuxman2.txt");
             }
             else if(fails == 3)
             {
                 CLEAR
-                print_file("graphics/hangman3.txt");
+                print_file("graphics/tuxman3.txt");
             }
             else if(fails == 4)
             {
                 CLEAR
-                print_file("graphics/hangman4.txt");
+                print_file("graphics/tuxman4.txt");
             }
             else if(fails == 5)
             {
                 CLEAR
-                print_file("graphics/hangman5.txt");
+                print_file("graphics/tuxman5.txt");
             }
             else if(fails == 6)
             {
                 CLEAR
-                print_file("graphics/hangman6.txt");
+                print_file("graphics/tuxman6.txt");
                 fails = 7;
                 // THIS PRINTS THE LETTERS GUESSED AS WELL AS THE FAILED GUESSES
                 print_guess(word, &wordLength, index, &indexLength, failedGuesses, &fails, &win);
@@ -334,7 +334,7 @@ int main()
             else
             {
                 CLEAR
-                print_file("graphics/hangman7.txt");
+                print_file("graphics/tuxman7.txt");
                 print_guess(word, &wordLength, index, &indexLength, failedGuesses, &fails, &win);
             }
         }

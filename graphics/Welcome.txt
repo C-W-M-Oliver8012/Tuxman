@@ -1,6 +1,6 @@
 
    ==========================
-   | Welcome to Hangman!    |
+   | Welcome to Tuxman!     |
    ==========================
    | 1) Play                |
    | 2) About               |
