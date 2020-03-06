@@ -16,9 +16,9 @@ void print_file(char *filename)
     while(fgets(buff, SIZE, (FILE*)file))
     {
         // PRINTS EACH LINE
-        printf("%s", buff);
+        printw("%s", buff);
     }
-    printf("\n");
+    printw("\n");
 
     // CLOSES FILE
     fclose(file);
@@ -61,7 +61,7 @@ void get_word(char *word)
 void print_guess(struct Penguin *tux)
 {
     // SPACE FOR FORMATTING
-    printf("   ");
+    printw("   ");
 
     // LOOPS THROUGH INDEX
     for(int i = 0; i < tux->wordLength; i++)
@@ -72,13 +72,13 @@ void print_guess(struct Penguin *tux)
         // IF GAME IS OVER AND THE CURRENT LETTER IS NOT A SPACE
         if((tux->fails == 7) && (tux->word[i] != ' '))
         {
-            printf("%c ", tux->word[i]);
+            printw("%c ", tux->word[i]);
             matched++;
         }
         // SAME AS PREVIOUS EXCEPT CURRENT LETTER IS A SPACE
         else if((tux->fails == 7) && (tux->word[i] == ' '))
         {
-            printf("    ");
+            printw("    ");
             matched++;
         }
 
@@ -92,7 +92,7 @@ void print_guess(struct Penguin *tux)
                 if(tux->word[i] == tux->index[j])
                 {
                     // PRINTS GUESSED LETTER
-                    printf("%c ", tux->word[i]);
+                    printw("%c ", tux->word[i]);
                     // BREAKS OUT BECAUSE MATCH DETECTED
                     matched++;
                     break;
@@ -101,27 +101,27 @@ void print_guess(struct Penguin *tux)
             // NOT IN INDEX
             if(matched == 0)
             {
-                printf("  ");
+                printw("  ");
             }
         }
         // IF LETTER IS A SPACE
         else if((tux->word[i] == ' ') && (tux->fails != 7))
         {
-            printf("    ");
+            printw("    ");
         }
     }
 
     // PRINTS THE UNDERSCORES
-    printf("\n   ");
+    printw("\n   ");
     for(int i = 0; i < tux->wordLength; i++)
     {
         if(tux->word[i] != ' ')
         {
-            printf("- ");
+            printw("- ");
         }
         else
         {
-            printf("    ");
+            printw("    ");
         }
     }
 }
@@ -130,10 +130,10 @@ void print_guess(struct Penguin *tux)
 void print_failed_guesses(struct Penguin *tux)
 {
     // PRINTS THE FAILED GUESES
-    printf("\n\n   Bad guesses: ");
+    printw("\n\n   Bad guesses: ");
     for(int i = 0; i < tux->fails; i++)
     {
-        printf("%c ", tux->failedGuesses[i]);
+        printw("%c ", tux->failedGuesses[i]);
     }
 }
 
@@ -144,8 +144,9 @@ void get_guess(struct Penguin *tux)
     int matched = 0;
 
     // GETS USER INPUT
-    printf("\n   Pick a letter: ");
-    fgets(tux->s_choice, SIZE, stdin);
+    printw("\n   Pick a letter: ");
+    //fgets(tux->s_choice, SIZE, stdin);
+    getstr(tux->s_choice);
     tux->choice = tux->s_choice[0];
 
     // CHECKS IF INPUT IS VALID BASED ON LENGTH AND NEWLINE

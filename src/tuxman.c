@@ -2,6 +2,8 @@
 
 int main()
 {
+    initscr();
+
     char s_play[SIZE];
     char play = '0';
     char welcome = '0';
@@ -16,8 +18,10 @@ int main()
             CLEAR
             print_file("graphics/Welcome.txt");
             // GETS INPUT FROM THE USER
-            printf("   option: ");
-            fgets(tux.s_option, SIZE, stdin);
+            printw("   option: ");
+            refresh();
+            //fgets(tux.s_option, SIZE, stdin);
+            getstr(tux.s_option);
             // GETS SIMPLY CHAR FROM USER INPUT
             if(strlen(tux.s_option) <= 2)
             {
@@ -89,12 +93,14 @@ int main()
                 // THIS PRINTS THE LETTERS GUESSED AS WELL AS THE FAILED GUESSES
                 print_guess(&tux);
                 print_failed_guesses(&tux);
+                refresh();
                 break;
             }
 
             // THIS PRINTS THE LETTERS GUESSED AS WELL AS THE FAILED GUESSES
             print_guess(&tux);
             print_failed_guesses(&tux);
+            refresh();
             // DETERMINES IF PLAYER HAS WON GAME
             has_won(&tux);
             // THIS GETS THE NEXT GUESS IF THE USER HAS NOT WON YET
@@ -115,9 +121,11 @@ int main()
         if(tux.option == '1')
         {
             // PROMPTS USER TO PLAY AGAIN
-            printf("\n   Play again? (Y/n): ");
+            printw("\n   Play again? (Y/n): ");
             // GETS USER INPUT
-            fgets(s_play, SIZE, stdin);
+            //fgets(s_play, SIZE, stdin);
+            getstr(s_play);
+            refresh();
             // CHECKS IF INPUT IS VALID
             if(strlen(s_play) <= 2)
             {
@@ -140,8 +148,10 @@ int main()
             // CLEARS SCREEN AND GETS USER INPUT
             CLEAR
             print_file("graphics/about.txt");
-            printf("   Return to menu? (Y/n): ");
-            fgets(s_play, SIZE, stdin);
+            printw("   Return to menu? (Y/n): ");
+            //fgets(s_play, SIZE, stdin);
+            getstr(s_play);
+            refresh();
             // CHECKS FOR INVALID INPUT
             if(strlen(s_play) <= 2)
             {
@@ -166,6 +176,8 @@ int main()
             play = '1';
         }
     }
+
+    endwin();
 
     return 0;
 }

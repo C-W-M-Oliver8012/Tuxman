@@ -5,8 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <ncurses.h>
 
-#define CLEAR for(int i = 0; i < 100; i++){ printf("\n"); }
+//#define CLEAR for(int i = 0; i < 100; i++){ printw("\n"); }
+#define CLEAR clear();
 #define SIZE 256
 
 struct Penguin
