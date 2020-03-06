@@ -1,2 +1,2 @@
 # Tuxman
-Hangman for linux
+Hangman for linux and windows
