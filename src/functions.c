@@ -147,11 +147,15 @@ void get_guess(struct Penguin *tux)
     printw("\n   Pick a letter: ");
     //fgets(tux->s_choice, SIZE, stdin);
     getstr(tux->s_choice);
-    tux->choice = tux->s_choice[0];
+
+    if(strlen(tux->s_choice) < INPUT_SIZE)
+    {
+        tux->choice = tux->s_choice[0];
+    }
 
     // CHECKS IF INPUT IS VALID BASED ON LENGTH AND NEWLINE
     int checkIndex = 0;
-    if((strlen(tux->s_choice) > 2) || (tux->choice == '\n'))
+    if((strlen(tux->s_choice) > INPUT_SIZE) || (tux->choice == '\n'))
     {
         checkIndex = 1;
     }

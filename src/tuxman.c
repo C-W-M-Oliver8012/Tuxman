@@ -23,7 +23,7 @@ int main()
             //fgets(tux.s_option, SIZE, stdin);
             getstr(tux.s_option);
             // GETS SIMPLY CHAR FROM USER INPUT
-            if(strlen(tux.s_option) <= 2)
+            if(strlen(tux.s_option) < INPUT_SIZE)
             {
                 tux.option = tux.s_option[0];
             }
@@ -127,7 +127,7 @@ int main()
             getstr(s_play);
             refresh();
             // CHECKS IF INPUT IS VALID
-            if(strlen(s_play) <= 2)
+            if(strlen(s_play) < INPUT_SIZE)
             {
                 play = s_play[0];
             }
@@ -153,7 +153,7 @@ int main()
             getstr(s_play);
             refresh();
             // CHECKS FOR INVALID INPUT
-            if(strlen(s_play) <= 2)
+            if(strlen(s_play) < INPUT_SIZE)
             {
                 play = s_play[0];
             }
