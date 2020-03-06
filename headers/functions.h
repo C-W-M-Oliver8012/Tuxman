@@ -1,7 +1,10 @@
+#ifndef FUNCTIONS
+#define FUNCTIONS
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <string.h>
+#include <time.h>
 
 #define CLEAR for(int i = 0; i < 100; i++){ printf("\n"); }
 #define SIZE 256
@@ -26,3 +29,5 @@ void get_guess(struct Penguin *tux);
 void has_won(struct Penguin *tux);
 // CHECKS IF PLAYER WANTS TO EXIT THE GAME
 void exit_game(struct Penguin *tux);
+
+#endif
