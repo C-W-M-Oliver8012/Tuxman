@@ -24,4 +24,7 @@ Tuxman: src/tuxman.c src/functions.c headers/functions.h
 	# $(CC) $(CFLAGS) -o Tuxman tuxman.o functions.o -lpdcurses
 
 clean:
+	# FOR LINUX
 	$(RM) Tuxman.out *.o *~
+	# FOR WINDOWS
+	$(RM) Tuxman.exe *.o *~

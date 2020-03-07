@@ -152,6 +152,10 @@ void get_guess(struct Penguin *tux)
     {
         tux->choice = tux->s_choice[0];
     }
+    else
+    {
+        tux->choice = '\n';
+    }
 
     // CHECKS IF INPUT IS VALID BASED ON LENGTH AND NEWLINE
     int checkIndex = 0;

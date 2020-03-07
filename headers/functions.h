@@ -7,8 +7,6 @@
 #include <time.h>
 #include <curses.h>
 
-//#define CLEAR for(int i = 0; i < 100; i++){ printw("\n"); }
-#define CLEAR clear();
 #define SIZE 256
 #define INPUT_SIZE 2
 

@@ -15,7 +15,7 @@ int main()
         // CLEAR SCREEN AND PRINTS WELCOME SCREEN
         if(welcome == '0')
         {
-            CLEAR
+            clear();
             print_file("graphics/Welcome.txt");
             // GETS INPUT FROM THE USER
             printw("   option: ");
@@ -27,10 +27,6 @@ int main()
             {
                 tux.option = tux.s_option[0];
             }
-        }
-        else
-        {
-            tux.option = '1';
         }
 
         // THIS IS THE WORD TO BE GUESSED IN THE GAME
@@ -57,37 +53,37 @@ int main()
             */
             if(tux.fails == 0)
             {
-                CLEAR
+                clear();
                 print_file("graphics/tuxman0.txt");
             }
             else if(tux.fails == 1)
             {
-                CLEAR
+                clear();
                 print_file("graphics/tuxman1.txt");
             }
             else if(tux.fails == 2)
             {
-                CLEAR
+                clear();
                 print_file("graphics/tuxman2.txt");
             }
             else if(tux.fails == 3)
             {
-                CLEAR
+                clear();
                 print_file("graphics/tuxman3.txt");
             }
             else if(tux.fails == 4)
             {
-                CLEAR
+                clear();
                 print_file("graphics/tuxman4.txt");
             }
             else if(tux.fails == 5)
             {
-                CLEAR
+                clear();
                 print_file("graphics/tuxman5.txt");
             }
             else if(tux.fails == 6)
             {
-                CLEAR
+                clear();
                 print_file("graphics/tuxman6.txt");
                 tux.fails = 7;
                 // THIS PRINTS THE LETTERS GUESSED AS WELL AS THE FAILED GUESSES
@@ -111,7 +107,7 @@ int main()
             }
             else
             {
-                CLEAR
+                clear();
                 print_file("graphics/tuxman7.txt");
                 print_guess(&tux);
                 print_failed_guesses(&tux);
@@ -120,42 +116,52 @@ int main()
         // IF THE USER WAS ALREADY PLAYING THE GAME
         if(tux.option == '1')
         {
-            // PROMPTS USER TO PLAY AGAIN
-            printw("\n   Play again? (Y/n): ");
-            // GETS USER INPUT
-            //fgets(s_play, SIZE, stdin);
-            getstr(s_play);
-            refresh();
-            // CHECKS IF INPUT IS VALID
-            if(strlen(s_play) < INPUT_SIZE)
+            do
             {
-                play = s_play[0];
-            }
-            // PLAYER WANTS TO PLAY AGAIN
-            if((play == 'y') || (play == 'Y'))
-            {
-                play = '0';
-                welcome = '1';
-            }
-            else
-            {
-                play = '1';
-            }
+                // PROMPTS USER TO PLAY AGAIN
+                printw("\n   Play again? (Y/n): ");
+                // GETS USER INPUT
+                getstr(s_play);
+                refresh();
+                // CHECKS IF INPUT IS VALID
+                if(strlen(s_play) < INPUT_SIZE)
+                {
+                    play = s_play[0];
+                }
+                else
+                {
+                    play = ' ';
+                }
+                // PLAYER WANTS TO PLAY AGAIN
+                if((play == 'y') || (play == 'Y'))
+                {
+                    play = '0';
+                    welcome = '1';
+                }
+                else if((play == 'n') || (play == 'N'))
+                {
+                    play = '1';
+                }
+                clear();
+            } while((play != '0') && (play != '1'));
         }
         // IF THE USER WAS ON THE ABOUT SCREEN
         else if(tux.option == '2')
         {
             // CLEARS SCREEN AND GETS USER INPUT
-            CLEAR
+            clear();
             print_file("graphics/about.txt");
             printw("   Return to menu? (Y/n): ");
-            //fgets(s_play, SIZE, stdin);
             getstr(s_play);
             refresh();
             // CHECKS FOR INVALID INPUT
             if(strlen(s_play) < INPUT_SIZE)
             {
                 play = s_play[0];
+            }
+            else
+            {
+                play = '\n';
             }
             // PLAYER DOES NOT WANT TO RETURN TO MENU
             // ENDS GAME
@@ -164,9 +170,14 @@ int main()
                 play = '0';
                 welcome = '0';
             }
-            else
+            else if((play == 'n') || (play == 'N'))
             {
                 play = '1';
+            }
+            else
+            {
+                play = '0';
+                welcome = '1';
             }
         }
         // THE USER WANTS TO EXIT THE GAME
