@@ -159,11 +159,11 @@ void get_guess(struct Penguin *tux)
 
     // CHECKS IF INPUT IS VALID BASED ON LENGTH AND NEWLINE
     int checkIndex = 0;
-    if(tux->choice == '\0')
+    if((tux->choice == '\0') || (tux->choice == ' '))
     {
         checkIndex = 1;
     }
-    
+
     if((strlen(tux->s_choice) > INPUT_SIZE) || (tux->choice == '\n'))
     {
         checkIndex = 1;
