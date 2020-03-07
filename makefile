@@ -9,7 +9,7 @@ all: src/functions.c src/tuxman.c headers/functions.h
 	# FOR LINUX
 	$(CC) $(CFLAGS) -o Tuxman.out tuxman.o functions.o -lncurses
 	# FOR WINDOWS
-	# $(CC) $(CFLAGS) -o Tuxman tuxman.o functions.o -lpdcurses
+	# $(CC) $(CFLAGS) -o Tuxman tuxman.o functions.o libpdcurses.a -mwindows -lpdcurses
 
 functions: src/functions.c headers/functions.h
 	$(CC) $(CFLAGS) -c src/functions.c

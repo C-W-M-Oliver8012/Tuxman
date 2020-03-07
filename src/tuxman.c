@@ -3,12 +3,14 @@
 int main()
 {
     initscr();
+    //start_color();
 
     char s_play[SIZE];
     char play = '0';
     char welcome = '0';
 
     struct Penguin tux;
+    tux.score = 0;
 
     while(play == '0')
     {
@@ -26,6 +28,10 @@ int main()
             if(strlen(tux.s_option) < INPUT_SIZE)
             {
                 tux.option = tux.s_option[0];
+            }
+            else
+            {
+                tux.option = '0';
             }
         }
 
@@ -54,36 +60,43 @@ int main()
             if(tux.fails == 0)
             {
                 clear();
+                print_score(&tux);
                 print_file("graphics/tuxman0.txt");
             }
             else if(tux.fails == 1)
             {
                 clear();
+                print_score(&tux);
                 print_file("graphics/tuxman1.txt");
             }
             else if(tux.fails == 2)
             {
                 clear();
+                print_score(&tux);
                 print_file("graphics/tuxman2.txt");
             }
             else if(tux.fails == 3)
             {
                 clear();
+                print_score(&tux);
                 print_file("graphics/tuxman3.txt");
             }
             else if(tux.fails == 4)
             {
                 clear();
+                print_score(&tux);
                 print_file("graphics/tuxman4.txt");
             }
             else if(tux.fails == 5)
             {
                 clear();
+                print_score(&tux);
                 print_file("graphics/tuxman5.txt");
             }
             else if(tux.fails == 6)
             {
                 clear();
+                print_score(&tux);
                 print_file("graphics/tuxman6.txt");
                 tux.fails = 7;
                 // THIS PRINTS THE LETTERS GUESSED AS WELL AS THE FAILED GUESSES
@@ -108,6 +121,8 @@ int main()
             else
             {
                 clear();
+                add_score(&tux);
+                print_score(&tux);
                 print_file("graphics/tuxman7.txt");
                 print_guess(&tux);
                 print_failed_guesses(&tux);

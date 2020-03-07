@@ -5,4 +5,6 @@
    | word, or you haven't... then you lose! All guesses       |
    | should be lowercase and if you want to quit at anytime,  |
    | press ^ on the input. Thanks for playing!!               |
+   |                                                          |
+   | Current Version: 0.1.6-beta                              |
    ============================================================

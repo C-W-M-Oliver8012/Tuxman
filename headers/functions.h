@@ -5,7 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <curses.h>
+#include <curses.h>  // For Linux
+// #include <pdcurses/curses.h>  // For Windows
 
 #define SIZE 256
 #define INPUT_SIZE 2
@@ -13,9 +14,13 @@
 struct Penguin
 {
     char word[SIZE], index[SIZE], failedGuesses[SIZE], s_option[SIZE], option, s_choice[SIZE], choice;
-    int wordLength, fails, indexLength, win, letters_guessed;
+    int wordLength, fails, indexLength, win, letters_guessed, score;
 };
 
+// PRINTS THE CURRENT SCORE
+void print_score(struct Penguin *tux);
+// ADDS TO THE CURRENT SCORE
+void add_score(struct Penguin *tux);
 // PRINTS GRAPHICS FILES
 void print_file(char *filename);
 // RANDOMLY DETERMINES WHICH WORD TO SELECT FROM FILE

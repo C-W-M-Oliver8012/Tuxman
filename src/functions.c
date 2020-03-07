@@ -1,5 +1,38 @@
 #include "../headers/functions.h"
 
+void print_score(struct Penguin *tux)
+{
+    printw("   score: %d\n", tux->score);
+}
+
+void add_score(struct Penguin *tux)
+{
+    if(tux->fails == 5)
+    {
+        tux->score = tux->score + 1;
+    }
+    else if(tux->fails == 4)
+    {
+        tux->score = tux->score + 2;
+    }
+    else if(tux->fails == 3)
+    {
+        tux->score = tux->score + 3;
+    }
+    else if(tux->fails == 2)
+    {
+        tux->score = tux->score + 4;
+    }
+    else if(tux->fails == 1)
+    {
+        tux->score = tux->score + 5;
+    }
+    else if(tux->fails == 0)
+    {
+        tux->score = tux->score + 6;
+    }
+}
+
 // PRINTS GRAPHICS FILES
 void print_file(char *filename)
 {
