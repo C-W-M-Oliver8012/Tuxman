@@ -21,7 +21,10 @@ Refer to the same instructions for Installing
 ## Compiling on Windows
 
 * Instructions
-    * Properly install and setup msys2 on Windows
-    * Install the 'mingw-w64-gcc' and 'make' packages
-    * Download the latest stable code for pdcurses from https://pdcurses.org/
-    * Compile the code for windows and place the curses.h, pdcurses.a, pdcurses.dll in their proper (mingw64) directories
+    * Properly install and setup msys2 on Windows (be sure to add Mingw64 to path)(it is found in the msys64 folder in the C Directory
+	* Download the latest release or just clone the master branch
+    * Install the 'mingw-w64-gcc', 'make', and 'mingw-w64-x86_64-pdcurses' packages
+    * Comment out '#include <curses.h>' and uncomment '#include <pdcurses/curses.h>' in the functions.h file found in the headers folder
+	* Copy and paste the 'libpdcurses.a' file from the Mingw64/lib/ Directory to the Tuxman Directory
+	* Open up cmd.exe and cd into the Tuxman Directory
+	* Run 'make'
