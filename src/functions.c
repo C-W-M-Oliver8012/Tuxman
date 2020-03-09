@@ -188,6 +188,10 @@ void get_guess(struct Penguin *tux)
     else
     {
         tux->choice = ' ';
+        if(strcmp(tux->word, tux->s_choice) == 0)
+        {
+            tux->win = 1;
+        }
     }
 
     // CHECKS IF INPUT IS VALID BASED ON LENGTH AND NEWLINE
@@ -260,33 +264,36 @@ void get_guess(struct Penguin *tux)
 // DETERMINES IF PLAYER HAS WON
 void has_won(struct Penguin *tux)
 {
-    // RESETS LETTERS_GUESSED
-    tux->letters_guessed = 0;
-
-    // LOOP THROUGH ALL OF LETTERS IN WORD
-    for(int i = 0; i < tux->wordLength; i++)
+    if(tux->win != 1)
     {
-        // LOOP THROUGH ALL LETTERS IN THE INDEX
-        for(int j = 0; j < tux->indexLength; j++)
+        // RESETS LETTERS_GUESSED
+        tux->letters_guessed = 0;
+
+        // LOOP THROUGH ALL OF LETTERS IN WORD
+        for(int i = 0; i < tux->wordLength; i++)
         {
-            // INCREASE LETTERS GUESSED IF WORD MATCHES INDEX AND WORD IS NOT SPACE
-            if((tux->word[i] == tux->index[j]) && (tux->word[i] != ' '))
+            // LOOP THROUGH ALL LETTERS IN THE INDEX
+            for(int j = 0; j < tux->indexLength; j++)
+            {
+                // INCREASE LETTERS GUESSED IF WORD MATCHES INDEX AND WORD IS NOT SPACE
+                if((tux->word[i] == tux->index[j]) && (tux->word[i] != ' '))
+                {
+                    tux->letters_guessed = tux->letters_guessed + 1;
+                }
+            }
+            // IF WORD IS A SPACE, INCREASE LETTERS GUESSED
+            if(tux->word[i] == ' ')
             {
                 tux->letters_guessed = tux->letters_guessed + 1;
             }
         }
-        // IF WORD IS A SPACE, INCREASE LETTERS GUESSED
-        if(tux->word[i] == ' ')
-        {
-            tux->letters_guessed = tux->letters_guessed + 1;
-        }
-    }
 
-    // IF LETTERS GUESSED EQUALS THE LENGTH OF WORD, THEN GAME IS WON
-    if(tux->letters_guessed == tux->wordLength)
-    {
-        // SETS GAME TO WON
-        tux->win = 1;
+        // IF LETTERS GUESSED EQUALS THE LENGTH OF WORD, THEN GAME IS WON
+        if(tux->letters_guessed == tux->wordLength)
+        {
+            // SETS GAME TO WON
+            tux->win = 1;
+        }
     }
 }
 

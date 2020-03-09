@@ -118,7 +118,9 @@ int main()
                 get_guess(&tux);
                 exit_game(&tux);
             }
-            else
+
+            // This most be an if statement as game can be won during get_guess above
+            if(tux.win == 1)
             {
                 clear();
                 add_score(&tux);
