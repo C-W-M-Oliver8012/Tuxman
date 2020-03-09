@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ~/Documents/Code/Tuxman/
+cd ~/Documents/Code/Tuxman
 ./Tuxman.out
 exit
 exec bash

@@ -269,7 +269,7 @@ void get_guess(struct Penguin *tux)
 
 void get_full_guess(struct Penguin *tux)
 {
-    printw("   Guess the word: ");
+    printw("\n   Guess the word: ");
     getstr(tux->s_choice);
     if(strcmp(tux->word, tux->s_choice) == 0)
     {

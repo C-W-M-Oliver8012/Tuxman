@@ -49,6 +49,10 @@ int main()
         tux.win = 0;
         // NUMBER OF LETTERS GUESSED USED TO DETERMINE IF GAME HAS BEEN WON
         tux.letters_guessed = 0;
+        // RESETS S_CHOICE
+        strcpy(tux.s_choice, "    ");
+        // RESETS CHOICE 
+        tux.choice = ' ';
 
         // GAME LOOP
         while((tux.option == '1') && (tux.fails != 7) && (tux.win == 0))
@@ -112,19 +116,19 @@ int main()
             refresh();
             // DETERMINES IF PLAYER HAS WON GAME
             has_won(&tux);
+
+            if(tux.choice == '@')
+            {
+                get_full_guess(&tux);
+            }
+
             // THIS GETS THE NEXT GUESS IF THE USER HAS NOT WON YET
             if(tux.win == 0)
             {
                 get_guess(&tux);
-                if(tux.choice == '@')
-                {
-                    get_full_guess(&tux);
-                }
                 exit_game(&tux);
             }
-
-            // This most be an if statement as game can be won during get_guess above
-            if(tux.win == 1)
+            else
             {
                 clear();
                 add_score(&tux);
