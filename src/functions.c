@@ -111,7 +111,7 @@ void print_guess(struct Penguin *tux)
         // SAME AS PREVIOUS EXCEPT CURRENT LETTER IS A SPACE
         else if((tux->fails == 7) && (tux->word[i] == ' '))
         {
-            printw("    ");
+            printw("  ");
             matched++;
         }
 
@@ -140,7 +140,7 @@ void print_guess(struct Penguin *tux)
         // IF LETTER IS A SPACE
         else if((tux->word[i] == ' ') && (tux->fails != 7))
         {
-            printw("    ");
+            printw("  ");
         }
     }
 
@@ -154,7 +154,7 @@ void print_guess(struct Penguin *tux)
         }
         else
         {
-            printw("    ");
+            printw("  ");
         }
     }
 }
