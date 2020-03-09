@@ -116,6 +116,10 @@ int main()
             if(tux.win == 0)
             {
                 get_guess(&tux);
+                if(tux.choice == '@')
+                {
+                    get_full_guess(&tux);
+                }
                 exit_game(&tux);
             }
 

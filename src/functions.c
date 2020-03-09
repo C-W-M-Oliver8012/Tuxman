@@ -114,9 +114,14 @@ void print_guess(struct Penguin *tux)
             printw("  ");
             matched++;
         }
+        else if(tux->win == 1)
+        {
+            printw("%c ", tux->word[i]);
+            matched++;
+        }
 
         // IF GAME IS NOT OVER && INDEX LENGTH IS NOT ZERO && LETTER ISN'T A SPACE
-        if(tux->fails != 7 && tux->indexLength != 0 && (tux->word[i] != ' '))
+        if(tux->fails != 7 && tux->indexLength != 0 && (tux->word[i] != ' ') && (tux->win != 1))
         {
             // INDEX LOOP
             for(int j = 0; j < tux->indexLength; j++)
@@ -138,7 +143,7 @@ void print_guess(struct Penguin *tux)
             }
         }
         // IF LETTER IS A SPACE
-        else if((tux->word[i] == ' ') && (tux->fails != 7))
+        else if((tux->word[i] == ' ') && (tux->fails != 7) && (tux->win != 1))
         {
             printw("  ");
         }
@@ -188,14 +193,15 @@ void get_guess(struct Penguin *tux)
     else
     {
         tux->choice = ' ';
-        if(strcmp(tux->word, tux->s_choice) == 0)
-        {
-            tux->win = 1;
-        }
     }
 
     // CHECKS IF INPUT IS VALID BASED ON LENGTH AND NEWLINE
     int checkIndex = 0;
+    if(tux->choice == '@')
+    {
+        checkIndex = 1;
+    }
+
     if((tux->choice == '\0') || (tux->choice == ' '))
     {
         checkIndex = 1;
@@ -258,6 +264,21 @@ void get_guess(struct Penguin *tux)
         {
             tux->indexLength = tux->indexLength + 1;
         }
+    }
+}
+
+void get_full_guess(struct Penguin *tux)
+{
+    printw("   Guess the word: ");
+    getstr(tux->s_choice);
+    if(strcmp(tux->word, tux->s_choice) == 0)
+    {
+        tux->win = 1;
+    }
+    else
+    {
+        tux->failedGuesses[tux->fails] = '@';
+        tux->fails = tux->fails + 1;
     }
 }
 

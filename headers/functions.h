@@ -31,6 +31,8 @@ void print_guess(struct Penguin *tux);
 void print_failed_guesses(struct Penguin *tux);
 // GETS GUESS AND ADDS TO INDEX IF NEEDED
 void get_guess(struct Penguin *tux);
+// GETS THE ENTIRE WORD AS A GUESS 
+void get_full_guess(struct Penguin *tux);
 // DETERMINES IF PLAYER HAS WON
 void has_won(struct Penguin *tux);
 // CHECKS IF PLAYER WANTS TO EXIT THE GAME
