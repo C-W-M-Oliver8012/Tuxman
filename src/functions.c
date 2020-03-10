@@ -7,29 +7,26 @@ void print_score(struct Penguin *tux)
 
 void add_score(struct Penguin *tux)
 {
-    if(tux->fails == 5)
+    switch(tux->fails)
     {
-        tux->score = tux->score + 1;
-    }
-    else if(tux->fails == 4)
-    {
-        tux->score = tux->score + 2;
-    }
-    else if(tux->fails == 3)
-    {
-        tux->score = tux->score + 3;
-    }
-    else if(tux->fails == 2)
-    {
-        tux->score = tux->score + 4;
-    }
-    else if(tux->fails == 1)
-    {
-        tux->score = tux->score + 5;
-    }
-    else if(tux->fails == 0)
-    {
-        tux->score = tux->score + 6;
+        case 5:
+            tux->score = tux->score + 1;
+            break;
+        case 4:
+            tux->score = tux->score + 2;
+            break;
+        case 3:
+            tux->score = tux->score + 3;
+            break;
+        case 2:
+            tux->score = tux->score + 4;
+            break;
+        case 1:
+            tux->score = tux->score + 5;
+            break;
+        case 0:
+            tux->score = tux->score + 6;
+            break;
     }
 }
 
@@ -103,7 +100,7 @@ void print_guess(struct Penguin *tux)
         int matched = 0;
 
         // IF GAME IS OVER AND THE CURRENT LETTER IS NOT A SPACE
-        if((tux->fails == 7) && (tux->word[i] != ' '))
+        if(((tux->fails == 7) && (tux->word[i] != ' ')) || (tux->win == 1))
         {
             printw("%c ", tux->word[i]);
             matched++;
@@ -112,11 +109,6 @@ void print_guess(struct Penguin *tux)
         else if((tux->fails == 7) && (tux->word[i] == ' '))
         {
             printw("  ");
-            matched++;
-        }
-        else if(tux->win == 1)
-        {
-            printw("%c ", tux->word[i]);
             matched++;
         }
 

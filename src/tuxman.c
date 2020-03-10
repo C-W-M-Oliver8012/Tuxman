@@ -21,7 +21,6 @@ int main()
             print_file("graphics/Welcome.txt");
             // GETS INPUT FROM THE USER
             printw("   option: ");
-            refresh();
             //fgets(tux.s_option, SIZE, stdin);
             getstr(tux.s_option);
             // GETS SIMPLY CHAR FROM USER INPUT
@@ -53,99 +52,84 @@ int main()
         strcpy(tux.s_choice, "    ");
         // RESETS CHOICE
         tux.choice = ' ';
+        //  USED TO DETERMINE IF PLAYER HAS MADE GUESS FOR COMPLETE WORD
         int guess = 0;
 
         // GAME LOOP
         while((tux.option == '1') && (tux.fails != 7) && (tux.win == 0))
         {
+            clear();
+            print_score(&tux);
             /* the following loops contain all of
                the graphics which are displayed
                based on how often the user failed
             */
-            if(tux.fails == 0)
+            switch (tux.fails)
             {
-                clear();
-                print_score(&tux);
-                print_file("graphics/tuxman0.txt");
+                case 0:
+                    print_file("graphics/tuxman0.txt");
+                    break;
+                case 1:
+                    print_file("graphics/tuxman1.txt");
+                    break;
+                case 2:
+                    print_file("graphics/tuxman2.txt");
+                    break;
+                case 3:
+                    print_file("graphics/tuxman3.txt");
+                    break;
+                case 4:
+                    print_file("graphics/tuxman4.txt");
+                    break;
+                case 5:
+                    print_file("graphics/tuxman5.txt");
+                    break;
+                case 6:
+                    print_file("graphics/tuxman6.txt");
+                    tux.fails = 7;
+                    // THIS PRINTS THE LETTERS GUESSED AS WELL AS THE FAILED GUESSES
+                    print_guess(&tux);
+                    print_failed_guesses(&tux);
+                    break;
             }
-            else if(tux.fails == 1)
+
+            if(tux.fails != 7)
             {
-                clear();
-                print_score(&tux);
-                print_file("graphics/tuxman1.txt");
-            }
-            else if(tux.fails == 2)
-            {
-                clear();
-                print_score(&tux);
-                print_file("graphics/tuxman2.txt");
-            }
-            else if(tux.fails == 3)
-            {
-                clear();
-                print_score(&tux);
-                print_file("graphics/tuxman3.txt");
-            }
-            else if(tux.fails == 4)
-            {
-                clear();
-                print_score(&tux);
-                print_file("graphics/tuxman4.txt");
-            }
-            else if(tux.fails == 5)
-            {
-                clear();
-                print_score(&tux);
-                print_file("graphics/tuxman5.txt");
-            }
-            else if(tux.fails == 6)
-            {
-                clear();
-                print_score(&tux);
-                print_file("graphics/tuxman6.txt");
-                tux.fails = 7;
                 // THIS PRINTS THE LETTERS GUESSED AS WELL AS THE FAILED GUESSES
                 print_guess(&tux);
                 print_failed_guesses(&tux);
-                refresh();
-                break;
-            }
+                // DETERMINES IF PLAYER HAS WON GAME
+                has_won(&tux);
 
-            // THIS PRINTS THE LETTERS GUESSED AS WELL AS THE FAILED GUESSES
-            print_guess(&tux);
-            print_failed_guesses(&tux);
-            refresh();
-            // DETERMINES IF PLAYER HAS WON GAME
-            has_won(&tux);
+                if(tux.choice == '@')
+                {
+                    get_full_guess(&tux);
+                    guess++;
+                }
 
-            if(tux.choice == '@')
-            {
-                get_full_guess(&tux);
-                guess++;
-            }
+                // THIS GETS THE NEXT GUESS IF THE USER HAS NOT WON YET
+                if(tux.win == 0 && (tux.choice != '@'))
+                {
+                    get_guess(&tux);
+                    exit_game(&tux);
+                    clear();
+                }
 
-            // THIS GETS THE NEXT GUESS IF THE USER HAS NOT WON YET
-            if(tux.win == 0 && (tux.choice != '@'))
-            {
-                get_guess(&tux);
-                exit_game(&tux);
-                clear();
-            }
+                if(guess == 1)
+                {
+                    guess = 0;
+                    tux.choice = ' ';
+                }
 
-            if(guess == 1)
-            {
-                guess = 0;
-                tux.choice = ' ';
-            }
-
-            if(tux.win == 1)
-            {
-                clear();
-                add_score(&tux);
-                print_score(&tux);
-                print_file("graphics/tuxman7.txt");
-                print_guess(&tux);
-                print_failed_guesses(&tux);
+                if(tux.win == 1)
+                {
+                    clear();
+                    add_score(&tux);
+                    print_score(&tux);
+                    print_file("graphics/tuxman7.txt");
+                    print_guess(&tux);
+                    print_failed_guesses(&tux);
+                }
             }
         }
         // IF THE USER WAS ALREADY PLAYING THE GAME
@@ -157,7 +141,6 @@ int main()
                 printw("\n   Play again? (Y/n): ");
                 // GETS USER INPUT
                 getstr(s_play);
-                refresh();
                 // CHECKS IF INPUT IS VALID
                 if(strlen(s_play) < INPUT_SIZE)
                 {
@@ -188,7 +171,6 @@ int main()
             print_file("graphics/about.txt");
             printw("   Return to menu? (Y/n): ");
             getstr(s_play);
-            refresh();
             // CHECKS FOR INVALID INPUT
             if(strlen(s_play) < INPUT_SIZE)
             {
