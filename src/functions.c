@@ -180,6 +180,8 @@ void get_guess(struct Penguin *tux)
 {
     // USED TO DETERMINE IF CHOICE IS A GOOD GUESS
     int matched = 0;
+    // CHECKS IF INPUT IS VALID BASED ON LENGTH AND NEWLINE
+    int checkIndex = 0;
 
     // GETS USER INPUT
     printw("\n   Pick a letter: ");
@@ -192,17 +194,10 @@ void get_guess(struct Penguin *tux)
     }
     else
     {
-        tux->choice = ' ';
-    }
-
-    // CHECKS IF INPUT IS VALID BASED ON LENGTH AND NEWLINE
-    int checkIndex = 0;
-    if(tux->choice == '@')
-    {
         checkIndex = 1;
     }
 
-    if((tux->choice == '\0') || (tux->choice == ' '))
+    if((tux->choice == '\0') || (tux->choice == ' ') || (tux->choice == '@'))
     {
         checkIndex = 1;
     }
@@ -279,6 +274,7 @@ void get_full_guess(struct Penguin *tux)
     {
         tux->failedGuesses[tux->fails] = '@';
         tux->fails = tux->fails + 1;
+        clear();
     }
 }
 

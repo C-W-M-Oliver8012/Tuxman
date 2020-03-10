@@ -51,8 +51,9 @@ int main()
         tux.letters_guessed = 0;
         // RESETS S_CHOICE
         strcpy(tux.s_choice, "    ");
-        // RESETS CHOICE 
+        // RESETS CHOICE
         tux.choice = ' ';
+        int guess = 0;
 
         // GAME LOOP
         while((tux.option == '1') && (tux.fails != 7) && (tux.win == 0))
@@ -120,15 +121,24 @@ int main()
             if(tux.choice == '@')
             {
                 get_full_guess(&tux);
+                guess++;
             }
 
             // THIS GETS THE NEXT GUESS IF THE USER HAS NOT WON YET
-            if(tux.win == 0)
+            if(tux.win == 0 && (tux.choice != '@'))
             {
                 get_guess(&tux);
                 exit_game(&tux);
+                clear();
             }
-            else
+
+            if(guess == 1)
+            {
+                guess = 0;
+                tux.choice = ' ';
+            }
+
+            if(tux.win == 1)
             {
                 clear();
                 add_score(&tux);
