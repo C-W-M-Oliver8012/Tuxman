@@ -3,20 +3,23 @@
 int main()
 {
     initscr();
-    //start_color();
 
     char s_play[SIZE];
     char play = '0';
     char welcome = '0';
 
     struct Penguin tux;
-    tux.score = 0;
 
     while(play == '0')
     {
+
         // CLEAR SCREEN AND PRINTS WELCOME SCREEN
         if(welcome == '0')
         {
+            tux.score = 0;
+            tux.lives = 5;
+            strcpy(tux.s_option, "     ");
+            tux.option = ' ';
             clear();
             print_file("graphics/Welcome.txt");
             // GETS INPUT FROM THE USER
@@ -53,13 +56,17 @@ int main()
         // RESETS CHOICE
         tux.choice = ' ';
         //  USED TO DETERMINE IF PLAYER HAS MADE GUESS FOR COMPLETE WORD
-        int guess = 0;
+        unsigned guess = 0;
 
         // GAME LOOP
         while((tux.option == '1') && (tux.fails != 7) && (tux.win == 0))
         {
             clear();
-            print_score(&tux);
+            if(tux.fails == 6)
+            {
+                tux.lives = tux.lives - 1;
+            }
+            print_score_lives(&tux);
             /* the following loops contain all of
                the graphics which are displayed
                based on how often the user failed
@@ -125,12 +132,16 @@ int main()
                 {
                     clear();
                     add_score(&tux);
-                    print_score(&tux);
+                    print_score_lives(&tux);
                     print_file("graphics/tuxman7.txt");
                     print_guess(&tux);
                     print_failed_guesses(&tux);
                 }
             }
+        }
+        if(tux.lives == 0)
+        {
+            tux.option = '4';
         }
         // IF THE USER WAS ALREADY PLAYING THE GAME
         if(tux.option == '1')
@@ -202,6 +213,41 @@ int main()
         {
             // ENDS MENU LOOP
             play = '1';
+        }
+        else if(tux.option == '4')
+        {
+            clear();
+            print_score_lives(&tux);
+            print_file("graphics/tuxman8.txt");
+            print_guess(&tux);
+            print_failed_guesses(&tux);
+            do
+            {
+                // PROMPTS USER TO PLAY AGAIN
+                printw("\n   Return to menu? (Y/n): ");
+                // GETS USER INPUT
+                getstr(s_play);
+                // CHECKS IF INPUT IS VALID
+                if(strlen(s_play) < INPUT_SIZE)
+                {
+                    play = s_play[0];
+                }
+                else
+                {
+                    play = ' ';
+                }
+                // PLAYER WANTS TO PLAY AGAIN
+                if((play == 'y') || (play == 'Y'))
+                {
+                    play = '0';
+                    welcome = '0';
+                }
+                else if((play == 'n') || (play == 'N'))
+                {
+                    play = '1';
+                }
+                clear();
+            } while((play != '0') && (play != '1'));
         }
     }
 

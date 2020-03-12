@@ -14,11 +14,11 @@
 struct Penguin
 {
     char word[SIZE], index[SIZE], failedGuesses[SIZE], s_option[SIZE], option, s_choice[SIZE], choice;
-    int wordLength, fails, indexLength, win, letters_guessed, score;
+    unsigned long int wordLength, fails, indexLength, win, letters_guessed, score, lives;
 };
 
 // PRINTS THE CURRENT SCORE
-void print_score(struct Penguin *tux);
+void print_score_lives(struct Penguin *tux);
 // ADDS TO THE CURRENT SCORE
 void add_score(struct Penguin *tux);
 // PRINTS GRAPHICS FILES
@@ -31,7 +31,7 @@ void print_guess(struct Penguin *tux);
 void print_failed_guesses(struct Penguin *tux);
 // GETS GUESS AND ADDS TO INDEX IF NEEDED
 void get_guess(struct Penguin *tux);
-// GETS THE ENTIRE WORD AS A GUESS 
+// GETS THE ENTIRE WORD AS A GUESS
 void get_full_guess(struct Penguin *tux);
 // DETERMINES IF PLAYER HAS WON
 void has_won(struct Penguin *tux);

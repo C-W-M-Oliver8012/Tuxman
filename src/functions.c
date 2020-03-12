@@ -1,8 +1,8 @@
 #include "../headers/functions.h"
 
-void print_score(struct Penguin *tux)
+void print_score_lives(struct Penguin *tux)
 {
-    printw("   score: %d\n", tux->score);
+    printw("   score: %d                     lives: %d\n", tux->score, tux->lives);
 }
 
 void add_score(struct Penguin *tux)
@@ -27,6 +27,11 @@ void add_score(struct Penguin *tux)
         case 0:
             tux->score = tux->score + 6;
             break;
+    }
+    if(tux->score >= 10)
+    {
+        tux->score = tux->score - 10;
+        tux->lives = tux->lives + 1;
     }
 }
 
