@@ -18,8 +18,7 @@ int main()
         {
             tux.score = 0;
             tux.lives = 5;
-            strcpy(tux.s_option, "     ");
-            tux.option = ' ';
+            tux.max_score = 10;
             clear();
             print_file("graphics/Welcome.txt");
             // GETS INPUT FROM THE USER

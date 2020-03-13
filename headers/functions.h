@@ -14,7 +14,7 @@
 struct Penguin
 {
     char word[SIZE], index[SIZE], failedGuesses[SIZE], s_option[SIZE], option, s_choice[SIZE], choice;
-    unsigned long int wordLength, fails, indexLength, win, letters_guessed, score, lives;
+    unsigned long int wordLength, fails, indexLength, win, letters_guessed, score, max_score, lives;
 };
 
 // PRINTS THE CURRENT SCORE

@@ -28,10 +28,10 @@ void add_score(struct Penguin *tux)
             tux->score = tux->score + 6;
             break;
     }
-    if(tux->score >= 10)
+    if(tux->score >= tux->max_score)
     {
-        tux->score = tux->score - 10;
         tux->lives = tux->lives + 1;
+        tux->max_score = tux->max_score + 10;
     }
 }
 
