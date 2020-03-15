@@ -17,23 +17,14 @@ struct Penguin
     unsigned long int wordLength, fails, indexLength, win, letters_guessed, score, max_score, lives;
 };
 
-// PRINTS GRAPHICS FILES
 void get_file_data(char *filename, char *file_data);
-// RANDOMLY DETERMINES WHICH WORD TO SELECT FROM FILE
 void get_word(char *word);
-// PRINTS THE LETTERS GUESSED CORECTLY
 void correct_guesses_to_str(struct Penguin *tux, char *guess_data);
-// PRINTS FAILED GUESSES
 void failed_guesses_to_str(struct Penguin *tux, char *guess_data);
-// GETS GUESS AND ADDS TO INDEX IF NEEDED
 int check_guess(struct Penguin *tux);
-// DETERMINES IF PLAYER HAS WON
 int has_won(struct Penguin *tux);
-// CHECKS TO SEE IF FULL GUESS MATCHES WORD
 int check_full_guess(struct Penguin *tux);
-// ADDS SCORE BASED ON HOW MANY WRONG GUESSES
 int add_score(struct Penguin *tux);
-// PRINTS LONG STRINGS AS THE PRINTW FUNCTION FOR PDCURSES IS BROKEN
 void print_str(char *str);
 
 #endif
