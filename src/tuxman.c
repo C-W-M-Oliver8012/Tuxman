@@ -49,12 +49,12 @@ int main()
         {
             clear();
             strcpy(file_data, "");
-            if(tux.fails == 6)      // PLAYER LOST AND THEREFOR LOSES A LIFE
+            if(tux.fails == 6)                          // PLAYER LOST AND THEREFOR LOSES A LIFE
             {
-                tux.lives = tux.lives - 1;
+                tux.lives--;
             }
 
-            switch (tux.fails)      // GETS PROPER GRAPHIC TO PRINT
+            switch (tux.fails)                          // GETS PROPER GRAPHIC TO PRINT
             {
                 case 0:
                     get_file_data("graphics/tuxman0.txt", file_data);
@@ -85,7 +85,7 @@ int main()
 
             if((tux.fails != 7) && (tux.win == 0))      // HASN'T LOST YET & HASN'T WON YET
             {
-                if(tux.choice == '@')       // GUESS ENTIRE WORD
+                if(tux.choice == '@')                   // GUESS ENTIRE WORD
                 {
                     printw("   score: %d                     lives: %d\n", tux.score, tux.lives);
                     print_str(file_data);
@@ -101,7 +101,7 @@ int main()
                         strcpy(tux.s_choice, "");
                     }
                 }
-                else      // NORMAL TURN
+                else                                    // NORMAL TURN
                 {
                     printw("   score: %d                     lives: %d\n", tux.score, tux.lives);
                     print_str(file_data);
@@ -125,14 +125,14 @@ int main()
                         tux.win = has_won(&tux);
                     }
 
-                    if(tux.choice == '^')       // ENDS GAME
+                    if(tux.choice == '^')                // ENDS GAME
                     {
                         tux.fails = 7;
                         tux.option = '3';
                     }
                 }
 
-                if(tux.win == 1)        // PLAYER WINS
+                if(tux.win == 1)                        // PLAYER WINS
                 {
                     strcpy(file_data, "");
                     int add = add_score(&tux);
@@ -149,7 +149,7 @@ int main()
             }
         }
 
-        if(tux.lives == 0)      // PLAYER LOST ENTIRE GAME
+        if(tux.lives == 0)                              // PLAYER LOST ENTIRE GAME
         {
             strcpy(file_data, "");
             get_file_data("graphics/tuxman8.txt", file_data);
@@ -182,11 +182,11 @@ int main()
                 }
             } while((play != '0') && (play != '1'));
         }
-        else
+        else                                            // THE GAME CONTINES
         {
             switch(tux.option)
             {
-                case '1':
+                case '1':                               // PLAY AGAIN PROMPT
                     do
                     {
                         clear();
@@ -213,7 +213,7 @@ int main()
                         }
                     } while((play != '0') && (play != '1'));
                     break;
-                case '2':
+                case '2':                               // RETURN TO MENU PROMPT
                     clear();
                     strcpy(file_data, "");
                     get_file_data("graphics/about.txt", file_data);
@@ -243,9 +243,32 @@ int main()
                         welcome = '1';
                     }
                     break;
-                case '3':
-                    play = '1';
-                    break;
+                case '3':                               // EXITS ENTIRE GAME
+                    do
+                    {
+                        clear();
+                        printw("   score: %d                     lives: %d\n", tux.score, tux.lives);
+                        print_str(file_data);
+                        printw("\n   Return to menu? (Y/n): ");
+                        getstr(s_play);
+                        if(strlen(s_play) < INPUT_SIZE)
+                        {
+                            play = s_play[0];
+                        }
+                        else
+                        {
+                            play = ' ';
+                        }
+                        if((play == 'y') || (play == 'Y'))
+                        {
+                            play = '0';
+                            welcome = '0';
+                        }
+                        else if((play == 'n') || (play == 'N'))
+                        {
+                            play = '1';
+                        }
+                    } while((play != '0') && (play != '1'));
             }
         }
     }
