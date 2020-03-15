@@ -29,7 +29,11 @@ void failed_guesses_to_str(struct Penguin *tux, char *guess_data);
 int check_guess(struct Penguin *tux);
 // DETERMINES IF PLAYER HAS WON
 int has_won(struct Penguin *tux);
+// CHECKS TO SEE IF FULL GUESS MATCHES WORD
 int check_full_guess(struct Penguin *tux);
+// ADDS SCORE BASED ON HOW MANY WRONG GUESSES
 int add_score(struct Penguin *tux);
+// PRINTS LONG STRINGS AS THE PRINTW FUNCTION FOR PDCURSES IS BROKEN
+void print_str(char *str);
 
 #endif

@@ -25,7 +25,8 @@ int main()
             get_file_data("graphics/Welcome.txt", file_data);
             // GETS INPUT FROM THE USER
             strcat(file_data, "   option: ");
-            printw("%s", file_data);
+            //printw("%s", file_data);
+            print_str(file_data);
             //fgets(tux.s_option, SIZE, stdin);
             getstr(tux.s_option);
             // GETS SIMPLY CHAR FROM USER INPUT
@@ -108,7 +109,8 @@ int main()
                 if(tux.choice == '@')
                 {
                     printw("   score: %d                     lives: %d\n", tux.score, tux.lives);
-                    printw("%s", file_data);
+                    //printw("%s", file_data);
+                    print_str(file_data);
                     printw("\n   Guess the word: ");
                     getstr(tux.s_choice);
 
@@ -125,7 +127,8 @@ int main()
                 if((tux.win) == 0 && (tux.choice != '@'))
                 {
                     printw("   score: %d                     lives: %d\n", tux.score, tux.lives);
-                    printw("%s", file_data);
+                    //printw("%s", file_data);
+                    print_str(file_data);
                     printw("\n   Pick a letter: ");
                     getstr(tux.s_choice);
                     if(strlen(tux.s_choice) < INPUT_SIZE)
@@ -188,7 +191,8 @@ int main()
             {
                 clear();
                 printw("   score: %d                     lives: %d\n", tux.score, tux.lives);
-                printw("%s", file_data);
+                //printw("%s", file_data);
+                print_str(file_data);
                 // PROMPTS USER TO PLAY AGAIN
                 printw("\n   Play again? (Y/n): ");
                 // GETS USER INPUT
@@ -221,7 +225,8 @@ int main()
             clear();
             strcpy(file_data, "");
             get_file_data("graphics/about.txt", file_data);
-            printw("%s", file_data);
+            //printw("%s", file_data);
+            print_str(file_data);
             printw("   Return to menu? (Y/n): ");
             getstr(s_play);
             // CHECKS FOR INVALID INPUT
@@ -262,12 +267,13 @@ int main()
             get_file_data("graphics/tuxman8.txt", file_data);
             correct_guesses_to_str(&tux, file_data);
             failed_guesses_to_str(&tux, file_data);
-            
+
             do
             {
                 clear();
                 printw("   score: %d                     lives: %d\n", tux.score, tux.lives);
-                printw("%s", file_data);
+                //printw("%s", file_data);
+                print_str(file_data);
                 // PROMPTS USER TO PLAY AGAIN
                 printw("\n   Return to menu? (Y/n): ");
                 // GETS USER INPUT

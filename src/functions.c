@@ -246,6 +246,7 @@ int has_won(struct Penguin *tux)
     return 0;
 }
 
+// CHECKS TO SEE IF FULL GUESS MATCHES WORD
 int check_full_guess(struct Penguin *tux)
 {
     if(strcmp(tux->word, tux->s_choice) == 0)
@@ -256,6 +257,7 @@ int check_full_guess(struct Penguin *tux)
     return 0;
 }
 
+// ADDS SCORE BASED ON HOW MANY WRONG GUESSES
 int add_score(struct Penguin *tux)
 {
     switch(tux->fails)
@@ -275,4 +277,16 @@ int add_score(struct Penguin *tux)
     }
 
     return 0;
+}
+
+// PRINTS LONG STRINGS AS THE PRINTW FUNCTION FOR PDCURSES IS BROKEN
+// ONLY USE THIS FOR LONG STRINGS
+void print_str(char *str)
+{
+    int length = strlen(str);
+
+    for(int i = 0; i < length; i++)
+    {
+        addch(str[i]);
+    }
 }
