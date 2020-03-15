@@ -172,29 +172,26 @@ int check_guess(struct Penguin *tux)
 
 int has_won(struct Penguin *tux)
 {
-    if(tux->win != 1)
-    {
-        int letters_guessed = 0;
+    int letters_guessed = 0;
 
-        for(int i = 0; i < tux->wordLength; i++)
+    for(int i = 0; i < tux->wordLength; i++)
+    {
+        for(int j = 0; j < tux->indexLength; j++)
         {
-            for(int j = 0; j < tux->indexLength; j++)
-            {
-                if((tux->word[i] == tux->index[j]) && (tux->word[i] != ' '))
-                {
-                    letters_guessed++;
-                }
-            }
-            if(tux->word[i] == ' ')
+            if((tux->word[i] == tux->index[j]) && (tux->word[i] != ' '))
             {
                 letters_guessed++;
             }
         }
-
-        if(letters_guessed == tux->wordLength)
+        if(tux->word[i] == ' ')
         {
-            return 1;
+            letters_guessed++;
         }
+    }
+
+    if(letters_guessed == tux->wordLength)
+    {
+        return 1;
     }
 
     return 0;

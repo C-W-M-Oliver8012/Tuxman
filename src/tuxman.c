@@ -44,18 +44,17 @@ int main()
         tux.letters_guessed = 0;
         strcpy(tux.s_choice, "");
         tux.choice = ' ';
-        unsigned guess = 0;
 
         while((tux.option == '1') && (tux.fails != 7) && (tux.win == 0))
         {
             clear();
             strcpy(file_data, "");
-            if(tux.fails == 6)
+            if(tux.fails == 6)      // PLAYER LOST AND THEREFOR LOSES A LIFE
             {
                 tux.lives = tux.lives - 1;
             }
 
-            switch (tux.fails)
+            switch (tux.fails)      // GETS PROPER GRAPHIC TO PRINT
             {
                 case 0:
                     get_file_data("graphics/tuxman0.txt", file_data);
@@ -84,11 +83,9 @@ int main()
             correct_guesses_to_str(&tux, file_data);
             failed_guesses_to_str(&tux, file_data);
 
-            if(tux.fails != 7)
+            if((tux.fails != 7) && (tux.win == 0))      // HASN'T LOST YET & HASN'T WON YET
             {
-                tux.win = has_won(&tux);
-
-                if(tux.choice == '@')
+                if(tux.choice == '@')       // GUESS ENTIRE WORD
                 {
                     printw("   score: %d                     lives: %d\n", tux.score, tux.lives);
                     print_str(file_data);
@@ -100,11 +97,11 @@ int main()
                     {
                         tux.failedGuesses[tux.fails] = '@';
                         tux.fails = tux.fails + 1;
+                        tux.choice = '^';
+                        strcpy(tux.s_choice, "");
                     }
-                    guess++;
                 }
-
-                if((tux.win) == 0 && (tux.choice != '@'))
+                else      // NORMAL TURN
                 {
                     printw("   score: %d                     lives: %d\n", tux.score, tux.lives);
                     print_str(file_data);
@@ -124,22 +121,18 @@ int main()
                             tux.index[tux.indexLength] = tux.choice;
                             tux.indexLength++;
                         }
+
+                        tux.win = has_won(&tux);
                     }
 
-                    if(tux.choice == '^')
+                    if(tux.choice == '^')       // ENDS GAME
                     {
                         tux.fails = 7;
                         tux.option = '3';
                     }
                 }
 
-                if(guess == 1)
-                {
-                    guess = 0;
-                    tux.choice = ' ';
-                }
-
-                if(tux.win == 1)
+                if(tux.win == 1)        // PLAYER WINS
                 {
                     strcpy(file_data, "");
                     int add = add_score(&tux);
@@ -156,46 +149,19 @@ int main()
             }
         }
 
-        if(tux.lives == 0)
+        if(tux.lives == 0)      // PLAYER LOST ENTIRE GAME
         {
-            tux.option = '4';
-        }
+            strcpy(file_data, "");
+            get_file_data("graphics/tuxman8.txt", file_data);
+            correct_guesses_to_str(&tux, file_data);
+            failed_guesses_to_str(&tux, file_data);
 
-        switch(tux.option)
-        {
-            case '1':
-                do
-                {
-                    clear();
-                    printw("   score: %d                     lives: %d\n", tux.score, tux.lives);
-                    print_str(file_data);
-                    printw("\n   Play again? (Y/n): ");
-                    getstr(s_play);
-                    if(strlen(s_play) < INPUT_SIZE)
-                    {
-                        play = s_play[0];
-                    }
-                    else
-                    {
-                        play = ' ';
-                    }
-                    if((play == 'y') || (play == 'Y'))
-                    {
-                        play = '0';
-                        welcome = '1';
-                    }
-                    else if((play == 'n') || (play == 'N'))
-                    {
-                        play = '1';
-                    }
-                } while((play != '0') && (play != '1'));
-                break;
-            case '2':
+            do
+            {
                 clear();
-                strcpy(file_data, "");
-                get_file_data("graphics/about.txt", file_data);
+                printw("   score: %d                     lives: %d\n", tux.score, tux.lives);
                 print_str(file_data);
-                printw("   Return to menu? (Y/n): ");
+                printw("\n   Return to menu? (Y/n): ");
                 getstr(s_play);
                 if(strlen(s_play) < INPUT_SIZE)
                 {
@@ -203,7 +169,7 @@ int main()
                 }
                 else
                 {
-                    play = '\n';
+                    play = ' ';
                 }
                 if((play == 'y') || (play == 'Y'))
                 {
@@ -214,27 +180,45 @@ int main()
                 {
                     play = '1';
                 }
-                else
-                {
-                    play = '0';
-                    welcome = '1';
-                }
-                break;
-            case '3':
-                play = '1';
-                break;
-            case '4':
-                strcpy(file_data, "");
-                get_file_data("graphics/tuxman8.txt", file_data);
-                correct_guesses_to_str(&tux, file_data);
-                failed_guesses_to_str(&tux, file_data);
-
-                do
-                {
+            } while((play != '0') && (play != '1'));
+        }
+        else
+        {
+            switch(tux.option)
+            {
+                case '1':
+                    do
+                    {
+                        clear();
+                        printw("   score: %d                     lives: %d\n", tux.score, tux.lives);
+                        print_str(file_data);
+                        printw("\n   Play again? (Y/n): ");
+                        getstr(s_play);
+                        if(strlen(s_play) < INPUT_SIZE)
+                        {
+                            play = s_play[0];
+                        }
+                        else
+                        {
+                            play = ' ';
+                        }
+                        if((play == 'y') || (play == 'Y'))
+                        {
+                            play = '0';
+                            welcome = '1';
+                        }
+                        else if((play == 'n') || (play == 'N'))
+                        {
+                            play = '1';
+                        }
+                    } while((play != '0') && (play != '1'));
+                    break;
+                case '2':
                     clear();
-                    printw("   score: %d                     lives: %d\n", tux.score, tux.lives);
+                    strcpy(file_data, "");
+                    get_file_data("graphics/about.txt", file_data);
                     print_str(file_data);
-                    printw("\n   Return to menu? (Y/n): ");
+                    printw("   Return to menu? (Y/n): ");
                     getstr(s_play);
                     if(strlen(s_play) < INPUT_SIZE)
                     {
@@ -242,7 +226,7 @@ int main()
                     }
                     else
                     {
-                        play = ' ';
+                        play = '\n';
                     }
                     if((play == 'y') || (play == 'Y'))
                     {
@@ -253,8 +237,16 @@ int main()
                     {
                         play = '1';
                     }
-                } while((play != '0') && (play != '1'));
-                break;
+                    else
+                    {
+                        play = '0';
+                        welcome = '1';
+                    }
+                    break;
+                case '3':
+                    play = '1';
+                    break;
+            }
         }
     }
 
