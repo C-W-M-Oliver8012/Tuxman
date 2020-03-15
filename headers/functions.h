@@ -5,10 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <curses.h>  // For Linux
-// #include <pdcurses/curses.h>  // For Windows
+#include <curses.h>
 
 #define SIZE 256
+#define DATA_SIZE 12800
 #define INPUT_SIZE 2
 
 struct Penguin
@@ -17,25 +17,19 @@ struct Penguin
     unsigned long int wordLength, fails, indexLength, win, letters_guessed, score, max_score, lives;
 };
 
-// PRINTS THE CURRENT SCORE
-void print_score_lives(struct Penguin *tux);
-// ADDS TO THE CURRENT SCORE
-void add_score(struct Penguin *tux);
 // PRINTS GRAPHICS FILES
-void print_file(char *filename);
+void get_file_data(char *filename, char *file_data);
 // RANDOMLY DETERMINES WHICH WORD TO SELECT FROM FILE
 void get_word(char *word);
 // PRINTS THE LETTERS GUESSED CORECTLY
-void print_guess(struct Penguin *tux);
+void correct_guesses_to_str(struct Penguin *tux, char *guess_data);
 // PRINTS FAILED GUESSES
-void print_failed_guesses(struct Penguin *tux);
+void failed_guesses_to_str(struct Penguin *tux, char *guess_data);
 // GETS GUESS AND ADDS TO INDEX IF NEEDED
-void get_guess(struct Penguin *tux);
-// GETS THE ENTIRE WORD AS A GUESS
-void get_full_guess(struct Penguin *tux);
+int check_guess(struct Penguin *tux);
 // DETERMINES IF PLAYER HAS WON
-void has_won(struct Penguin *tux);
-// CHECKS IF PLAYER WANTS TO EXIT THE GAME
-void exit_game(struct Penguin *tux);
+int has_won(struct Penguin *tux);
+int check_full_guess(struct Penguin *tux);
+int add_score(struct Penguin *tux);
 
 #endif

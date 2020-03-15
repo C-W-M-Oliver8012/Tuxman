@@ -7,11 +7,13 @@ int main()
     char s_play[SIZE];
     char play = '0';
     char welcome = '0';
+    char file_data[DATA_SIZE];
 
     struct Penguin tux;
 
     while(play == '0')
     {
+        strcpy(file_data, "");
 
         // CLEAR SCREEN AND PRINTS WELCOME SCREEN
         if(welcome == '0')
@@ -20,9 +22,10 @@ int main()
             tux.lives = 5;
             tux.max_score = 10;
             clear();
-            print_file("graphics/Welcome.txt");
+            get_file_data("graphics/Welcome.txt", file_data);
             // GETS INPUT FROM THE USER
-            printw("   option: ");
+            strcat(file_data, "   option: ");
+            printw("%s", file_data);
             //fgets(tux.s_option, SIZE, stdin);
             getstr(tux.s_option);
             // GETS SIMPLY CHAR FROM USER INPUT
@@ -61,64 +64,95 @@ int main()
         while((tux.option == '1') && (tux.fails != 7) && (tux.win == 0))
         {
             clear();
+            strcpy(file_data, "");
             if(tux.fails == 6)
             {
                 tux.lives = tux.lives - 1;
             }
-            print_score_lives(&tux);
-            /* the following loops contain all of
-               the graphics which are displayed
-               based on how often the user failed
-            */
+
             switch (tux.fails)
             {
                 case 0:
-                    print_file("graphics/tuxman0.txt");
+                    get_file_data("graphics/tuxman0.txt", file_data);
                     break;
                 case 1:
-                    print_file("graphics/tuxman1.txt");
+                    get_file_data("graphics/tuxman1.txt", file_data);
                     break;
                 case 2:
-                    print_file("graphics/tuxman2.txt");
+                    get_file_data("graphics/tuxman2.txt", file_data);
                     break;
                 case 3:
-                    print_file("graphics/tuxman3.txt");
+                    get_file_data("graphics/tuxman3.txt", file_data);
                     break;
                 case 4:
-                    print_file("graphics/tuxman4.txt");
+                    get_file_data("graphics/tuxman4.txt", file_data);
                     break;
                 case 5:
-                    print_file("graphics/tuxman5.txt");
+                    get_file_data("graphics/tuxman5.txt", file_data);
                     break;
                 case 6:
-                    print_file("graphics/tuxman6.txt");
+                    get_file_data("graphics/tuxman6.txt", file_data);
                     tux.fails = 7;
-                    // THIS PRINTS THE LETTERS GUESSED AS WELL AS THE FAILED GUESSES
-                    print_guess(&tux);
-                    print_failed_guesses(&tux);
                     break;
             }
 
+            // THIS PRINTS THE LETTERS GUESSED AS WELL AS THE FAILED GUESSES
+            correct_guesses_to_str(&tux, file_data);
+            failed_guesses_to_str(&tux, file_data);
+
             if(tux.fails != 7)
             {
-                // THIS PRINTS THE LETTERS GUESSED AS WELL AS THE FAILED GUESSES
-                print_guess(&tux);
-                print_failed_guesses(&tux);
                 // DETERMINES IF PLAYER HAS WON GAME
-                has_won(&tux);
+                tux.win = has_won(&tux);
 
                 if(tux.choice == '@')
                 {
-                    get_full_guess(&tux);
+                    printw("   score: %d                     lives: %d\n", tux.score, tux.lives);
+                    printw("%s", file_data);
+                    printw("\n   Guess the word: ");
+                    getstr(tux.s_choice);
+
+                    tux.win = check_full_guess(&tux);
+                    if(tux.win == 0)
+                    {
+                        tux.failedGuesses[tux.fails] = '@';
+                        tux.fails = tux.fails + 1;
+                    }
                     guess++;
                 }
 
                 // THIS GETS THE NEXT GUESS IF THE USER HAS NOT WON YET
-                if(tux.win == 0 && (tux.choice != '@'))
+                if((tux.win) == 0 && (tux.choice != '@'))
                 {
-                    get_guess(&tux);
-                    exit_game(&tux);
-                    clear();
+                    printw("   score: %d                     lives: %d\n", tux.score, tux.lives);
+                    printw("%s", file_data);
+                    printw("\n   Pick a letter: ");
+                    getstr(tux.s_choice);
+                    if(strlen(tux.s_choice) < INPUT_SIZE)
+                    {
+                        tux.choice = tux.s_choice[0];
+                        int valid = check_guess(&tux);
+                        if(valid == 0)
+                        {
+                            tux.failedGuesses[tux.fails] = tux.choice;
+                            tux.fails++;
+                        }
+                        else if(valid == 1)
+                        {
+                            // CHOICE ADDED TO INDEX
+                            tux.index[tux.indexLength] = tux.choice;
+                            tux.indexLength++;
+                        }
+                    }
+
+                    // ADDS ABILITY TO EXIT THE GAME
+                    if(tux.choice == '^')
+                    {
+                        // MEANS GAME IS OVER
+                        tux.fails = 7;
+                        // IMMEDIATLEY EXITS GAME
+                        tux.option = '3';
+                    }
                 }
 
                 if(guess == 1)
@@ -129,12 +163,17 @@ int main()
 
                 if(tux.win == 1)
                 {
-                    clear();
-                    add_score(&tux);
-                    print_score_lives(&tux);
-                    print_file("graphics/tuxman7.txt");
-                    print_guess(&tux);
-                    print_failed_guesses(&tux);
+                    strcpy(file_data, "");
+                    int add = add_score(&tux);
+                    tux.score = tux.score + add;
+                    if(tux.score >= tux.max_score)
+                    {
+                        tux.lives++;
+                        tux.max_score = tux.max_score + 10;
+                    }
+                    get_file_data("graphics/tuxman7.txt", file_data);
+                    correct_guesses_to_str(&tux, file_data);
+                    failed_guesses_to_str(&tux, file_data);
                 }
             }
         }
@@ -147,6 +186,9 @@ int main()
         {
             do
             {
+                clear();
+                printw("   score: %d                     lives: %d\n", tux.score, tux.lives);
+                printw("%s", file_data);
                 // PROMPTS USER TO PLAY AGAIN
                 printw("\n   Play again? (Y/n): ");
                 // GETS USER INPUT
@@ -170,7 +212,6 @@ int main()
                 {
                     play = '1';
                 }
-                clear();
             } while((play != '0') && (play != '1'));
         }
         // IF THE USER WAS ON THE ABOUT SCREEN
@@ -178,7 +219,9 @@ int main()
         {
             // CLEARS SCREEN AND GETS USER INPUT
             clear();
-            print_file("graphics/about.txt");
+            strcpy(file_data, "");
+            get_file_data("graphics/about.txt", file_data);
+            printw("%s", file_data);
             printw("   Return to menu? (Y/n): ");
             getstr(s_play);
             // CHECKS FOR INVALID INPUT
@@ -215,13 +258,16 @@ int main()
         }
         else if(tux.option == '4')
         {
-            clear();
-            print_score_lives(&tux);
-            print_file("graphics/tuxman8.txt");
-            print_guess(&tux);
-            print_failed_guesses(&tux);
+            strcpy(file_data, "");
+            get_file_data("graphics/tuxman8.txt", file_data);
+            correct_guesses_to_str(&tux, file_data);
+            failed_guesses_to_str(&tux, file_data);
+            
             do
             {
+                clear();
+                printw("   score: %d                     lives: %d\n", tux.score, tux.lives);
+                printw("%s", file_data);
                 // PROMPTS USER TO PLAY AGAIN
                 printw("\n   Return to menu? (Y/n): ");
                 // GETS USER INPUT
@@ -245,7 +291,6 @@ int main()
                 {
                     play = '1';
                 }
-                clear();
             } while((play != '0') && (play != '1'));
         }
     }
