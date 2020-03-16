@@ -253,7 +253,7 @@ void print_str (char *str, int color)
                 x++;
             }
 
-            if ( (y > 2) && (y < 14) && (x > 7) && (x < 25))
+            if ( (y > 2) && (y < 14) && (x > 7) && (x < 40))
             {
                 attron (COLOR_PAIR (3));
             }
