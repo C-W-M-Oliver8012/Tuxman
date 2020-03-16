@@ -166,10 +166,12 @@ int main()
                     strcpy(file_data, "");
                     int add = add_score(&tux);
                     tux.score = tux.score + add;
-                    while((tux.score - tux.max_score) >= 10)
+                    int diff = tux.score - tux.max_score;
+                    while(diff >= 10)
                     {
                         tux.lives++;
                         tux.max_score = tux.max_score + 10;
+                        diff = tux.score - tux.max_score;
                     }
                     if(tux.score >= tux.max_score)
                     {
