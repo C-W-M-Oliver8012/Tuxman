@@ -4,12 +4,17 @@ int main ()
 {
     initscr ();
     start_color ();
-    //use_default_colors ();
     init_color (COLOR_BLACK, 150, 150, 150);
-    init_pair (1, COLOR_YELLOW, COLOR_BLACK);
+    init_color (COLOR_RED, 1000, 150, 150);
+    init_color (COLOR_GREEN, 150, 1000, 150);
+    init_color (COLOR_BLUE, 150, 150, 1000);
+    init_color (COLOR_YELLOW, 1000, 1000, 150);
+    init_color (COLOR_WHITE, 900, 900, 900);
+
+    init_pair (1, COLOR_GREEN, COLOR_BLACK);
     init_pair (2, COLOR_RED, COLOR_BLACK);
-    init_pair (3, COLOR_GREEN, COLOR_BLACK);
-    init_pair (4, COLOR_CYAN, COLOR_BLACK);
+    init_pair (3, COLOR_BLUE, COLOR_BLACK);
+    init_pair (4, COLOR_YELLOW, COLOR_BLACK);
     init_pair (5, COLOR_WHITE, COLOR_BLACK);
 
     char s_play[SIZE];
@@ -101,7 +106,7 @@ int main ()
                 if (tux.choice == '@')                   // GUESS ENTIRE WORD
                 {
                     attron (COLOR_PAIR (1));
-                    printw ("   score: %d", tux.score);
+                    printw ("\n   score: %d", tux.score);
                     attron (COLOR_PAIR (2));
                     printw ("                     lives: %d\n", tux.lives);
                     attron (COLOR_PAIR (3));
@@ -143,7 +148,7 @@ int main ()
                 else                                    // NORMAL TURN
                 {
                     attron (COLOR_PAIR (1));
-                    printw ("   score: %d", tux.score);
+                    printw ("\n   score: %d", tux.score);
                     attron (COLOR_PAIR (2));
                     printw ("                     lives: %d\n", tux.lives);
                     attron (COLOR_PAIR (3));
@@ -219,7 +224,7 @@ int main ()
                 {
                     clear ();
                     attron (COLOR_PAIR (1));
-                    printw ("   score: %d", tux.score);
+                    printw ("\n   score: %d", tux.score);
                     attron (COLOR_PAIR (2));
                     printw ("                     lives: %d\n", tux.lives);
                     attron (COLOR_PAIR (3));
@@ -256,7 +261,7 @@ int main ()
                         {
                             clear ();
                             attron (COLOR_PAIR (1));
-                            printw ("   score: %d", tux.score);
+                            printw ("\n   score: %d", tux.score);
                             attron (COLOR_PAIR (2));
                             printw ("                     lives: %d\n", tux.lives);
                             attron (COLOR_PAIR (3));
@@ -324,7 +329,7 @@ int main ()
                         {
                             clear ();
                             attron (COLOR_PAIR (1));
-                            printw ("   score: %d", tux.score);
+                            printw ("\n   score: %d", tux.score);
                             attron (COLOR_PAIR (2));
                             printw ("                     lives: %d\n", tux.lives);
                             attron (COLOR_PAIR (3));

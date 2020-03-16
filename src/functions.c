@@ -267,15 +267,15 @@ void print_str (char *str, int color)
             }
             if ( (y > 4) && (y < 7) && (x > 14) && (x < 18))
             {
-                attron (COLOR_PAIR (1));
+                attron (COLOR_PAIR (4));
             }
             if ( ((y == 11) && (x > 10) && (x < 13)) || ((y == 11) && (x > 19) && (x < 22)))
             {
-                attron (COLOR_PAIR (1));
+                attron (COLOR_PAIR (4));
             }
             if ( (y == 12) && (x > 10) && (x < 22))
             {
-                attron (COLOR_PAIR (1));
+                attron (COLOR_PAIR (4));
             }
             if ((str[i] == 'o') && (y < 17))
             {
