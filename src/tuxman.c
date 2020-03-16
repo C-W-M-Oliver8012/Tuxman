@@ -3,6 +3,11 @@
 int main ()
 {
     initscr ();
+    start_color ();
+    use_default_colors ();
+    init_pair (1, COLOR_GREEN, -1);
+    init_pair (2, -1, -1);
+    attron (COLOR_PAIR(1));
 
     char s_play[SIZE];
     char play = '0';
@@ -197,30 +202,31 @@ int main ()
             failed_guesses_to_str (&tux, file_data);
 
             do
-            {
-                clear ();
-                printw ("   score: %d                     lives: %d\n", tux.score, tux.lives);
-                print_str (file_data);
-                printw ("\n   Return to menu? (Y/n): ");
-                getstr (s_play);
-                if (strlen (s_play) < INPUT_SIZE)
                 {
-                    play = s_play[0];
+                    clear ();
+                    printw ("   score: %d                     lives: %d\n", tux.score, tux.lives);
+                    print_str (file_data);
+                    printw ("\n   Return to menu? (Y/n): ");
+                    getstr (s_play);
+                    if (strlen (s_play) < INPUT_SIZE)
+                    {
+                        play = s_play[0];
+                    }
+                    else
+                    {
+                        play = ' ';
+                    }
+                    if ( (play == 'y') || (play == 'Y'))
+                    {
+                        play = '0';
+                        welcome = '0';
+                    }
+                    else if ( (play == 'n') || (play == 'N'))
+                    {
+                        play = '1';
+                    }
                 }
-                else
-                {
-                    play = ' ';
-                }
-                if ( (play == 'y') || (play == 'Y'))
-                {
-                    play = '0';
-                    welcome = '0';
-                }
-                else if ( (play == 'n') || (play == 'N'))
-                {
-                    play = '1';
-                }
-            } while ( (play != '0') && (play != '1'));
+            while ( (play != '0') && (play != '1'));
         }
         else                                            // THE GAME CONTINES
         {
@@ -228,30 +234,31 @@ int main ()
             {
                 case '1':                               // PLAY AGAIN PROMPT
                     do
-                    {
-                        clear ();
-                        printw ("   score: %d                     lives: %d\n", tux.score, tux.lives);
-                        print_str (file_data);
-                        printw ("\n   Play again? (Y/n): ");
-                        getstr (s_play);
-                        if (strlen (s_play) < INPUT_SIZE)
                         {
-                            play = s_play[0];
+                            clear ();
+                            printw ("   score: %d                     lives: %d\n", tux.score, tux.lives);
+                            print_str (file_data);
+                            printw ("\n   Play again? (Y/n): ");
+                            getstr (s_play);
+                            if (strlen (s_play) < INPUT_SIZE)
+                            {
+                                play = s_play[0];
+                            }
+                            else
+                            {
+                                play = ' ';
+                            }
+                            if ( (play == 'y') || (play == 'Y'))
+                            {
+                                play = '0';
+                                welcome = '1';
+                            }
+                            else if ( (play == 'n') || (play == 'N'))
+                            {
+                                play = '1';
+                            }
                         }
-                        else
-                        {
-                            play = ' ';
-                        }
-                        if ( (play == 'y') || (play == 'Y'))
-                        {
-                            play = '0';
-                            welcome = '1';
-                        }
-                        else if ( (play == 'n') || (play == 'N'))
-                        {
-                            play = '1';
-                        }
-                    } while ( (play != '0') && (play != '1'));
+                    while ( (play != '0') && (play != '1'));
                     break;
                 case '2':                               // RETURN TO MENU PROMPT
                     clear ();
@@ -288,30 +295,32 @@ int main ()
                     break;
                 case '4':                               // EXITS ENTIRE GAME
                     do
-                    {
-                        clear ();
-                        printw ("   score: %d                     lives: %d\n", tux.score, tux.lives);
-                        print_str (file_data);
-                        printw ("\n   Return to menu? (Y/n): ");
-                        getstr (s_play);
-                        if (strlen(s_play) < INPUT_SIZE)
                         {
-                            play = s_play[0];
+                            clear ();
+                            printw ("   score: %d                     lives: %d\n", tux.score, tux.lives);
+                            print_str (file_data);
+                            printw ("\n   Return to menu? (Y/n): ");
+                            getstr (s_play);
+                            if (strlen(s_play) < INPUT_SIZE)
+                            {
+                                play = s_play[0];
+                            }
+                            else
+                            {
+                                play = ' ';
+                            }
+                            if ( (play == 'y') || (play == 'Y'))
+                            {
+                                play = '0';
+                                welcome = '0';
+                            }
+                            else if ( (play == 'n') || (play == 'N'))
+                            {
+                                play = '1';
+                            }
                         }
-                        else
-                        {
-                            play = ' ';
-                        }
-                        if ( (play == 'y') || (play == 'Y'))
-                        {
-                            play = '0';
-                            welcome = '0';
-                        }
-                        else if ( (play == 'n') || (play == 'N'))
-                        {
-                            play = '1';
-                        }
-                    } while ( (play != '0') && (play != '1'));
+                    while ( (play != '0') && (play != '1'));
+                    break;
             }
         }
     }
