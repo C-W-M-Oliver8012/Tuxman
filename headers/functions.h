@@ -17,15 +17,15 @@ struct Penguin
     unsigned long int wordLength, fails, indexLength, win, letters_guessed, score, max_score, lives;
 };
 
-void file_to_str(char *filename, char *file_data);
-void get_word(char *word);
-void correct_guesses_to_str(struct Penguin *tux, char *guess_data);
-void failed_guesses_to_str(struct Penguin *tux, char *guess_data);
-int check_guess_is_valid(struct Penguin *tux);
-int check_guess(struct Penguin *tux);
-int has_won(struct Penguin *tux);
-int check_full_guess(struct Penguin *tux);
-int add_score(struct Penguin *tux);
-void print_str(char *str);
+void file_to_str (char *filename, char *file_data);
+void get_word (char *word);
+void correct_guesses_to_str (struct Penguin *tux, char *guess_data);
+void failed_guesses_to_str (struct Penguin *tux, char *guess_data);
+int check_guess_is_valid (struct Penguin *tux);
+int check_guess (struct Penguin *tux);
+int has_won (struct Penguin *tux);
+int check_full_guess (struct Penguin *tux);
+int add_score (struct Penguin *tux);
+void print_str (char *str);
 
 #endif
