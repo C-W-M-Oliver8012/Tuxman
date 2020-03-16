@@ -21,6 +21,7 @@ void get_file_data(char *filename, char *file_data);
 void get_word(char *word);
 void correct_guesses_to_str(struct Penguin *tux, char *guess_data);
 void failed_guesses_to_str(struct Penguin *tux, char *guess_data);
+int check_guess_is_valid(struct Penguin *tux);
 int check_guess(struct Penguin *tux);
 int has_won(struct Penguin *tux);
 int check_full_guess(struct Penguin *tux);

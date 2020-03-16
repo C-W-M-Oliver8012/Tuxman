@@ -93,12 +93,33 @@ int main()
                     getstr(tux.s_choice);
 
                     tux.win = check_full_guess(&tux);
-                    if(tux.win == 0)
+                    if(tux.win == 0)                // wrong guess
                     {
                         tux.failedGuesses[tux.fails] = '@';
                         tux.fails = tux.fails + 1;
                         tux.choice = '^';
                         strcpy(tux.s_choice, "");
+                    }
+                    else                            // you win and all letters in word are added to index
+                    {
+                        for(int i = 0; i < tux.wordLength; i++)
+                        {
+                            int matched = 0;
+
+                            for(int j = 0; j < tux.indexLength; j++)
+                            {
+                                if(tux.word[i] == tux.index[j])
+                                {
+                                    matched = 1;
+                                }
+                            }
+
+                            if(matched == 0)
+                            {
+                                tux.index[tux.indexLength] = tux.word[i];
+                                tux.indexLength++;
+                            }
+                        }
                     }
                 }
                 else                                    // NORMAL TURN
@@ -110,7 +131,15 @@ int main()
                     if(strlen(tux.s_choice) < INPUT_SIZE)
                     {
                         tux.choice = tux.s_choice[0];
-                        int valid = check_guess(&tux);
+                        int valid;
+                        if(check_guess_is_valid(&tux) == 0)
+                        {
+                            valid = check_guess(&tux);
+                        }
+                        else
+                        {
+                            valid = 3;
+                        }
                         if(valid == 0)
                         {
                             tux.failedGuesses[tux.fails] = tux.choice;
@@ -128,7 +157,7 @@ int main()
                     if(tux.choice == '^')                // ENDS GAME
                     {
                         tux.fails = 7;
-                        tux.option = '3';
+                        tux.option = '4';
                     }
                 }
 
@@ -137,6 +166,11 @@ int main()
                     strcpy(file_data, "");
                     int add = add_score(&tux);
                     tux.score = tux.score + add;
+                    while((tux.score - tux.max_score) >= 10)
+                    {
+                        tux.lives++;
+                        tux.max_score = tux.max_score + 10;
+                    }
                     if(tux.score >= tux.max_score)
                     {
                         tux.lives++;
@@ -243,7 +277,10 @@ int main()
                         welcome = '1';
                     }
                     break;
-                case '3':                               // EXITS ENTIRE GAME
+                case '3':
+                    play = '1';
+                    break;
+                case '4':                               // EXITS ENTIRE GAME
                     do
                     {
                         clear();

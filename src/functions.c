@@ -123,23 +123,20 @@ void failed_guesses_to_str(struct Penguin *tux, char *guess_data)
     }
 }
 
-int check_guess(struct Penguin *tux)
+int check_guess_is_valid(struct Penguin *tux)
 {
     int matched = 0;
-    int checkIndex = 0;
 
     if((tux->choice == '\0') || (tux->choice == ' ') || (tux->choice == '@') || (tux->choice == '^') || (strlen(tux->s_choice) > INPUT_SIZE) || (tux->choice == '\n'))
     {
-        checkIndex = 1;
-        matched = 3;
+        matched = 1;
     }
 
     for(int i = 0; i < tux->indexLength; i++)
     {
         if(tux->choice == tux->index[i])
         {
-            checkIndex = 1;
-            matched = 3;
+            matched = 1;
         }
     }
 
@@ -147,26 +144,29 @@ int check_guess(struct Penguin *tux)
     {
         if(tux->choice == tux->failedGuesses[i])
         {
-            checkIndex = 1;
-            matched = 3;
+            matched = 1;
         }
     }
 
-    if(checkIndex != 1)
+    return matched;
+}
+
+int check_guess(struct Penguin *tux)
+{
+    int matched = 0;
+
+    for(int i = 0; i <= tux->indexLength; i++)
     {
-        for(int i = 0; i <= tux->indexLength; i++)
+        for(int j = 0; j < tux->wordLength; j++)
         {
-            for(int j = 0; j < tux->wordLength; j++)
+            if(tux->choice == tux->word[j])
             {
-                if(tux->choice == tux->word[j])
-                {
-                    matched = 1;
-                    return matched;
-                }
+                matched = 1;
+                return matched;
             }
         }
-
     }
+
     return matched;
 }
 
@@ -187,6 +187,11 @@ int has_won(struct Penguin *tux)
         {
             letters_guessed++;
         }
+    }
+
+    if(tux->win == 1)
+    {
+        return 1;
     }
 
     if(letters_guessed == tux->wordLength)
@@ -212,17 +217,17 @@ int add_score(struct Penguin *tux)
     switch(tux->fails)
     {
         case 5:
-            return 1;
+            return 1 + tux->indexLength;
         case 4:
-            return 2;
+            return 2 + tux->indexLength;
         case 3:
-            return 3;
+            return 3 + tux->indexLength;
         case 2:
-            return 4;
+            return 4 + tux->indexLength;
         case 1:
-            return 5;
+            return 5 + tux->indexLength;
         case 0:
-            return 6;
+            return 6 + tux->indexLength;
     }
 
     return 0;
