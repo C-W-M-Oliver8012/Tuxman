@@ -108,7 +108,7 @@ int main()
 
                             for(int j = 0; j < tux.indexLength; j++)
                             {
-                                if(tux.word[i] == tux.index[j])
+                                if((tux.word[i] == tux.index[j]) || (tux.word[i] == ' '))
                                 {
                                     matched = 1;
                                 }
