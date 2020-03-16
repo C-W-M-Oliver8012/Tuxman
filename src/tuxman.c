@@ -5,9 +5,11 @@ int main ()
     initscr ();
     start_color ();
     use_default_colors ();
-    init_pair (1, COLOR_GREEN, -1);
-    init_pair (2, -1, -1);
-    attron (COLOR_PAIR(1));
+    init_pair (1, COLOR_YELLOW, -1);
+    init_pair (2, COLOR_RED, -1);
+    init_pair (3, COLOR_GREEN, -1);
+    init_pair (4, COLOR_CYAN, -1);
+    init_pair (5, COLOR_WHITE, -1);
 
     char s_play[SIZE];
     char play = '0';
@@ -28,7 +30,8 @@ int main ()
             clear ();
             file_to_str ("graphics/welcome.txt", file_data);
             strcat (file_data, "   option: ");
-            print_str (file_data);
+            attron (COLOR_PAIR (5));
+            print_str (file_data, 0);
             getstr (tux.s_option);
             if (strlen (tux.s_option) < INPUT_SIZE)
             {
@@ -96,8 +99,13 @@ int main ()
             {
                 if (tux.choice == '@')                   // GUESS ENTIRE WORD
                 {
-                    printw ("   score: %d                     lives: %d\n", tux.score, tux.lives);
-                    print_str (file_data);
+                    attron (COLOR_PAIR (1));
+                    printw ("   score: %d", tux.score);
+                    attron (COLOR_PAIR (2));
+                    printw ("                     lives: %d\n", tux.lives);
+                    attron (COLOR_PAIR (3));
+                    print_str (file_data, 1);
+                    attron (COLOR_PAIR (5));
                     printw ("\n   Guess the word: ");
                     getstr (tux.s_choice);
 
@@ -133,8 +141,13 @@ int main ()
                 }
                 else                                    // NORMAL TURN
                 {
-                    printw ("   score: %d                     lives: %d\n", tux.score, tux.lives);
-                    print_str (file_data);
+                    attron (COLOR_PAIR (1));
+                    printw ("   score: %d", tux.score);
+                    attron (COLOR_PAIR (2));
+                    printw ("                     lives: %d\n", tux.lives);
+                    attron (COLOR_PAIR (3));
+                    print_str (file_data, 1);
+                    attron (COLOR_PAIR (5));
                     printw ("\n   Pick a letter: ");
                     getstr (tux.s_choice);
                     if (strlen (tux.s_choice) < INPUT_SIZE)
@@ -204,8 +217,13 @@ int main ()
             do
                 {
                     clear ();
-                    printw ("   score: %d                     lives: %d\n", tux.score, tux.lives);
-                    print_str (file_data);
+                    attron (COLOR_PAIR (1));
+                    printw ("   score: %d", tux.score);
+                    attron (COLOR_PAIR (2));
+                    printw ("                     lives: %d\n", tux.lives);
+                    attron (COLOR_PAIR (3));
+                    print_str (file_data, 1);
+                    attron (COLOR_PAIR (5));
                     printw ("\n   Return to menu? (Y/n): ");
                     getstr (s_play);
                     if (strlen (s_play) < INPUT_SIZE)
@@ -236,8 +254,13 @@ int main ()
                     do
                         {
                             clear ();
-                            printw ("   score: %d                     lives: %d\n", tux.score, tux.lives);
-                            print_str (file_data);
+                            attron (COLOR_PAIR (1));
+                            printw ("   score: %d", tux.score);
+                            attron (COLOR_PAIR (2));
+                            printw ("                     lives: %d\n", tux.lives);
+                            attron (COLOR_PAIR (3));
+                            print_str (file_data, 1);
+                            attron (COLOR_PAIR (5));
                             printw ("\n   Play again? (Y/n): ");
                             getstr (s_play);
                             if (strlen (s_play) < INPUT_SIZE)
@@ -264,7 +287,9 @@ int main ()
                     clear ();
                     strcpy (file_data, "");
                     file_to_str ("graphics/about.txt", file_data);
-                    print_str (file_data);
+                    attron (COLOR_PAIR (5));
+                    print_str (file_data, 0);
+                    attron (COLOR_PAIR (5));
                     printw ("   Return to menu? (Y/n): ");
                     getstr (s_play);
                     if (strlen (s_play) < INPUT_SIZE)
@@ -297,8 +322,13 @@ int main ()
                     do
                         {
                             clear ();
-                            printw ("   score: %d                     lives: %d\n", tux.score, tux.lives);
-                            print_str (file_data);
+                            attron (COLOR_PAIR (1));
+                            printw ("   score: %d", tux.score);
+                            attron (COLOR_PAIR (2));
+                            printw ("                     lives: %d\n", tux.lives);
+                            attron (COLOR_PAIR (3));
+                            print_str (file_data, 1);
+                            attron (COLOR_PAIR (5));
                             printw ("\n   Return to menu? (Y/n): ");
                             getstr (s_play);
                             if (strlen(s_play) < INPUT_SIZE)

@@ -233,12 +233,55 @@ int add_score (struct Penguin *tux)
     return 0;
 }
 
-void print_str (char *str)
+void print_str (char *str, int color)
 {
     int length = strlen (str);
+    int x = 0;
+    int y = 0;
 
     for (int i = 0; i < length; i++)
     {
+        if (color == 1)
+        {
+            if (str[i] == '\n')
+            {
+                y++;
+                x = 0;
+            }
+            else
+            {
+                x++;
+            }
+
+            if ( (y > 2) && (y < 14) && (x > 7) && (x < 25))
+            {
+                attron (COLOR_PAIR (3));
+            }
+            else if (y > 16)
+            {
+                attron (COLOR_PAIR (5));
+            }
+            else
+            {
+                attron (COLOR_PAIR (5));
+            }
+            if ( (y > 4) && (y < 7) && (x > 14) && (x < 18))
+            {
+                attron (COLOR_PAIR (1));
+            }
+            if ( ((y == 11) && (x > 10) && (x < 13)) || ((y == 11) && (x > 19) && (x < 22)))
+            {
+                attron (COLOR_PAIR (1));
+            }
+            if ( (y == 12) && (x > 10) && (x < 22))
+            {
+                attron (COLOR_PAIR (1));
+            }
+            if ((str[i] == 'o') && (y < 17))
+            {
+                attron (COLOR_PAIR (5));
+            }
+        }
         addch (str[i]);
     }
 }

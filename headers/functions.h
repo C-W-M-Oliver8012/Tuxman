@@ -26,6 +26,6 @@ int check_guess (struct Penguin *tux);
 int has_won (struct Penguin *tux);
 int check_full_guess (struct Penguin *tux);
 int add_score (struct Penguin *tux);
-void print_str (char *str);
+void print_str (char *str, int color);
 
 #endif
