@@ -21,7 +21,7 @@ int main()
             tux.lives = 5;
             tux.max_score = 10;
             clear();
-            get_file_data("graphics/Welcome.txt", file_data);
+            get_file_data("graphics/welcome.txt", file_data);
             strcat(file_data, "   option: ");
             print_str(file_data);
             getstr(tux.s_option);
