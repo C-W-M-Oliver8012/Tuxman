@@ -17,7 +17,7 @@ struct Penguin
     unsigned long int wordLength, fails, indexLength, win, letters_guessed, score, max_score, lives;
 };
 
-void get_file_data(char *filename, char *file_data);
+void file_to_str(char *filename, char *file_data);
 void get_word(char *word);
 void correct_guesses_to_str(struct Penguin *tux, char *guess_data);
 void failed_guesses_to_str(struct Penguin *tux, char *guess_data);

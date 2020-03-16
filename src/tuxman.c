@@ -21,13 +21,17 @@ int main()
             tux.lives = 5;
             tux.max_score = 10;
             clear();
-            get_file_data("graphics/welcome.txt", file_data);
+            file_to_str("graphics/welcome.txt", file_data);
             strcat(file_data, "   option: ");
             print_str(file_data);
             getstr(tux.s_option);
             if(strlen(tux.s_option) < INPUT_SIZE)
             {
                 tux.option = tux.s_option[0];
+                if((tux.option != '1') && (tux.option != '2') && (tux.option != '3'))
+                {
+                    tux.option = '0';
+                }
             }
             else
             {
@@ -57,25 +61,25 @@ int main()
             switch (tux.fails)                          // GETS PROPER GRAPHIC TO PRINT
             {
                 case 0:
-                    get_file_data("graphics/tuxman0.txt", file_data);
+                    file_to_str("graphics/tuxman0.txt", file_data);
                     break;
                 case 1:
-                    get_file_data("graphics/tuxman1.txt", file_data);
+                    file_to_str("graphics/tuxman1.txt", file_data);
                     break;
                 case 2:
-                    get_file_data("graphics/tuxman2.txt", file_data);
+                    file_to_str("graphics/tuxman2.txt", file_data);
                     break;
                 case 3:
-                    get_file_data("graphics/tuxman3.txt", file_data);
+                    file_to_str("graphics/tuxman3.txt", file_data);
                     break;
                 case 4:
-                    get_file_data("graphics/tuxman4.txt", file_data);
+                    file_to_str("graphics/tuxman4.txt", file_data);
                     break;
                 case 5:
-                    get_file_data("graphics/tuxman5.txt", file_data);
+                    file_to_str("graphics/tuxman5.txt", file_data);
                     break;
                 case 6:
-                    get_file_data("graphics/tuxman6.txt", file_data);
+                    file_to_str("graphics/tuxman6.txt", file_data);
                     tux.fails = 7;
                     break;
             }
@@ -93,14 +97,14 @@ int main()
                     getstr(tux.s_choice);
 
                     tux.win = check_full_guess(&tux);
-                    if(tux.win == 0)                // wrong guess
+                    if(tux.win == 0)                    // wrong guess
                     {
                         tux.failedGuesses[tux.fails] = '@';
                         tux.fails = tux.fails + 1;
                         tux.choice = '^';
                         strcpy(tux.s_choice, "");
                     }
-                    else                            // you win and all letters in word are added to index
+                    else                                // you win and all letters in word are added to index
                     {
                         for(int i = 0; i < tux.wordLength; i++)
                         {
@@ -178,7 +182,7 @@ int main()
                         tux.lives++;
                         tux.max_score = tux.max_score + 10;
                     }
-                    get_file_data("graphics/tuxman7.txt", file_data);
+                    file_to_str("graphics/tuxman7.txt", file_data);
                     correct_guesses_to_str(&tux, file_data);
                     failed_guesses_to_str(&tux, file_data);
                 }
@@ -188,7 +192,7 @@ int main()
         if(tux.lives == 0)                              // PLAYER LOST ENTIRE GAME
         {
             strcpy(file_data, "");
-            get_file_data("graphics/tuxman8.txt", file_data);
+            file_to_str("graphics/tuxman8.txt", file_data);
             correct_guesses_to_str(&tux, file_data);
             failed_guesses_to_str(&tux, file_data);
 
@@ -252,7 +256,7 @@ int main()
                 case '2':                               // RETURN TO MENU PROMPT
                     clear();
                     strcpy(file_data, "");
-                    get_file_data("graphics/about.txt", file_data);
+                    file_to_str("graphics/about.txt", file_data);
                     print_str(file_data);
                     printw("   Return to menu? (Y/n): ");
                     getstr(s_play);

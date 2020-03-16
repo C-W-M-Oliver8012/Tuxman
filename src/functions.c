@@ -1,6 +1,6 @@
 #include "../headers/functions.h"
 
-void get_file_data(char *filename, char *file_data)
+void file_to_str(char *filename, char *file_data)
 {
     FILE *file;
 

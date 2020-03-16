@@ -6,8 +6,8 @@ Hangman for linux and windows (maybe mac os? but I don't have any way to develop
 * Instructions
     * First make sure that you have make, gcc, bash, and ncurses installed on your distro
     * Download the latest release
-    * Run the 'make' command in the Tuxman directory
-    * (Optional) Add the directory to your bash path and run the Tuxman sh package from any directory
+    * Run the 'make linux' command in the Tuxman directory
+    * (Optional) Add the directory to your bash path and run the Tuxman bash package from any directory
 
 ## Installing on Windows
 
@@ -28,4 +28,4 @@ Refer to the same instructions for Installing
     * Copy and paste the 'curses.h' file into the Mingw64/Include/ folder
 	* Copy and paste the 'pdcurses.a' file from the 'pdcurses/wincon' Directory to the Tuxman Directory
 	* Open up cmd.exe and cd into the Tuxman Directory
-	* Run 'make'
+	* Run 'make windows'
