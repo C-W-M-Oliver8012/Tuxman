@@ -282,6 +282,29 @@ void print_str (char *str, int color)
             {
                 attron (COLOR_PAIR (5));
             }
+            if ( (y == 21) && (x < 16))
+            {
+                attron (COLOR_PAIR (2));
+            }
+            else if ( (y == 21) && (x > 17))
+            {
+                attron (COLOR_PAIR (5));
+            }
+            else if (y == 22)
+            {
+                attron (COLOR_PAIR (1));
+            }
+        }
+        else if (color == 2)
+        {
+            if ((str[i] == '=') || (str[i] == '|'))
+            {
+                attron (COLOR_PAIR (6));
+            }
+            else
+            {
+                attron (COLOR_PAIR (5));
+            }
         }
         addch (str[i]);
     }
