@@ -4,7 +4,7 @@ int main ()
 {
     initscr ();
     start_color ();
-    init_color (COLOR_BLACK, 150, 150, 150);
+    init_color (COLOR_BLACK, 85, 85, 85);
     init_color (COLOR_RED, 1000, 150, 150);
     init_color (COLOR_GREEN, 150, 1000, 150);
     init_color (COLOR_BLUE, 150, 150, 1000);
