@@ -9,6 +9,7 @@
 
 #define SIZE 256
 #define DATA_SIZE 12800
+#define WORD_SIZE 25600
 #define INPUT_SIZE 2
 
 struct Penguin

@@ -3,10 +3,11 @@
 int main ()
 {
     initscr ();
+
     start_color ();
     init_color (COLOR_BLACK, 85, 85, 85);
-    init_color (COLOR_RED, 1000, 150, 150);
     init_color (COLOR_GREEN, 150, 1000, 150);
+    init_color (COLOR_RED, 1000, 150, 150);
     init_color (COLOR_BLUE, 150, 150, 1000);
     init_color (COLOR_YELLOW, 1000, 1000, 150);
     init_color (COLOR_WHITE, 900, 900, 900);
@@ -40,14 +41,16 @@ int main ()
     while (play == '0')                                  // menu loop
     {
         strcpy (file_data, "");
+        refresh ();
 
         if (welcome == '0')
         {
+            refresh ();
             tux.score = 0;
             tux.lives = 5;
             tux.max_score = 10;
             clear ();
-            strcpy (file_data, str0);
+            strcat (file_data, str0);
             strcat (file_data, "   option: ");
             attron (COLOR_PAIR (5));
             print_str (file_data, 0);
@@ -66,8 +69,11 @@ int main ()
             }
         }
 
-        get_word (tux.word);
-        strtok (tux.word, "\n");
+        if (tux.option == '1')
+        {
+            get_word (tux.word);
+            strtok (tux.word, "\n");
+        }
         tux.wordLength = strlen (tux.word);
         tux.fails = 0;
         tux.indexLength = 0;
@@ -226,7 +232,7 @@ int main ()
             }
         }
 
-        if (tux.lives == 0)                              // PLAYER LOST ENTIRE GAME
+        if ( (tux.lives == 0) && (tux.option == '1'))                              // PLAYER LOST ENTIRE GAME
         {
             strcpy (file_data, "");
             strcat (file_data, str9);
