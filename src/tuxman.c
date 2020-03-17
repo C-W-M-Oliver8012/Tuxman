@@ -20,7 +20,20 @@ int main ()
     char s_play[SIZE];
     char play = '0';
     char welcome = '0';
-    char file_data[DATA_SIZE];
+    char file_data[DATA_SIZE], str0[DATA_SIZE], str1[DATA_SIZE], str2[DATA_SIZE],
+            str3[DATA_SIZE], str4[DATA_SIZE], str5[DATA_SIZE], str6[DATA_SIZE], str7[DATA_SIZE], str8[DATA_SIZE], str9[DATA_SIZE], str10[DATA_SIZE];
+
+    file_to_str ("graphics/welcome.txt", str0);
+    file_to_str ("graphics/tuxman0.txt", str1);
+    file_to_str ("graphics/tuxman1.txt", str2);
+    file_to_str ("graphics/tuxman2.txt", str3);
+    file_to_str ("graphics/tuxman3.txt", str4);
+    file_to_str ("graphics/tuxman4.txt", str5);
+    file_to_str ("graphics/tuxman5.txt", str6);
+    file_to_str ("graphics/tuxman6.txt", str7);
+    file_to_str ("graphics/tuxman7.txt", str8);
+    file_to_str ("graphics/tuxman8.txt", str9);
+    file_to_str ("graphics/about.txt", str10);
 
     struct Penguin tux;
 
@@ -34,7 +47,7 @@ int main ()
             tux.lives = 5;
             tux.max_score = 10;
             clear ();
-            file_to_str ("graphics/welcome.txt", file_data);
+            strcpy (file_data, str0);
             strcat (file_data, "   option: ");
             attron (COLOR_PAIR (5));
             print_str (file_data, 0);
@@ -75,25 +88,25 @@ int main ()
             switch (tux.fails)                          // GETS PROPER GRAPHIC TO PRINT
             {
                 case 0:
-                    file_to_str ("graphics/tuxman0.txt", file_data);
+                    strcat (file_data, str1);
                     break;
                 case 1:
-                    file_to_str ("graphics/tuxman1.txt", file_data);
+                    strcat (file_data, str2);
                     break;
                 case 2:
-                    file_to_str ("graphics/tuxman2.txt", file_data);
+                    strcat (file_data, str3);
                     break;
                 case 3:
-                    file_to_str ("graphics/tuxman3.txt", file_data);
+                    strcat (file_data, str4);
                     break;
                 case 4:
-                    file_to_str ("graphics/tuxman4.txt", file_data);
+                    strcat (file_data, str5);
                     break;
                 case 5:
-                    file_to_str ("graphics/tuxman5.txt", file_data);
+                    strcat (file_data, str6);
                     break;
                 case 6:
-                    file_to_str ("graphics/tuxman6.txt", file_data);
+                    strcat (file_data, str7);
                     tux.fails = 7;
                     break;
             }
@@ -206,7 +219,7 @@ int main ()
                         tux.lives++;
                         tux.max_score = tux.max_score + 10;
                     }
-                    file_to_str ("graphics/tuxman7.txt", file_data);
+                    strcat (file_data, str8);
                     correct_guesses_to_str (&tux, file_data);
                     failed_guesses_to_str (&tux, file_data);
                 }
@@ -216,7 +229,7 @@ int main ()
         if (tux.lives == 0)                              // PLAYER LOST ENTIRE GAME
         {
             strcpy (file_data, "");
-            file_to_str ("graphics/tuxman8.txt", file_data);
+            strcat (file_data, str9);
             correct_guesses_to_str (&tux, file_data);
             failed_guesses_to_str (&tux, file_data);
 
@@ -292,7 +305,7 @@ int main ()
                 case '2':                               // RETURN TO MENU PROMPT
                     clear ();
                     strcpy (file_data, "");
-                    file_to_str ("graphics/about.txt", file_data);
+                    strcat (file_data, str10);
                     attron (COLOR_PAIR (5));
                     print_str (file_data, 0);
                     attron (COLOR_PAIR (5));
