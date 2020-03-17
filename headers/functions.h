@@ -9,8 +9,9 @@
 
 #define SIZE 256
 #define DATA_SIZE 12800
-#define WORD_SIZE 25600
+#define WORD_SIZE 12800
 #define INPUT_SIZE 2
+#define COLOR_BROWN 10
 
 struct Penguin
 {

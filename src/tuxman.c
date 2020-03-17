@@ -5,18 +5,20 @@ int main ()
     initscr ();
 
     start_color ();
-    init_color (COLOR_BLACK, 85, 85, 85);
+    init_color (COLOR_BLACK, 50, 50, 50);
     init_color (COLOR_GREEN, 150, 1000, 150);
     init_color (COLOR_RED, 1000, 150, 150);
     init_color (COLOR_BLUE, 150, 150, 1000);
     init_color (COLOR_YELLOW, 1000, 1000, 150);
     init_color (COLOR_WHITE, 900, 900, 900);
+    init_color (COLOR_BROWN, 956, 643, 376);
 
     init_pair (1, COLOR_GREEN, COLOR_BLACK);
     init_pair (2, COLOR_RED, COLOR_BLACK);
     init_pair (3, COLOR_BLUE, COLOR_BLACK);
     init_pair (4, COLOR_YELLOW, COLOR_BLACK);
     init_pair (5, COLOR_WHITE, COLOR_BLACK);
+    init_pair (6, COLOR_BROWN, COLOR_BLACK);
 
     char s_play[SIZE];
     char play = '0';

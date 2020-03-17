@@ -263,8 +263,9 @@ void print_str (char *str, int color)
             }
             else
             {
-                attron (COLOR_PAIR (5));
+                attron (COLOR_PAIR (6));
             }
+
             if ( (y > 4) && (y < 7) && (x > 14) && (x < 18))
             {
                 attron (COLOR_PAIR (4));
