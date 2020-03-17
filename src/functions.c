@@ -290,10 +290,6 @@ void print_str (char *str, int color)
             {
                 attron (COLOR_PAIR (5));
             }
-            else if (y == 22)
-            {
-                attron (COLOR_PAIR (1));
-            }
         }
         else if (color == 2)
         {
@@ -308,4 +304,6 @@ void print_str (char *str, int color)
         }
         addch (str[i]);
     }
+
+    attron (COLOR_PAIR (5));
 }

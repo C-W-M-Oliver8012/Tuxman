@@ -1,5 +1,19 @@
 #include "../headers/functions.h"
 
+void print_game_scr (long unsigned int *score, long unsigned int *lives, char *file_data)
+{
+    clear ();
+    attron (COLOR_PAIR (1));
+    printw ("\n   score: ");
+    attron (COLOR_PAIR (5));
+    printw ("%d", *score);
+    attron (COLOR_PAIR (2));
+    printw ("                     lives: ");
+    attron (COLOR_PAIR (5));
+    printw ("%d\n", *lives);
+    print_str (file_data, 1);
+}
+
 int main ()
 {
     initscr ();
@@ -57,6 +71,7 @@ int main ()
             attron (COLOR_PAIR (5));
             print_str (file_data, 2);
             getstr (tux.s_option);
+
             if (strlen (tux.s_option) < INPUT_SIZE)
             {
                 tux.option = tux.s_option[0];
@@ -126,15 +141,7 @@ int main ()
             {
                 if (tux.choice == '@')                   // GUESS ENTIRE WORD
                 {
-                    attron (COLOR_PAIR (1));
-                    printw ("\n   score: ");
-                    attron (COLOR_PAIR (5));
-                    printw ("%d", tux.score);
-                    attron (COLOR_PAIR (2));
-                    printw ("                     lives: ");
-                    attron (COLOR_PAIR (5));
-                    printw ("%d\n", tux.lives);
-                    print_str (file_data, 1);
+                    print_game_scr (&tux.score, &tux.lives, file_data);
                     attron (COLOR_PAIR (1));
                     printw ("\n   Guess the word: ");
                     attron (COLOR_PAIR (5));
@@ -172,19 +179,12 @@ int main ()
                 }
                 else                                    // NORMAL TURN
                 {
-                    attron (COLOR_PAIR (1));
-                    printw ("\n   score: ");
-                    attron (COLOR_PAIR (5));
-                    printw ("%d", tux.score);
-                    attron (COLOR_PAIR (2));
-                    printw ("                     lives: ");
-                    attron (COLOR_PAIR (5));
-                    printw ("%d\n", tux.lives);
-                    print_str (file_data, 1);
+                    print_game_scr (&tux.score, &tux.lives, file_data);
                     attron (COLOR_PAIR (1));
                     printw ("\n   Pick a letter: ");
                     attron (COLOR_PAIR (5));
                     getstr (tux.s_choice);
+
                     if (strlen (tux.s_choice) < INPUT_SIZE)
                     {
                         tux.choice = tux.s_choice[0];
@@ -251,20 +251,12 @@ int main ()
 
             do
                 {
-                    clear ();
-                    attron (COLOR_PAIR (1));
-                    printw ("\n   score: ");
-                    attron (COLOR_PAIR (5));
-                    printw ("%d", tux.score);
-                    attron (COLOR_PAIR (2));
-                    printw ("                     lives: ");
-                    attron (COLOR_PAIR (5));
-                    printw ("%d\n", tux.lives);
-                    print_str (file_data, 1);
+                    print_game_scr (&tux.score, &tux.lives, file_data);
                     attron (COLOR_PAIR (1));
                     printw ("\n   Return to menu? (Y/n): ");
                     attron (COLOR_PAIR (5));
                     getstr (s_play);
+
                     if (strlen (s_play) < INPUT_SIZE)
                     {
                         play = s_play[0];
@@ -292,20 +284,12 @@ int main ()
                 case '1':                               // PLAY AGAIN PROMPT
                     do
                         {
-                            clear ();
-                            attron (COLOR_PAIR (1));
-                            printw ("\n   score: ");
-                            attron (COLOR_PAIR (5));
-                            printw ("%d", tux.score);
-                            attron (COLOR_PAIR (2));
-                            printw ("                     lives: ");
-                            attron (COLOR_PAIR (5));
-                            printw ("%d\n", tux.lives);
-                            print_str (file_data, 1);
+                            print_game_scr (&tux.score, &tux.lives, file_data);
                             attron (COLOR_PAIR (1));
                             printw ("\n   Play again? (Y/n): ");
                             attron (COLOR_PAIR (5));
                             getstr (s_play);
+
                             if (strlen (s_play) < INPUT_SIZE)
                             {
                                 play = s_play[0];
@@ -333,6 +317,7 @@ int main ()
                     print_str (file_data, 2);
                     printw ("   Return to menu? (Y/n): ");
                     getstr (s_play);
+
                     if (strlen (s_play) < INPUT_SIZE)
                     {
                         play = s_play[0];
@@ -362,20 +347,12 @@ int main ()
                 case '4':                               // EXITS ENTIRE GAME
                     do
                         {
-                            clear ();
-                            attron (COLOR_PAIR (1));
-                            printw ("\n   score: ");
-                            attron (COLOR_PAIR (5));
-                            printw ("%d", tux.score);
-                            attron (COLOR_PAIR (2));
-                            printw ("                     lives: ");
-                            attron (COLOR_PAIR (5));
-                            printw ("%d\n", tux.lives);
-                            print_str (file_data, 1);
+                            print_game_scr (&tux.score, &tux.lives, file_data);
                             attron (COLOR_PAIR (1));
                             printw ("\n   Return to menu? (Y/n): ");
                             attron (COLOR_PAIR (5));
                             getstr (s_play);
+                            
                             if (strlen(s_play) < INPUT_SIZE)
                             {
                                 play = s_play[0];
