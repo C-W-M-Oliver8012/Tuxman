@@ -40,12 +40,10 @@ void get_words (char *file_name, char **words, int *wordCount)
     FILE *file;
 
     file = fopen (file_name, "a+");
-    char buff[SIZE];
 
     int i = 0;
-    while (fgets (buff, SIZE, (FILE*)file) && (i < *wordCount))
+    while (fgets (words[i], SIZE, (FILE*)file) && (i < *wordCount))
     {
-        strcpy (words[i], buff);
         i++;
     }
 
