@@ -4,11 +4,11 @@ void print_game_scr (long unsigned int *score, long unsigned int *lives, char *f
 {
     clear ();
     attron (COLOR_PAIR (1));
-    printw ("\n\n   score: ");
+    printw ("\n\n   Score: ");
     attron (COLOR_PAIR (5));
     printw ("%d", *score);
     attron (COLOR_PAIR (2));
-    printw ("                     lives: ");
+    printw ("                     Lives: ");
     attron (COLOR_PAIR (5));
     printw ("%d\n", *lives);
     print_str (file_data, *color_option);
@@ -80,7 +80,7 @@ int main ()
             tux.max_score = 10;
             clear ();
             strcat (file_data, str0);
-            strcat (file_data, "   option: ");
+            strcat (file_data, "   Option: ");
             attron (COLOR_PAIR (5));
             print_str (file_data, 2);
             getstr (tux.s_option);
