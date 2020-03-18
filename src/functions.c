@@ -119,7 +119,7 @@ void failed_guesses_to_str (struct Penguin *tux, char *guess_data)
 {
     char formated_letters[SIZE];
 
-    strcat (guess_data, "\n\n   Bad guesses: ");
+    strcat (guess_data, "\n\n\n   Bad guesses: ");
     for (int i = 0; i < tux->fails; i++)
     {
         strcpy (formated_letters, "");
@@ -248,7 +248,7 @@ void print_str (char *str, int color)
 
     for (int i = 0; i < length; i++)
     {
-        if (color == 1)
+        if ((color == 1) || (color == 3) || (color == 4))
         {
             if (str[i] == '\n')
             {
@@ -260,40 +260,44 @@ void print_str (char *str, int color)
                 x++;
             }
 
-            if ( (y > 2) && (y < 14) && (x > 7) && (x < 40))
+            if ( (y > 2) && (y < 14) && (x > 7) && (x < 40) && (color == 1))                        // penguin
             {
                 attron (COLOR_PAIR (3));
             }
-            else if (y > 16)
+            else if ( (y > 2) && (y < 14) && (x > 7) && (x < 40) && (color == 3))                   // green for win
             {
-                attron (COLOR_PAIR (5));
+                attron (COLOR_PAIR (1));
             }
-            else
-            {
-                attron (COLOR_PAIR (6));
-            }
-
-            if ( (y > 4) && (y < 7) && (x > 14) && (x < 18))
-            {
-                attron (COLOR_PAIR (4));
-            }
-            if ( ((y == 11) && (x > 10) && (x < 13)) || ((y == 11) && (x > 19) && (x < 22)))
-            {
-                attron (COLOR_PAIR (4));
-            }
-            if ( (y == 12) && (x > 10) && (x < 22))
-            {
-                attron (COLOR_PAIR (4));
-            }
-            if ((str[i] == 'o') && (y < 17))
-            {
-                attron (COLOR_PAIR (5));
-            }
-            if ( (y == 21) && (x < 16))
+            else if ( (y > 2) && (y < 14) && (x > 7) && (x < 40) && (color == 4))                   // red for lose
             {
                 attron (COLOR_PAIR (2));
             }
-            else if ( (y == 21) && (x > 17))
+            else if ( (y == 22) && (x < 16))                                                        // red for bad guesses
+            {
+                attron (COLOR_PAIR (2));
+            }
+            else if (y < 17)                                                                        // brown for everything else
+            {
+                attron (COLOR_PAIR (6));
+            }
+            else
+            {
+                attron (COLOR_PAIR (5));
+            }
+
+            if ( (y > 4) && (y < 7) && (x > 14) && (x < 18))                                        // yellow for beak
+            {
+                attron (COLOR_PAIR (4));
+            }
+            if ( ((y == 11) && (x > 10) && (x < 13)) || ((y == 11) && (x > 19) && (x < 22)))        // yellow for top of feet
+            {
+                attron (COLOR_PAIR (4));
+            }
+            if ( (y == 12) && (x > 10) && (x < 22))                                                 // yellow for bottom of feet
+            {
+                attron (COLOR_PAIR (4));
+            }
+            if ((str[i] == 'o') && (y < 17))                                                        // white for the eyes
             {
                 attron (COLOR_PAIR (5));
             }

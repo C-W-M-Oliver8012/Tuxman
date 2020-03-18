@@ -1,6 +1,6 @@
 #include "../headers/functions.h"
 
-void print_game_scr (long unsigned int *score, long unsigned int *lives, char *file_data)
+void print_game_scr (long unsigned int *score, long unsigned int *lives, char *file_data, int *color_option)
 {
     clear ();
     attron (COLOR_PAIR (1));
@@ -11,7 +11,7 @@ void print_game_scr (long unsigned int *score, long unsigned int *lives, char *f
     printw ("                     lives: ");
     attron (COLOR_PAIR (5));
     printw ("%d\n", *lives);
-    print_str (file_data, 1);
+    print_str (file_data, *color_option);
 }
 
 int main ()
@@ -21,13 +21,13 @@ int main ()
     initscr ();
 
     start_color ();
-    init_color (COLOR_BLACK, 50, 50, 50);
-    init_color (COLOR_GREEN, 150, 900, 150);
-    init_color (COLOR_RED, 900, 150, 150);
-    init_color (COLOR_BLUE, 150, 150, 1000);
-    init_color (COLOR_YELLOW, 1000, 1000, 150);
+    init_color (COLOR_BLACK, 25, 25, 25);
+    init_color (COLOR_GREEN, 262, 690, 164);
+    init_color (COLOR_RED, 933, 219, 192);
+    init_color (COLOR_BLUE, 0, 380, 627);
+    init_color (COLOR_YELLOW, 882, 835, 333);
     init_color (COLOR_WHITE, 900, 900, 900);
-    init_color (COLOR_BROWN, 900, 450, 150);
+    init_color (COLOR_BROWN, 666, 564, 443);
 
     init_pair (1, COLOR_GREEN, COLOR_BLACK);
     init_pair (2, COLOR_RED, COLOR_BLACK);
@@ -61,7 +61,7 @@ int main ()
         words[i] = malloc (SIZE * sizeof (char));
     }
     get_words ("data/words.txt", words, &wordCount);
-    int pickLine;
+    int pickLine, color_option;
 
     struct Penguin tux;
 
@@ -143,6 +143,7 @@ int main ()
                 case 6:
                     strcat (file_data, str7);
                     tux.fails = 7;
+                    color_option = 4;
                     break;
             }
 
@@ -153,7 +154,8 @@ int main ()
             {
                 if (tux.choice == '@')                   // GUESS ENTIRE WORD
                 {
-                    print_game_scr (&tux.score, &tux.lives, file_data);
+                    color_option = 1;
+                    print_game_scr (&tux.score, &tux.lives, file_data, &color_option);
                     attron (COLOR_PAIR (1));
                     printw ("\n   Guess the word: ");
                     attron (COLOR_PAIR (5));
@@ -191,7 +193,8 @@ int main ()
                 }
                 else                                    // NORMAL TURN
                 {
-                    print_game_scr (&tux.score, &tux.lives, file_data);
+                    color_option = 1;
+                    print_game_scr (&tux.score, &tux.lives, file_data, &color_option);
                     attron (COLOR_PAIR (1));
                     printw ("\n   Pick a letter: ");
                     attron (COLOR_PAIR (5));
@@ -250,6 +253,7 @@ int main ()
                     strcat (file_data, str8);
                     correct_guesses_to_str (&tux, file_data);
                     failed_guesses_to_str (&tux, file_data);
+                    color_option = 3;
                 }
             }
         }
@@ -263,7 +267,8 @@ int main ()
 
             do
                 {
-                    print_game_scr (&tux.score, &tux.lives, file_data);
+                    color_option = 4;
+                    print_game_scr (&tux.score, &tux.lives, file_data, &color_option);
                     attron (COLOR_PAIR (1));
                     printw ("\n   Return to menu? (Y/n): ");
                     attron (COLOR_PAIR (5));
@@ -296,7 +301,7 @@ int main ()
                 case '1':                               // PLAY AGAIN PROMPT
                     do
                         {
-                            print_game_scr (&tux.score, &tux.lives, file_data);
+                            print_game_scr (&tux.score, &tux.lives, file_data, &color_option);
                             attron (COLOR_PAIR (1));
                             printw ("\n   Play again? (Y/n): ");
                             attron (COLOR_PAIR (5));
@@ -359,7 +364,8 @@ int main ()
                 case '4':                               // EXITS ENTIRE GAME
                     do
                         {
-                            print_game_scr (&tux.score, &tux.lives, file_data);
+                            color_option = 1;
+                            print_game_scr (&tux.score, &tux.lives, file_data, &color_option);
                             attron (COLOR_PAIR (1));
                             printw ("\n   Return to menu? (Y/n): ");
                             attron (COLOR_PAIR (5));
