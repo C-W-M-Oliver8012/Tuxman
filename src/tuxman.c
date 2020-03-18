@@ -26,8 +26,9 @@ int main ()
     init_color (COLOR_RED, 933, 219, 192);
     init_color (COLOR_BLUE, 0, 380, 627);
     init_color (COLOR_YELLOW, 882, 835, 333);
-    init_color (COLOR_WHITE, 900, 900, 900);
-    init_color (COLOR_BROWN, 666, 564, 443);
+    init_color (COLOR_WHITE, 850, 850, 850);
+    init_color (COLOR_BROWN, 600, 400, 50);
+    init_color (COLOR_LBLUE, 694, 788, 909);
 
     init_pair (1, COLOR_GREEN, COLOR_BLACK);
     init_pair (2, COLOR_RED, COLOR_BLACK);
@@ -35,6 +36,7 @@ int main ()
     init_pair (4, COLOR_YELLOW, COLOR_BLACK);
     init_pair (5, COLOR_WHITE, COLOR_BLACK);
     init_pair (6, COLOR_BROWN, COLOR_BLACK);
+    init_pair (7, COLOR_LBLUE, COLOR_BLACK);
 
     char s_play[SIZE];
     char play = '0';
@@ -291,6 +293,10 @@ int main ()
                     {
                         play = '1';
                     }
+                    else
+                    {
+                        play = ' ';
+                    }
                 }
             while ( (play != '0') && (play != '1'));
         }
@@ -323,6 +329,10 @@ int main ()
                             else if ( (play == 'n') || (play == 'N'))
                             {
                                 play = '1';
+                            }
+                            else
+                            {
+                                play = ' ';
                             }
                         }
                     while ( (play != '0') && (play != '1'));
@@ -379,6 +389,7 @@ int main ()
                             {
                                 play = ' ';
                             }
+
                             if ( (play == 'y') || (play == 'Y'))
                             {
                                 play = '0';
@@ -387,6 +398,10 @@ int main ()
                             else if ( (play == 'n') || (play == 'N'))
                             {
                                 play = '1';
+                            }
+                            else
+                            {
+                                play = ' ';
                             }
                         }
                     while ( (play != '0') && (play != '1'));

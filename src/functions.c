@@ -272,7 +272,7 @@ void print_str (char *str, int color)
             {
                 attron (COLOR_PAIR (2));
             }
-            else if ( (y == 22) && (x < 16))                                                        // red for bad guesses
+            else if ( (y == 22) && (x < 17))                                                        // red for bad guesses
             {
                 attron (COLOR_PAIR (2));
             }

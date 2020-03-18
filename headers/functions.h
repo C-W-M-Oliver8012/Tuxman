@@ -12,6 +12,7 @@
 #define WORD_SIZE 12800
 #define INPUT_SIZE 2
 #define COLOR_BROWN 10
+#define COLOR_LBLUE 11
 
 struct Penguin
 {
