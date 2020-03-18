@@ -4,7 +4,7 @@ void print_game_scr (long unsigned int *score, long unsigned int *lives, char *f
 {
     clear ();
     attron (COLOR_PAIR (1));
-    printw ("\n   score: ");
+    printw ("\n\n   score: ");
     attron (COLOR_PAIR (5));
     printw ("%d", *score);
     attron (COLOR_PAIR (2));

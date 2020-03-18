@@ -52,7 +52,7 @@ void get_words (char *file_name, char **words, int *wordCount)
 
 void correct_guesses_to_str (struct Penguin *tux, char *guess_data)
 {
-    strcat (guess_data, "   ");
+    strcat (guess_data, "\n   ");
     char formated_letters[SIZE];
 
     for (int i = 0; i < tux->wordLength; i++)
@@ -272,7 +272,7 @@ void print_str (char *str, int color)
             {
                 attron (COLOR_PAIR (2));
             }
-            else if ( (y == 22) && (x < 17))                                                        // red for bad guesses
+            else if ( (y == 23) && (x < 17))                                                        // red for bad guesses
             {
                 attron (COLOR_PAIR (2));
             }

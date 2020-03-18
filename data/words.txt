@@ -45,3 +45,7 @@ wine
 clang
 intel
 amd ryzen
+pdcurses
+linux mint
+manjaro
+mx linux
