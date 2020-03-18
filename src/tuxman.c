@@ -16,6 +16,8 @@ void print_game_scr (long unsigned int *score, long unsigned int *lives, char *f
 
 int main ()
 {
+    srand ( (time (NULL)));                             // seeds random number generator
+
     initscr ();
 
     start_color ();
@@ -51,6 +53,15 @@ int main ()
     file_to_str ("graphics/tuxman7.txt", str8);
     file_to_str ("graphics/tuxman8.txt", str9);
     file_to_str ("graphics/about.txt", str10);
+
+    int wordCount = get_file_length ("data/words.txt");
+    char **words = (char**)malloc (wordCount * sizeof (char*));
+    for (int i = 0; i < wordCount; i++)
+    {
+        words[i] = malloc (SIZE * sizeof (char));
+    }
+    get_words ("data/words.txt", words, &wordCount);
+    int pickLine;
 
     struct Penguin tux;
 
@@ -88,7 +99,8 @@ int main ()
 
         if (tux.option == '1')
         {
-            get_word (tux.word);
+            pickLine = rand () % wordCount;
+            strcpy (tux.word, words[pickLine]);
             strtok (tux.word, "\n");
         }
         tux.wordLength = strlen (tux.word);
@@ -352,7 +364,7 @@ int main ()
                             printw ("\n   Return to menu? (Y/n): ");
                             attron (COLOR_PAIR (5));
                             getstr (s_play);
-                            
+
                             if (strlen(s_play) < INPUT_SIZE)
                             {
                                 play = s_play[0];
@@ -376,6 +388,8 @@ int main ()
             }
         }
     }
+
+    free (words);
 
     endwin ();
 

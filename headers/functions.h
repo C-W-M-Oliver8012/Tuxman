@@ -20,7 +20,8 @@ struct Penguin
 };
 
 void file_to_str (char *filename, char *file_data);
-void get_word (char *word);
+int get_file_length (char *name);
+void get_words (char *file_name, char **words, int *wordCount);
 void correct_guesses_to_str (struct Penguin *tux, char *guess_data);
 void failed_guesses_to_str (struct Penguin *tux, char *guess_data);
 int check_guess_is_valid (struct Penguin *tux);

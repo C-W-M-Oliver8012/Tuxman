@@ -17,27 +17,36 @@ void file_to_str (char *filename, char *file_data)
     fclose (file);
 }
 
-void get_word (char *word)
+int get_file_length (char *name)
 {
     FILE *file;
 
-    file = fopen ("data/words.txt", "a+");
+    file = fopen (name, "a+");
+    char buff[SIZE];
 
     int wordCount = 0;
-    while (fgets(word, SIZE, (FILE*)file))
+    while (fgets (buff, SIZE, (FILE*)file))
     {
         wordCount++;
     }
 
-    time_t t;
-    srand ( (unsigned) time (&t));
-    int pickLine = rand () % wordCount + 1;
+    fclose (file);
 
-    wordCount = 1;
-    file = fopen ("data/words.txt", "a+");
-    while (fgets (word, SIZE, (FILE*)file) && wordCount < pickLine)
+    return wordCount;
+}
+
+void get_words (char *file_name, char **words, int *wordCount)
+{
+    FILE *file;
+
+    file = fopen (file_name, "a+");
+    char buff[SIZE];
+
+    int i = 0;
+    while (fgets (buff, SIZE, (FILE*)file) && (i < *wordCount))
     {
-        wordCount++;
+        strcpy (words[i], buff);
+        i++;
     }
 
     fclose (file);
