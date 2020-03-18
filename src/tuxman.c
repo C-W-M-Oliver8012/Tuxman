@@ -16,6 +16,9 @@ void print_game_scr (long unsigned int *score, long unsigned int *lives, char *f
 
 int main ()
 {
+    WINDOW *tux_win;
+    tux_win = newwin (28, 80, 0, 0);
+
     srand ( (time (NULL)));                             // seeds random number generator
 
     initscr ();
@@ -24,11 +27,10 @@ int main ()
     init_color (COLOR_BLACK, 25, 25, 25);
     init_color (COLOR_GREEN, 262, 690, 164);
     init_color (COLOR_RED, 933, 219, 192);
-    init_color (COLOR_BLUE, 0, 380, 627);
+    init_color (COLOR_BLUE, 0, 490, 729);
     init_color (COLOR_YELLOW, 882, 835, 333);
     init_color (COLOR_WHITE, 850, 850, 850);
     init_color (COLOR_BROWN, 600, 400, 50);
-    init_color (COLOR_LBLUE, 694, 788, 909);
 
     init_pair (1, COLOR_GREEN, COLOR_BLACK);
     init_pair (2, COLOR_RED, COLOR_BLACK);
@@ -70,11 +72,9 @@ int main ()
     while (play == '0')                                  // menu loop
     {
         strcpy (file_data, "");
-        refresh ();
 
         if (welcome == '0')
         {
-            refresh ();
             tux.score = 0;
             tux.lives = 5;
             tux.max_score = 10;
@@ -84,6 +84,7 @@ int main ()
             attron (COLOR_PAIR (5));
             print_str (file_data, 2);
             getstr (tux.s_option);
+            wrefresh (tux_win);
 
             if (strlen (tux.s_option) < INPUT_SIZE)
             {
@@ -162,6 +163,7 @@ int main ()
                     printw ("\n   Guess the word: ");
                     attron (COLOR_PAIR (5));
                     getstr (tux.s_choice);
+                    wrefresh (tux_win);
 
                     tux.win = check_full_guess (&tux);
                     if (tux.win == 0)                    // wrong guess
@@ -201,6 +203,7 @@ int main ()
                     printw ("\n   Pick a letter: ");
                     attron (COLOR_PAIR (5));
                     getstr (tux.s_choice);
+                    wrefresh (tux_win);
 
                     if (strlen (tux.s_choice) < INPUT_SIZE)
                     {
@@ -275,6 +278,7 @@ int main ()
                     printw ("\n   Return to menu? (Y/n): ");
                     attron (COLOR_PAIR (5));
                     getstr (s_play);
+                    wrefresh (tux_win);
 
                     if (strlen (s_play) < INPUT_SIZE)
                     {
@@ -312,6 +316,7 @@ int main ()
                             printw ("\n   Play again? (Y/n): ");
                             attron (COLOR_PAIR (5));
                             getstr (s_play);
+                            wrefresh (tux_win);
 
                             if (strlen (s_play) < INPUT_SIZE)
                             {
@@ -344,6 +349,7 @@ int main ()
                     print_str (file_data, 2);
                     printw ("   Return to menu? (Y/n): ");
                     getstr (s_play);
+                    wrefresh (tux_win);
 
                     if (strlen (s_play) < INPUT_SIZE)
                     {
@@ -380,6 +386,7 @@ int main ()
                             printw ("\n   Return to menu? (Y/n): ");
                             attron (COLOR_PAIR (5));
                             getstr (s_play);
+                            wrefresh (tux_win);
 
                             if (strlen(s_play) < INPUT_SIZE)
                             {
