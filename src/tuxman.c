@@ -10,7 +10,7 @@ int main ()
     srand ( (time (NULL)));                             // seeds random number generator
 
     initscr ();
-    
+
     start_color ();
     init_color (COLOR_BLACK, 25, 25, 25);
     init_color (COLOR_GREEN, 262, 690, 164);
@@ -32,6 +32,19 @@ int main ()
     char play = '0';
     char welcome = '0';
     struct Game_States screen_data;
+
+    strcpy (screen_data.screen, "");
+    strcpy (screen_data.str0, "");
+    strcpy (screen_data.str0, "");
+    strcpy (screen_data.str0, "");
+    strcpy (screen_data.str0, "");
+    strcpy (screen_data.str0, "");
+    strcpy (screen_data.str0, "");
+    strcpy (screen_data.str0, "");
+    strcpy (screen_data.str0, "");
+    strcpy (screen_data.str0, "");
+    strcpy (screen_data.str0, "");
+    strcpy (screen_data.str0, "");
 
     file_to_str ("graphics/welcome.txt", screen_data.str0);
     file_to_str ("graphics/tuxman0.txt", screen_data.str1);
