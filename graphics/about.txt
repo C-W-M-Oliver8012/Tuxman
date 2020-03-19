@@ -1,5 +1,4 @@
 
-
    ============================================================
    | Tuxman is a game where you guess the appropriate letter  |
    | of a word until you have correctly guessed the entire    |
