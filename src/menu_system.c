@@ -1,6 +1,6 @@
 #include "../headers/menu_system.h"
 
-void print_game_scr (long unsigned int *score, long unsigned int *lives, char *file_data, int *color_option)
+void print_game_scr (long unsigned int *score, long unsigned int *lives, char *screen, int *color_option)
 {
     clear ();
     attron (COLOR_PAIR (1));
@@ -11,10 +11,10 @@ void print_game_scr (long unsigned int *score, long unsigned int *lives, char *f
     printw ("                     Lives: ");
     attron (COLOR_PAIR (5));
     printw ("%d\n", *lives);
-    print_str (file_data, *color_option);
+    print_str (screen, *color_option);
 }
 
-void welcome_screen (struct Penguin *tux, char *file_data, char *str0, WINDOW *tux_win, char *welcome)
+void welcome_screen (struct Penguin *tux, struct Game_States *screen_data, WINDOW *tux_win, char *welcome)
 {
     if (*welcome == '0')
     {
@@ -22,10 +22,10 @@ void welcome_screen (struct Penguin *tux, char *file_data, char *str0, WINDOW *t
         tux->lives = 5;
         tux->max_score = 10;
         clear ();
-        strcat (file_data, str0);
-        strcat (file_data, "   Option: ");
+        strcat (screen_data->screen, screen_data->str0);
+        strcat (screen_data->screen, "   Option: ");
         attron (COLOR_PAIR (5));
-        print_str (file_data, 2);
+        print_str (screen_data->screen, 2);
         getstr (tux->s_option);
         wrefresh (tux_win);
 
@@ -44,19 +44,19 @@ void welcome_screen (struct Penguin *tux, char *file_data, char *str0, WINDOW *t
     }
 }
 
-void menu_system (struct Penguin *tux, int *color_option, char *file_data, char *s_play, char *play, char *welcome, WINDOW *tux_win, char *str9, char *str10)
+void menu_system (struct Penguin *tux, struct Game_States *screen_data, int *color_option, char *s_play, char *play, char *welcome, WINDOW *tux_win)
 {
     if ( (tux->lives == 0) && (tux->option == '1'))                              // PLAYER LOST ENTIRE GAME
     {
-        strcpy (file_data, "");
-        strcat (file_data, str9);
-        correct_guesses_to_str (tux, file_data);
-        failed_guesses_to_str (tux, file_data);
+        strcpy (screen_data->screen, "");
+        strcat (screen_data->screen, screen_data->str9);
+        correct_guesses_to_str (tux, screen_data->screen);
+        failed_guesses_to_str (tux, screen_data->screen);
 
         do
             {
                 *color_option = 4;
-                print_game_scr (&tux->score, &tux->lives, file_data, &*color_option);
+                print_game_scr (&tux->score, &tux->lives, screen_data->screen, color_option);
                 attron (COLOR_PAIR (1));
                 printw ("\n   Return to menu? (Y/n): ");
                 attron (COLOR_PAIR (5));
@@ -94,7 +94,7 @@ void menu_system (struct Penguin *tux, int *color_option, char *file_data, char 
             case '1':                               // PLAY AGAIN PROMPT
                 do
                     {
-                        print_game_scr (&tux->score, &tux->lives, file_data, &*color_option);
+                        print_game_scr (&tux->score, &tux->lives, screen_data->screen, color_option);
                         attron (COLOR_PAIR (1));
                         printw ("\n   Play again? (Y/n): ");
                         attron (COLOR_PAIR (5));
@@ -125,11 +125,12 @@ void menu_system (struct Penguin *tux, int *color_option, char *file_data, char 
                     }
                 while ( (*play != '0') && (*play != '1'));
                 break;
+
             case '2':                               // RETURN TO MENU PROMPT
                 clear ();
-                strcpy (file_data, "");
-                strcat (file_data, str10);
-                print_str (file_data, 2);
+                strcpy (screen_data->screen, "");
+                strcat (screen_data->screen, screen_data->str10);
+                print_str (screen_data->screen, 2);
                 printw ("   Return to menu? (Y/n): ");
                 getstr (s_play);
                 wrefresh (tux_win);
@@ -157,14 +158,16 @@ void menu_system (struct Penguin *tux, int *color_option, char *file_data, char 
                     *welcome = '1';
                 }
                 break;
+
             case '3':
                 *play = '1';
                 break;
+
             case '4':                               // EXITS ENTIRE GAME
                 do
                     {
                         *color_option = 1;
-                        print_game_scr (&tux->score, &tux->lives, file_data, &*color_option);
+                        print_game_scr (&tux->score, &tux->lives, screen_data->screen, color_option);
                         attron (COLOR_PAIR (1));
                         printw ("\n   Return to menu? (Y/n): ");
                         attron (COLOR_PAIR (5));
@@ -195,6 +198,7 @@ void menu_system (struct Penguin *tux, int *color_option, char *file_data, char 
                         }
                     }
                 while ( (*play != '0') && (*play != '1'));
+                tux->option = '1';
                 break;
         }
     }

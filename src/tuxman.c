@@ -10,7 +10,7 @@ int main ()
     srand ( (time (NULL)));                             // seeds random number generator
 
     initscr ();
-
+    
     start_color ();
     init_color (COLOR_BLACK, 25, 25, 25);
     init_color (COLOR_GREEN, 262, 690, 164);
@@ -31,20 +31,19 @@ int main ()
     char s_play[SIZE];
     char play = '0';
     char welcome = '0';
-    char file_data[DATA_SIZE], str0[DATA_SIZE], str1[DATA_SIZE], str2[DATA_SIZE],
-            str3[DATA_SIZE], str4[DATA_SIZE], str5[DATA_SIZE], str6[DATA_SIZE], str7[DATA_SIZE], str8[DATA_SIZE], str9[DATA_SIZE], str10[DATA_SIZE];
+    struct Game_States screen_data;
 
-    file_to_str ("graphics/welcome.txt", str0);
-    file_to_str ("graphics/tuxman0.txt", str1);
-    file_to_str ("graphics/tuxman1.txt", str2);
-    file_to_str ("graphics/tuxman2.txt", str3);
-    file_to_str ("graphics/tuxman3.txt", str4);
-    file_to_str ("graphics/tuxman4.txt", str5);
-    file_to_str ("graphics/tuxman5.txt", str6);
-    file_to_str ("graphics/tuxman6.txt", str7);
-    file_to_str ("graphics/tuxman7.txt", str8);
-    file_to_str ("graphics/tuxman8.txt", str9);
-    file_to_str ("graphics/about.txt", str10);
+    file_to_str ("graphics/welcome.txt", screen_data.str0);
+    file_to_str ("graphics/tuxman0.txt", screen_data.str1);
+    file_to_str ("graphics/tuxman1.txt", screen_data.str2);
+    file_to_str ("graphics/tuxman2.txt", screen_data.str3);
+    file_to_str ("graphics/tuxman3.txt", screen_data.str4);
+    file_to_str ("graphics/tuxman4.txt", screen_data.str5);
+    file_to_str ("graphics/tuxman5.txt", screen_data.str6);
+    file_to_str ("graphics/tuxman6.txt", screen_data.str7);
+    file_to_str ("graphics/tuxman7.txt", screen_data.str8);
+    file_to_str ("graphics/tuxman8.txt", screen_data.str9);
+    file_to_str ("graphics/about.txt", screen_data.str10);
 
     int wordCount = get_file_length ("data/words.txt");
     char **words = (char**)malloc (wordCount * sizeof (char*));
@@ -56,30 +55,14 @@ int main ()
     int pickLine, color_option;
 
     struct Penguin tux;
+    tux.option = '1';
 
     while (play == '0')                                  // menu loop
     {
-        strcpy (file_data, "");
-
-        welcome_screen (&tux, file_data, str0, tux_win, &welcome);
-
-        if (tux.option == '1')                          // gets random word 
-        {
-            pickLine = rand () % wordCount;
-            strcpy (tux.word, words[pickLine]);
-            strtok (tux.word, "\n");
-        }
-        tux.wordLength = strlen (tux.word);
-        tux.fails = 0;
-        tux.indexLength = 0;
-        tux.win = 0;
-        tux.letters_guessed = 0;
-        strcpy (tux.s_choice, "");
-        tux.choice = ' ';
-
-        game_loop (&tux, file_data, str1, str2, str3, str4, str5, str6, str7, str8, tux_win, &color_option);
-
-        menu_system (&tux, &color_option, file_data, s_play, &play, &welcome, tux_win, str9, str10);
+        reset_game (&tux, &screen_data, words, &pickLine, &wordCount);
+        welcome_screen (&tux, &screen_data, tux_win, &welcome);
+        game_loop (&tux, &screen_data, tux_win, &color_option);
+        menu_system (&tux, &screen_data, &color_option, s_play, &play, &welcome, tux_win);
     }
 
     free (words);

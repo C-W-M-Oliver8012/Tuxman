@@ -20,6 +20,22 @@ struct Penguin
     unsigned long int wordLength, fails, indexLength, win, letters_guessed, score, max_score, lives;
 };
 
+struct Game_States
+{
+    char screen[DATA_SIZE];
+    char str0[DATA_SIZE];
+    char str1[DATA_SIZE];
+    char str2[DATA_SIZE];
+    char str3[DATA_SIZE];
+    char str4[DATA_SIZE];
+    char str5[DATA_SIZE];
+    char str6[DATA_SIZE];
+    char str7[DATA_SIZE];
+    char str8[DATA_SIZE];
+    char str9[DATA_SIZE];
+    char str10[DATA_SIZE];
+};
+
 void file_to_str (char *filename, char *file_data);
 int get_file_length (char *name);
 void get_words (char *file_name, char **words, int *wordCount);
