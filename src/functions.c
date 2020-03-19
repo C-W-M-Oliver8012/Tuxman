@@ -8,6 +8,8 @@ void file_to_str (char *filename, char *file_data)
 
     file = fopen (filename, "a+");
 
+    strcpy (file_data, "");
+
     while (fgets (buff, SIZE, (FILE*)file))
     {
         strcat (file_data, buff);

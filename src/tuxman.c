@@ -33,19 +33,6 @@ int main ()
     char welcome = '0';
     struct Game_States screen_data;
 
-    strcpy (screen_data.screen, "");
-    strcpy (screen_data.str0, "");
-    strcpy (screen_data.str0, "");
-    strcpy (screen_data.str0, "");
-    strcpy (screen_data.str0, "");
-    strcpy (screen_data.str0, "");
-    strcpy (screen_data.str0, "");
-    strcpy (screen_data.str0, "");
-    strcpy (screen_data.str0, "");
-    strcpy (screen_data.str0, "");
-    strcpy (screen_data.str0, "");
-    strcpy (screen_data.str0, "");
-
     file_to_str ("graphics/welcome.txt", screen_data.str0);
     file_to_str ("graphics/tuxman0.txt", screen_data.str1);
     file_to_str ("graphics/tuxman1.txt", screen_data.str2);
