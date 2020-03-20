@@ -1,4 +1,4 @@
-#include "../headers/functions.h"
+#include "../include/functions.h"
 
 void file_to_str (char *filename, char *file_data, int *open)
 {

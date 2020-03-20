@@ -1,4 +1,4 @@
-#include "../headers/menu_system.h"
+#include "../include/menu_system.h"
 
 void print_game_scr (long unsigned int *score, long unsigned int *lives, char *screen, int *color_option)
 {

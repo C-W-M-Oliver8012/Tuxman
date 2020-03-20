@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Tuxman
+Comment=Hangman For Linux
+Path=/home/cadenm/Documents/Code/Tuxman/
+Exec=Tuxman.out
+Terminal=True

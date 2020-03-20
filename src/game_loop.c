@@ -1,5 +1,5 @@
-#include "../headers/game_loop.h"
-#include "../headers/menu_system.h"
+#include "../include/game_loop.h"
+#include "../include/menu_system.h"
 
 void reset_game (struct Penguin *tux, struct Game_States *screen_data, char **words, int *pickLine, int *wordCount)
 {
