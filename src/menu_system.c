@@ -96,7 +96,7 @@ void game_over_screen (struct Penguin *tux, struct Game_States *screen_data, cha
             getstr (s_play);
             wrefresh (tux_win);
 
-            check_response (s_play, play, welcome, '0');
+            check_response (s_play, play, welcome, '0', 1);
         }
     while ( (*play != '0') && (*play != '1'));
 }
@@ -108,12 +108,12 @@ void play_again_prompt (struct Penguin *tux, struct Game_States *screen_data, ch
             clear ();
             print_game_scr (&tux->score, &tux->lives, screen_data->screen, color_option);
             attron (COLOR_PAIR (1));
-            printw ("\n   Play again? (Y/n): ");
+            printw ("\n   Press 'y' to get new word: ");
             attron (COLOR_PAIR (5));
             getstr (s_play);
             wrefresh (tux_win);
 
-            check_response (s_play, play, welcome, '1');
+            check_response (s_play, play, welcome, '1', 0);
         }
     while ( (*play != '0') && (*play != '1'));
 }
@@ -127,11 +127,11 @@ void about_screen (struct Game_States *screen_data, char *play, char *welcome, c
         {
             clear ();
             print_str (screen_data->screen, 2);
-            printw ("   Return to menu? (Y/n): ");
+            printw ("\n   Press 'y' to return to menu: ");
             getstr (s_play);
             wrefresh (tux_win);
 
-            check_response (s_play, play, welcome, '0');
+            check_response (s_play, play, welcome, '0', 0);
         }
     while( (*play != '0') && (*play != '1'));
 }
@@ -148,13 +148,13 @@ void return_to_menu_screen (struct Penguin *tux, char *screen, char *play, char 
             getstr (s_play);
             wrefresh (tux_win);
 
-            check_response (s_play, play, welcome, '0');
+            check_response (s_play, play, welcome, '0', 1);
         }
     while ( (*play != '0') && (*play != '1'));
     tux->option = '1';
 }
 
-void check_response (char *s_play, char *play, char *welcome, char display_welcome_screen)
+void check_response (char *s_play, char *play, char *welcome, char display_welcome_screen, int no_option)
 {
     if (strlen(s_play) < INPUT_SIZE)
     {
@@ -170,7 +170,7 @@ void check_response (char *s_play, char *play, char *welcome, char display_welco
         *play = '0';
         *welcome = display_welcome_screen;
     }
-    else if ( (*play == 'n') || (*play == 'N'))
+    else if ( ((*play == 'n') || (*play == 'N')) && (no_option == 1))
     {
         *play = '1';
     }
