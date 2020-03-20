@@ -21,26 +21,31 @@ void welcome_screen (struct Penguin *tux, struct Game_States *screen_data, WINDO
         tux->score = 0;
         tux->lives = 5;
         tux->max_score = 10;
-        clear ();
         strcat (screen_data->screen, screen_data->str0);
         strcat (screen_data->screen, "   Option: ");
-        attron (COLOR_PAIR (5));
-        print_str (screen_data->screen, 2);
-        getstr (tux->s_option);
-        wrefresh (tux_win);
 
-        if (strlen (tux->s_option) < INPUT_SIZE)
-        {
-            tux->option = tux->s_option[0];
-            if ( (tux->option != '1') && (tux->option != '2') && (tux->option != '3'))
+        do
             {
-                tux->option = '0';
+                clear ();
+                attron (COLOR_PAIR (5));
+                print_str (screen_data->screen, 2);
+                getstr (tux->s_option);
+                wrefresh (tux_win);
+
+                if (strlen (tux->s_option) < INPUT_SIZE)
+                {
+                    tux->option = tux->s_option[0];
+                    if ( (tux->option != '1') && (tux->option != '2') && (tux->option != '3'))
+                    {
+                        tux->option = '0';
+                    }
+                }
+                else
+                {
+                    tux->option = '0';
+                }
             }
-        }
-        else
-        {
-            tux->option = '0';
-        }
+        while(tux->option == '0');
     }
 }
 
@@ -91,27 +96,7 @@ void game_over_screen (struct Penguin *tux, struct Game_States *screen_data, cha
             getstr (s_play);
             wrefresh (tux_win);
 
-            if (strlen (s_play) < INPUT_SIZE)
-            {
-                *play = s_play[0];
-            }
-            else
-            {
-                *play = ' ';
-            }
-            if ( (*play == 'y') || (*play == 'Y'))
-            {
-                *play = '0';
-                *welcome = '0';
-            }
-            else if ( (*play == 'n') || (*play == 'N'))
-            {
-                *play = '1';
-            }
-            else
-            {
-                *play = ' ';
-            }
+            check_response (s_play, play, welcome, '0');
         }
     while ( (*play != '0') && (*play != '1'));
 }
@@ -128,63 +113,27 @@ void play_again_prompt (struct Penguin *tux, struct Game_States *screen_data, ch
             getstr (s_play);
             wrefresh (tux_win);
 
-            if (strlen (s_play) < INPUT_SIZE)
-            {
-                *play = s_play[0];
-            }
-            else
-            {
-                *play = ' ';
-            }
-            if ( (*play == 'y') || (*play == 'Y'))
-            {
-                *play = '0';
-                *welcome = '1';
-            }
-            else if ( (*play == 'n') || (*play == 'N'))
-            {
-                *play = '1';
-            }
-            else
-            {
-                *play = ' ';
-            }
+            check_response (s_play, play, welcome, '1');
         }
     while ( (*play != '0') && (*play != '1'));
 }
 
 void about_screen (struct Game_States *screen_data, char *play, char *welcome, char *s_play, int *color_option, WINDOW *tux_win)
 {
-    clear ();
     strcpy (screen_data->screen, "");
     strcat (screen_data->screen, screen_data->str10);
-    print_str (screen_data->screen, 2);
-    printw ("   Return to menu? (Y/n): ");
-    getstr (s_play);
-    wrefresh (tux_win);
 
-    if (strlen (s_play) < INPUT_SIZE)
-    {
-        *play = s_play[0];
-    }
-    else
-    {
-        *play = '\n';
-    }
-    if ( (*play == 'y') || (*play == 'Y'))
-    {
-        *play = '0';
-        *welcome = '0';
-    }
-    else if ( (*play == 'n') || (*play == 'N'))
-    {
-        *play = '1';
-    }
-    else
-    {
-        *play = '0';
-        *welcome = '1';
-    }
+    do
+        {
+            clear ();
+            print_str (screen_data->screen, 2);
+            printw ("   Return to menu? (Y/n): ");
+            getstr (s_play);
+            wrefresh (tux_win);
+
+            check_response (s_play, play, welcome, '0');
+        }
+    while( (*play != '0') && (*play != '1'));
 }
 
 void return_to_menu_screen (struct Penguin *tux, char *screen, char *play, char *welcome, char *s_play, int *color_option, WINDOW *tux_win)
@@ -199,29 +148,34 @@ void return_to_menu_screen (struct Penguin *tux, char *screen, char *play, char 
             getstr (s_play);
             wrefresh (tux_win);
 
-            if (strlen(s_play) < INPUT_SIZE)
-            {
-                *play = s_play[0];
-            }
-            else
-            {
-                *play = ' ';
-            }
-
-            if ( (*play == 'y') || (*play == 'Y'))
-            {
-                *play = '0';
-                *welcome = '0';
-            }
-            else if ( (*play == 'n') || (*play == 'N'))
-            {
-                *play = '1';
-            }
-            else
-            {
-                *play = ' ';
-            }
+            check_response (s_play, play, welcome, '0');
         }
     while ( (*play != '0') && (*play != '1'));
     tux->option = '1';
+}
+
+void check_response (char *s_play, char *play, char *welcome, char display_welcome_screen)
+{
+    if (strlen(s_play) < INPUT_SIZE)
+    {
+        *play = s_play[0];
+    }
+    else
+    {
+        *play = ' ';
+    }
+
+    if ( (*play == 'y') || (*play == 'Y'))
+    {
+        *play = '0';
+        *welcome = display_welcome_screen;
+    }
+    else if ( (*play == 'n') || (*play == 'N'))
+    {
+        *play = '1';
+    }
+    else
+    {
+        *play = ' ';
+    }
 }

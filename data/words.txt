@@ -36,6 +36,7 @@ canonical
 iot
 snap
 appimage
+flatpak
 apt
 dnf
 pacman
