@@ -36,9 +36,9 @@ struct Game_States
     char str10[DATA_SIZE];
 };
 
-void file_to_str (char *filename, char *file_data);
-int get_file_length (char *name);
-void get_words (char *file_name, char **words, int *wordCount);
+void file_to_str (char *filename, char *file_data, int *open);
+int get_file_length (char *name, int *open);
+void get_words (char *file_name, char **words, int *wordCount, int *open);
 void correct_guesses_to_str (struct Penguin *tux, char *guess_data);
 void failed_guesses_to_str (struct Penguin *tux, char *guess_data);
 int check_guess_is_valid (struct Penguin *tux);

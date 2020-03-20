@@ -1,55 +1,77 @@
 #include "../headers/functions.h"
 
-void file_to_str (char *filename, char *file_data)
+void file_to_str (char *filename, char *file_data, int *open)
 {
     FILE *file;
 
     char buff[SIZE];
 
-    file = fopen (filename, "a+");
+    file = fopen (filename, "r");
 
     strcpy (file_data, "");
 
-    while (fgets (buff, SIZE, (FILE*)file))
+    if (file != NULL)
     {
-        strcat (file_data, buff);
-    }
-    strcat (file_data, "\n");
+        while (fgets (buff, SIZE, (FILE*)file))
+        {
+            strcat (file_data, buff);
+        }
+        strcat (file_data, "\n");
 
-    fclose (file);
+        fclose (file);
+    }
+    else
+    {
+        *open = 1;
+    }
 }
 
-int get_file_length (char *name)
+int get_file_length (char *name, int *open)
 {
     FILE *file;
 
-    file = fopen (name, "a+");
+    file = fopen (name, "r");
+
     char buff[SIZE];
-
     int wordCount = 0;
-    while (fgets (buff, SIZE, (FILE*)file))
-    {
-        wordCount++;
-    }
 
-    fclose (file);
+    if (file != NULL)
+    {
+        while (fgets (buff, SIZE, (FILE*)file))
+        {
+            wordCount++;
+        }
+
+        fclose (file);
+    }
+    else
+    {
+        *open = 1;
+    }
 
     return wordCount;
 }
 
-void get_words (char *file_name, char **words, int *wordCount)
+void get_words (char *file_name, char **words, int *wordCount, int *open)
 {
     FILE *file;
 
-    file = fopen (file_name, "a+");
+    file = fopen (file_name, "r");
 
-    int i = 0;
-    while (fgets (words[i], SIZE, (FILE*)file) && (i < *wordCount))
+    if (file != NULL)
     {
-        i++;
-    }
+        int i = 0;
+        while (fgets (words[i], SIZE, (FILE*)file) && (i < *wordCount))
+        {
+            i++;
+        }
 
-    fclose (file);
+        fclose (file);
+    }
+    else
+    {
+        *open = 1;
+    }
 }
 
 void correct_guesses_to_str (struct Penguin *tux, char *guess_data)
