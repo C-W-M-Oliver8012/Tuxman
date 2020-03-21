@@ -43,7 +43,7 @@ int main ()
     }
     else
     {
-        attron (COLOR_PAIR (2));
+        attron (COLOR_PAIR (RED_PAIR));
         printw ("\n   **ERROR**: The game files could not be found. Please reinstall the program.\n\n\n   Press enter to close the program...");
         getstr (tux.s_option);
     }

@@ -12,13 +12,12 @@ void set_all_colors ()
     init_color (COLOR_WHITE, 850, 850, 850);
     init_color (COLOR_BROWN, 600, 400, 50);
 
-    init_pair (1, COLOR_GREEN, COLOR_BLACK);                                    // cerates all color pairs used in program
-    init_pair (2, COLOR_RED, COLOR_BLACK);
-    init_pair (3, COLOR_BLUE, COLOR_BLACK);
-    init_pair (4, COLOR_YELLOW, COLOR_BLACK);
-    init_pair (5, COLOR_WHITE, COLOR_BLACK);
-    init_pair (6, COLOR_BROWN, COLOR_BLACK);
-    init_pair (7, COLOR_LBLUE, COLOR_BLACK);
+    init_pair (GREEN_PAIR, COLOR_GREEN, COLOR_BLACK);                                    // cerates all color pairs used in program
+    init_pair (RED_PAIR, COLOR_RED, COLOR_BLACK);
+    init_pair (BLUE_PAIR, COLOR_BLUE, COLOR_BLACK);
+    init_pair (YELLOW_PAIR, COLOR_YELLOW, COLOR_BLACK);
+    init_pair (WHITE_PAIR, COLOR_WHITE, COLOR_BLACK);
+    init_pair (BROWN_PAIR, COLOR_BROWN, COLOR_BLACK);
 }
 
 void get_screen_data (struct Game_States *screen_data, int *open)

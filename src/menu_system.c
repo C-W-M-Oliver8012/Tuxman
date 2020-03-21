@@ -13,7 +13,7 @@ void welcome_screen (struct Penguin *tux, struct Game_States *screen_data, const
         do
             {
                 clear ();
-                attron (COLOR_PAIR (5));
+                attron (COLOR_PAIR (WHITE_PAIR));
                 print_str (screen_data->screen, 2);
                 getstr (tux->s_option);
                 wrefresh (game_info->tux_win);
@@ -81,9 +81,9 @@ void game_over_screen (struct Penguin *tux, struct Game_States *screen_data, str
             clear ();
             game_info->color_option = 4;
             print_game_scr (&tux->score, &tux->lives, screen_data->screen, &game_info->color_option);
-            attron (COLOR_PAIR (1));
+            attron (COLOR_PAIR (GREEN_PAIR));
             printw ("\n   Return to menu? (Y/n): ");
-            attron (COLOR_PAIR (5));
+            attron (COLOR_PAIR (WHITE_PAIR));
             getstr (game_info->s_play);
             wrefresh (game_info->tux_win);
 
@@ -98,9 +98,9 @@ void play_again_prompt (struct Penguin *tux, struct Game_States *screen_data, st
         {
             clear ();
             print_game_scr (&tux->score, &tux->lives, screen_data->screen, &game_info->color_option);
-            attron (COLOR_PAIR (1));
+            attron (COLOR_PAIR (GREEN_PAIR));
             printw ("\n   Press 'y' to get new word: ");
-            attron (COLOR_PAIR (5));
+            attron (COLOR_PAIR (WHITE_PAIR));
             getstr (game_info->s_play);
             wrefresh (game_info->tux_win);
 
@@ -133,9 +133,9 @@ void return_to_menu_screen (struct Penguin *tux, char *screen, struct Game_Optio
         {
             game_info->color_option = 1;
             print_game_scr (&tux->score, &tux->lives, screen, &game_info->color_option);
-            attron (COLOR_PAIR (1));
+            attron (COLOR_PAIR (GREEN_PAIR));
             printw ("\n   Return to menu? (Y/n): ");
-            attron (COLOR_PAIR (5));
+            attron (COLOR_PAIR (WHITE_PAIR));
             getstr (game_info->s_play);
             wrefresh (game_info->tux_win);
 

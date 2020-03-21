@@ -90,9 +90,9 @@ void guess_entire_word (struct Penguin *tux, const char *screen, int *color_opti
 {
     *color_option = 1;
     print_game_scr (&tux->score, &tux->lives, screen, color_option);
-    attron (COLOR_PAIR (1));
+    attron (COLOR_PAIR (GREEN_PAIR));
     printw ("\n   Guess the word: ");
-    attron (COLOR_PAIR (5));
+    attron (COLOR_PAIR (WHITE_PAIR));
     getstr (tux->s_choice);
     wrefresh (tux_win);
 
@@ -131,9 +131,9 @@ void guess_single_char (struct Penguin *tux, const char *screen, int *color_opti
 {
     *color_option = 1;
     print_game_scr (&tux->score, &tux->lives, screen, color_option);
-    attron (COLOR_PAIR (1));
+    attron (COLOR_PAIR (GREEN_PAIR));
     printw ("\n   Pick a letter: ");
-    attron (COLOR_PAIR (5));
+    attron (COLOR_PAIR (WHITE_PAIR));
     getstr (tux->s_choice);
     wrefresh (tux_win);
 

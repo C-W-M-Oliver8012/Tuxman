@@ -1,8 +1,9 @@
 [Desktop Entry]
-Version=1.0
 Type=Application
+Encoding=UTF-8
 Name=Tuxman
 Comment=Hangman For Linux
-Path=/home/cadenm/Documents/Code/Tuxman/
-Exec=Tuxman.out
-Terminal=True
+Exec=/home/cadenm/Documents/Code/Tuxman/Tuxman %f
+Icon=/home/cadenm/Documents/Code/Tuxman/Tuxman.png
+Terminal=false
+Categories=Game;

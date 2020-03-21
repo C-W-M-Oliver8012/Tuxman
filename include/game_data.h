@@ -21,6 +21,14 @@
 #define RETURN_TO_MENU_PROMPT 4
 #define INCORRECT_INPUT 0
 
+#define GREEN_PAIR 1
+#define RED_PAIR 2
+#define BLUE_PAIR 3
+#define YELLOW_PAIR 4
+#define WHITE_PAIR 5
+#define BROWN_PAIR 6
+
+
 struct Penguin
 {
     char word[SIZE], index[SIZE], failedGuesses[SIZE], s_option[SIZE], s_choice[SIZE], choice, **words;
