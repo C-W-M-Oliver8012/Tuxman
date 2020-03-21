@@ -5,5 +5,5 @@ Name=Tuxman
 Comment=Hangman For Linux
 Terminal=true
 Exec=/usr/share/Tuxman/Tuxman %f
-Icon=/usr/share/Tuxman/Tuxman.png
+Icon=/usr/share/Tuxman/Tuxman_logo.png
 Categories=Game;
