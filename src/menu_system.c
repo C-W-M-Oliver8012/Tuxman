@@ -1,19 +1,5 @@
 #include "../include/menu_system.h"
 
-void print_game_scr (long unsigned int *score, long unsigned int *lives, char *screen, int *color_option)
-{
-    clear ();
-    attron (COLOR_PAIR (1));
-    printw ("\n   Score: ");
-    attron (COLOR_PAIR (5));
-    printw ("%d", *score);
-    attron (COLOR_PAIR (2));
-    printw ("                     Lives: ");
-    attron (COLOR_PAIR (5));
-    printw ("%d\n", *lives);
-    print_str (screen, *color_option);
-}
-
 void welcome_screen (struct Penguin *tux, struct Game_States *screen_data, WINDOW *tux_win, char *welcome)
 {
     if (*welcome == '0')

@@ -342,3 +342,17 @@ void print_str (char *str, int color)
 
     attron (COLOR_PAIR (5));
 }
+
+void print_game_scr (long unsigned int *score, long unsigned int *lives, char *screen, int *color_option)
+{
+    clear ();
+    attron (COLOR_PAIR (1));
+    printw ("\n   Score: ");
+    attron (COLOR_PAIR (5));
+    printw ("%d", *score);
+    attron (COLOR_PAIR (2));
+    printw ("                     Lives: ");
+    attron (COLOR_PAIR (5));
+    printw ("%d\n", *lives);
+    print_str (screen, *color_option);
+}

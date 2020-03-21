@@ -2,6 +2,7 @@
 #define GAME_LOOP
 
 #include "functions.h"
+#include "game_data.h"
 
 void reset_game (struct Penguin *tux, struct Game_States *screen_data, char **words, int *pickLine, int *wordCount);
 void game_loop (struct Penguin *tux, struct Game_States *screen_data, WINDOW *tux_win, int *color_option);
