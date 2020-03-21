@@ -1,6 +1,6 @@
 #include "../include/functions.h"
 
-void file_to_str (const char *filename, char *file_data, int *open)
+void file_to_str (const char *filename, char *file_data, int *did_open)
 {
     FILE *file;
 
@@ -22,11 +22,11 @@ void file_to_str (const char *filename, char *file_data, int *open)
     }
     else
     {
-        *open = 1;
+        *did_open = FALSE;
     }
 }
 
-int get_file_length (const char *name, int *open)
+int get_file_length (const char *name, int *did_open)
 {
     FILE *file;
 
@@ -46,13 +46,13 @@ int get_file_length (const char *name, int *open)
     }
     else
     {
-        *open = 1;
+        *did_open = FALSE;
     }
 
     return wordCount;
 }
 
-void get_words (const char *file_name, char **words, int *wordCount, int *open)
+void get_words (const char *file_name, char **words, int *wordCount, int *did_open)
 {
     FILE *file;
 
@@ -70,7 +70,7 @@ void get_words (const char *file_name, char **words, int *wordCount, int *open)
     }
     else
     {
-        *open = 1;
+        *did_open = FALSE;
     }
 }
 

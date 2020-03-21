@@ -2,7 +2,7 @@
 
 void welcome_screen (struct Penguin *tux, struct Game_States *screen_data, const struct Game_Options *game_info)
 {
-    if (game_info->welcome == '0')
+    if (game_info->welcome == TRUE)
     {
         tux->score = 0;
         tux->lives = 5;
@@ -20,24 +20,32 @@ void welcome_screen (struct Penguin *tux, struct Game_States *screen_data, const
 
                 if (strlen (tux->s_option) < INPUT_SIZE)
                 {
-                    tux->option = tux->s_option[0];
-                    if ( (tux->option != '1') && (tux->option != '2') && (tux->option != '3'))
-                    {
-                        tux->option = '0';
+                    switch (tux->s_option[0]) {
+                        case '1':
+                            tux->option = GAME_SCREEN;
+                            break;
+                        case '2':
+                            tux->option = ABOUT_SCREEN;
+                            break;
+                        case '3':
+                            tux->option = QUIT_GAME;
+                            break;
+                        default:
+                            tux->option = INCORRECT_INPUT;
                     }
                 }
                 else
                 {
-                    tux->option = '0';
+                    tux->option = INCORRECT_INPUT;
                 }
             }
-        while(tux->option == '0');
+        while(tux->option == INCORRECT_INPUT);
     }
 }
 
 void menu_system (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info)
 {
-    if ( (tux->lives == 0) && (tux->option == '1'))                              // PLAYER LOST ENTIRE GAME
+    if ( (tux->lives == 0) && (tux->option == 1))                              // PLAYER LOST ENTIRE GAME
     {
         game_over_screen (tux, screen_data, game_info);
     }
@@ -45,19 +53,16 @@ void menu_system (struct Penguin *tux, struct Game_States *screen_data, struct G
     {
         switch (tux->option)
         {
-            case '1':                               // PLAY AGAIN PROMPT
+            case GAME_SCREEN:                               // PLAY AGAIN PROMPT
                 play_again_prompt (tux, screen_data, game_info);
                 break;
-
-            case '2':                               // RETURN TO MENU PROMPT
+            case ABOUT_SCREEN:                               // RETURN TO MENU PROMPT
                 about_screen (screen_data, game_info);
                 break;
-
-            case '3':
-                game_info->play = '1';
+            case QUIT_GAME:
+                game_info->play = FALSE;
                 break;
-
-            case '4':                               // EXITS ENTIRE GAME
+            case RETURN_TO_MENU_PROMPT:                               // EXITS ENTIRE GAME
                 return_to_menu_screen (tux, screen_data->screen, game_info);
                 break;
         }
@@ -82,9 +87,9 @@ void game_over_screen (struct Penguin *tux, struct Game_States *screen_data, str
             getstr (game_info->s_play);
             wrefresh (game_info->tux_win);
 
-            check_response (game_info->s_play, &game_info->play, &game_info->welcome, '0', 1);
+            check_response (game_info->s_play, &game_info->play, &game_info->welcome, TRUE, TRUE);
         }
-    while ( (game_info->play != '0') && (game_info->play != '1'));
+    while ( (game_info->play != FALSE) && (game_info->play != TRUE));
 }
 
 void play_again_prompt (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info)
@@ -99,9 +104,9 @@ void play_again_prompt (struct Penguin *tux, struct Game_States *screen_data, st
             getstr (game_info->s_play);
             wrefresh (game_info->tux_win);
 
-            check_response (game_info->s_play, &game_info->play, &game_info->welcome, '1', 0);
+            check_response (game_info->s_play, &game_info->play, &game_info->welcome, FALSE, FALSE);
         }
-    while ( (game_info->play != '0') && (game_info->play != '1'));
+    while ( (game_info->play != FALSE) && (game_info->play != TRUE));
 }
 
 void about_screen (struct Game_States *screen_data, struct Game_Options *game_info)
@@ -117,9 +122,9 @@ void about_screen (struct Game_States *screen_data, struct Game_Options *game_in
             getstr (game_info->s_play);
             wrefresh (game_info->tux_win);
 
-            check_response (game_info->s_play, &game_info->play, &game_info->welcome, '0', 0);
+            check_response (game_info->s_play, &game_info->play, &game_info->welcome, TRUE, FALSE);
         }
-    while( (game_info->play != '0') && (game_info->play != '1'));
+    while( (game_info->play != FALSE) && (game_info->play != TRUE));
 }
 
 void return_to_menu_screen (struct Penguin *tux, char *screen, struct Game_Options *game_info)
@@ -134,34 +139,32 @@ void return_to_menu_screen (struct Penguin *tux, char *screen, struct Game_Optio
             getstr (game_info->s_play);
             wrefresh (game_info->tux_win);
 
-            check_response (game_info->s_play, &game_info->play, &game_info->welcome, '0', 1);
+            check_response (game_info->s_play, &game_info->play, &game_info->welcome, TRUE, TRUE);
         }
-    while ( (game_info->play != '0') && (game_info->play != '1'));
-    tux->option = '1';
+    while ( (game_info->play != FALSE) && (game_info->play != TRUE));
+    tux->option = GAME_SCREEN;
 }
 
-void check_response (char *s_play, char *play, char *welcome, char display_welcome_screen, int no_option)
+void check_response (char *s_play, int *play, int *welcome, int display_welcome_screen, int no_option)
 {
     if (strlen(s_play) < INPUT_SIZE)
     {
-        *play = s_play[0];
+        if ( (s_play[0] == 'y') || (s_play[0] == 'Y'))
+        {
+            *play = TRUE;
+            *welcome = display_welcome_screen;
+        }
+        else if ( ((s_play[0] == 'n') || (s_play[0] == 'N')) && (no_option == TRUE))
+        {
+            *play = FALSE;
+        }
+        else
+        {
+            *play = NOT_FALSE_OR_TRUE;
+        }
     }
     else
     {
-        *play = ' ';
-    }
-
-    if ( (*play == 'y') || (*play == 'Y'))
-    {
-        *play = '0';
-        *welcome = display_welcome_screen;
-    }
-    else if ( ((*play == 'n') || (*play == 'N')) && (no_option == 1))
-    {
-        *play = '1';
-    }
-    else
-    {
-        *play = ' ';
+        *play = NOT_FALSE_OR_TRUE;
     }
 }

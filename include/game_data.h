@@ -7,13 +7,24 @@
 #define DATA_SIZE 12800
 #define WORD_SIZE 12800
 #define INPUT_SIZE 2
+
 #define COLOR_BROWN 10
 #define COLOR_LBLUE 11
 
+#define TRUE 1
+#define FALSE 0
+#define NOT_FALSE_OR_TRUE 2
+
+#define GAME_SCREEN 1
+#define ABOUT_SCREEN 2
+#define QUIT_GAME 3
+#define RETURN_TO_MENU_PROMPT 4
+#define INCORRECT_INPUT 0
+
 struct Penguin
 {
-    char word[SIZE], index[SIZE], failedGuesses[SIZE], s_option[SIZE], option, s_choice[SIZE], choice, **words;
-    unsigned long int wordLength, fails, indexLength, win, letters_guessed, score, max_score, lives;
+    char word[SIZE], index[SIZE], failedGuesses[SIZE], s_option[SIZE], s_choice[SIZE], choice, **words;
+    unsigned long int wordLength, fails, indexLength, win, letters_guessed, score, max_score, lives, option;
 };
 
 struct Game_States
@@ -35,8 +46,8 @@ struct Game_States
 struct Game_Options
 {
     WINDOW *tux_win;
-    char s_play[SIZE], play, welcome;
-    int open, wordCount, pickLine, color_option;
+    char s_play[SIZE];
+    int did_open, wordCount, pickLine, color_option, play, welcome;
 };
 
 #endif
