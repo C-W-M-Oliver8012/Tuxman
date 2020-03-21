@@ -8,7 +8,7 @@ void welcome_screen (struct Penguin *tux, struct Game_States *screen_data, const
         tux->lives = 5;
         tux->max_score = 10;
         strcat (screen_data->screen, screen_data->str0);
-        strcat (screen_data->screen, "   Option: ");
+        strcat (screen_data->screen, "\n   Option: ");
 
         do
             {
