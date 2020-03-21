@@ -6,7 +6,11 @@ void file_to_str (const char *filename, char *file_data, int *did_open)
 
     char buff[SIZE];
 
-    file = fopen (filename, "r");
+    char dir[DATA_SIZE];
+    strcpy (dir, DIR);
+    strcat (dir, filename);
+
+    file = fopen (dir, "r");
 
     strcpy (file_data, "");
 
@@ -26,11 +30,15 @@ void file_to_str (const char *filename, char *file_data, int *did_open)
     }
 }
 
-int get_file_length (const char *name, int *did_open)
+int get_file_length (const char *filename, int *did_open)
 {
     FILE *file;
 
-    file = fopen (name, "r");
+    char dir[DATA_SIZE];
+    strcpy (dir, DIR);
+    strcat (dir, filename);
+
+    file = fopen (dir, "r");
 
     char buff[SIZE];
     int wordCount = 0;
@@ -52,11 +60,15 @@ int get_file_length (const char *name, int *did_open)
     return wordCount;
 }
 
-void get_words (const char *file_name, char **words, int *wordCount, int *did_open)
+void get_words (const char *filename, char **words, int *wordCount, int *did_open)
 {
     FILE *file;
 
-    file = fopen (file_name, "r");
+    char dir[DATA_SIZE];
+    strcpy (dir, DIR);
+    strcat (dir, filename);
+
+    file = fopen (dir, "r");
 
     if (file != NULL)
     {

@@ -3,6 +3,8 @@
 
 #include <curses.h>
 
+#define DIR "/usr/share/Tuxman/"
+
 #define SIZE 256
 #define DATA_SIZE 12800
 #define WORD_SIZE 12800
