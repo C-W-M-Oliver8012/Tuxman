@@ -1,8 +1,8 @@
 #include "../include/menu_system.h"
 
-void welcome_screen (struct Penguin *tux, struct Game_States *screen_data, WINDOW *tux_win, char *welcome)
+void welcome_screen (struct Penguin *tux, struct Game_States *screen_data, const struct Game_Options *game_info)
 {
-    if (*welcome == '0')
+    if (game_info->welcome == '0')
     {
         tux->score = 0;
         tux->lives = 5;
@@ -16,7 +16,7 @@ void welcome_screen (struct Penguin *tux, struct Game_States *screen_data, WINDO
                 attron (COLOR_PAIR (5));
                 print_str (screen_data->screen, 2);
                 getstr (tux->s_option);
-                wrefresh (tux_win);
+                wrefresh (game_info->tux_win);
 
                 if (strlen (tux->s_option) < INPUT_SIZE)
                 {
@@ -35,36 +35,36 @@ void welcome_screen (struct Penguin *tux, struct Game_States *screen_data, WINDO
     }
 }
 
-void menu_system (struct Penguin *tux, struct Game_States *screen_data, int *color_option, char *s_play, char *play, char *welcome, WINDOW *tux_win)
+void menu_system (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info)
 {
     if ( (tux->lives == 0) && (tux->option == '1'))                              // PLAYER LOST ENTIRE GAME
     {
-        game_over_screen (tux, screen_data, play, welcome, s_play, color_option, tux_win);
+        game_over_screen (tux, screen_data, game_info);
     }
     else                                            // THE GAME CONTINES
     {
         switch (tux->option)
         {
             case '1':                               // PLAY AGAIN PROMPT
-                play_again_prompt (tux, screen_data, play, welcome, s_play, color_option, tux_win);
+                play_again_prompt (tux, screen_data, game_info);
                 break;
 
             case '2':                               // RETURN TO MENU PROMPT
-                about_screen (screen_data, play, welcome, s_play, color_option, tux_win);
+                about_screen (screen_data, game_info);
                 break;
 
             case '3':
-                *play = '1';
+                game_info->play = '1';
                 break;
 
             case '4':                               // EXITS ENTIRE GAME
-                return_to_menu_screen (tux, screen_data->screen, play, welcome, s_play, color_option, tux_win);
+                return_to_menu_screen (tux, screen_data->screen, game_info);
                 break;
         }
     }
 }
 
-void game_over_screen (struct Penguin *tux, struct Game_States *screen_data, char *play, char *welcome, char *s_play, int *color_option, WINDOW *tux_win)
+void game_over_screen (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info)
 {
     strcpy (screen_data->screen, "");
     strcat (screen_data->screen, screen_data->str9);
@@ -74,37 +74,37 @@ void game_over_screen (struct Penguin *tux, struct Game_States *screen_data, cha
     do
         {
             clear ();
-            *color_option = 4;
-            print_game_scr (&tux->score, &tux->lives, screen_data->screen, color_option);
+            game_info->color_option = 4;
+            print_game_scr (&tux->score, &tux->lives, screen_data->screen, &game_info->color_option);
             attron (COLOR_PAIR (1));
             printw ("\n   Return to menu? (Y/n): ");
             attron (COLOR_PAIR (5));
-            getstr (s_play);
-            wrefresh (tux_win);
+            getstr (game_info->s_play);
+            wrefresh (game_info->tux_win);
 
-            check_response (s_play, play, welcome, '0', 1);
+            check_response (game_info->s_play, &game_info->play, &game_info->welcome, '0', 1);
         }
-    while ( (*play != '0') && (*play != '1'));
+    while ( (game_info->play != '0') && (game_info->play != '1'));
 }
 
-void play_again_prompt (struct Penguin *tux, struct Game_States *screen_data, char *play, char *welcome, char *s_play, int *color_option, WINDOW *tux_win)
+void play_again_prompt (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info)
 {
     do
         {
             clear ();
-            print_game_scr (&tux->score, &tux->lives, screen_data->screen, color_option);
+            print_game_scr (&tux->score, &tux->lives, screen_data->screen, &game_info->color_option);
             attron (COLOR_PAIR (1));
             printw ("\n   Press 'y' to get new word: ");
             attron (COLOR_PAIR (5));
-            getstr (s_play);
-            wrefresh (tux_win);
+            getstr (game_info->s_play);
+            wrefresh (game_info->tux_win);
 
-            check_response (s_play, play, welcome, '1', 0);
+            check_response (game_info->s_play, &game_info->play, &game_info->welcome, '1', 0);
         }
-    while ( (*play != '0') && (*play != '1'));
+    while ( (game_info->play != '0') && (game_info->play != '1'));
 }
 
-void about_screen (struct Game_States *screen_data, char *play, char *welcome, char *s_play, int *color_option, WINDOW *tux_win)
+void about_screen (struct Game_States *screen_data, struct Game_Options *game_info)
 {
     strcpy (screen_data->screen, "");
     strcat (screen_data->screen, screen_data->str10);
@@ -114,29 +114,29 @@ void about_screen (struct Game_States *screen_data, char *play, char *welcome, c
             clear ();
             print_str (screen_data->screen, 2);
             printw ("\n   Press 'y' to return to menu: ");
-            getstr (s_play);
-            wrefresh (tux_win);
+            getstr (game_info->s_play);
+            wrefresh (game_info->tux_win);
 
-            check_response (s_play, play, welcome, '0', 0);
+            check_response (game_info->s_play, &game_info->play, &game_info->welcome, '0', 0);
         }
-    while( (*play != '0') && (*play != '1'));
+    while( (game_info->play != '0') && (game_info->play != '1'));
 }
 
-void return_to_menu_screen (struct Penguin *tux, char *screen, char *play, char *welcome, char *s_play, int *color_option, WINDOW *tux_win)
+void return_to_menu_screen (struct Penguin *tux, char *screen, struct Game_Options *game_info)
 {
     do
         {
-            *color_option = 1;
-            print_game_scr (&tux->score, &tux->lives, screen, color_option);
+            game_info->color_option = 1;
+            print_game_scr (&tux->score, &tux->lives, screen, &game_info->color_option);
             attron (COLOR_PAIR (1));
             printw ("\n   Return to menu? (Y/n): ");
             attron (COLOR_PAIR (5));
-            getstr (s_play);
-            wrefresh (tux_win);
+            getstr (game_info->s_play);
+            wrefresh (game_info->tux_win);
 
-            check_response (s_play, play, welcome, '0', 1);
+            check_response (game_info->s_play, &game_info->play, &game_info->welcome, '0', 1);
         }
-    while ( (*play != '0') && (*play != '1'));
+    while ( (game_info->play != '0') && (game_info->play != '1'));
     tux->option = '1';
 }
 

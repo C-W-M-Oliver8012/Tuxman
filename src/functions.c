@@ -1,6 +1,6 @@
 #include "../include/functions.h"
 
-void file_to_str (char *filename, char *file_data, int *open)
+void file_to_str (const char *filename, char *file_data, int *open)
 {
     FILE *file;
 
@@ -26,7 +26,7 @@ void file_to_str (char *filename, char *file_data, int *open)
     }
 }
 
-int get_file_length (char *name, int *open)
+int get_file_length (const char *name, int *open)
 {
     FILE *file;
 
@@ -52,7 +52,7 @@ int get_file_length (char *name, int *open)
     return wordCount;
 }
 
-void get_words (char *file_name, char **words, int *wordCount, int *open)
+void get_words (const char *file_name, char **words, int *wordCount, int *open)
 {
     FILE *file;
 
@@ -74,9 +74,9 @@ void get_words (char *file_name, char **words, int *wordCount, int *open)
     }
 }
 
-void correct_guesses_to_str (struct Penguin *tux, char *guess_data)
+void correct_guesses_to_str (const struct Penguin *tux, char *screen)
 {
-    strcat (guess_data, "\n   ");
+    strcat (screen, "\n   ");
     char formated_letters[SIZE];
 
     for (int i = 0; i < tux->wordLength; i++)
@@ -89,12 +89,12 @@ void correct_guesses_to_str (struct Penguin *tux, char *guess_data)
             formated_letters[0] = tux->word[i];
             formated_letters[1] = ' ';
             formated_letters[2] = '\0';
-            strcat (guess_data, formated_letters);
+            strcat (screen, formated_letters);
             matched++;
         }
         else if ( ( (tux->fails == 7) && (tux->word[i] == ' ')) || (tux->win == 1))
         {
-            strcat (guess_data, "  ");
+            strcat (screen, "  ");
             matched++;
         }
 
@@ -108,53 +108,52 @@ void correct_guesses_to_str (struct Penguin *tux, char *guess_data)
                     formated_letters[0] = tux->word[i];
                     formated_letters[1] = ' ';
                     formated_letters[2] = '\0';
-                    strcat (guess_data, formated_letters);
+                    strcat (screen, formated_letters);
                     matched++;
                     break;
                 }
             }
             if (matched == 0)
             {
-                strcat (guess_data, "  ");
+                strcat (screen, "  ");
             }
         }
         else if ( (tux->word[i] == ' ') && (tux->fails != 7) && (tux->win != 1))
         {
-            strcat (guess_data, "  ");
+            strcat (screen, "  ");
         }
     }
 
-    strcat (guess_data, "\n   ");
+    strcat (screen, "\n   ");
     for (int i = 0; i < tux->wordLength; i++)
     {
         if (tux->word[i] != ' ')
         {
-            strcat (guess_data, "- ");
+            strcat (screen, "- ");
         }
         else
         {
-            strcat (guess_data, "  ");
+            strcat (screen, "  ");
         }
     }
 }
 
-// PRINTS FAILED GUESSES
-void failed_guesses_to_str (struct Penguin *tux, char *guess_data)
+void failed_guesses_to_str (const struct Penguin *tux, char *screen)
 {
     char formated_letters[SIZE];
 
-    strcat (guess_data, "\n\n\n   Bad guesses: ");
+    strcat (screen, "\n\n\n   Bad guesses: ");
     for (int i = 0; i < tux->fails; i++)
     {
         strcpy (formated_letters, "");
         formated_letters[0] = tux->failedGuesses[i];
         formated_letters[1] = ' ';
         formated_letters[2] = '\0';
-        strcat (guess_data, formated_letters);
+        strcat (screen, formated_letters);
     }
 }
 
-int check_guess_is_valid (struct Penguin *tux)
+int check_guess_is_valid (const struct Penguin *tux)
 {
     int matched = 0;
 
@@ -182,7 +181,7 @@ int check_guess_is_valid (struct Penguin *tux)
     return matched;
 }
 
-int check_guess (struct Penguin *tux)
+int check_guess (const struct Penguin *tux)
 {
     int matched = 0;
 
@@ -201,7 +200,7 @@ int check_guess (struct Penguin *tux)
     return matched;
 }
 
-int has_won (struct Penguin *tux)
+int has_won (const struct Penguin *tux)
 {
     int letters_guessed = 0;
 
@@ -233,7 +232,7 @@ int has_won (struct Penguin *tux)
     return 0;
 }
 
-int check_full_guess (struct Penguin *tux)
+int check_full_guess (const struct Penguin *tux)
 {
     if (strcmp (tux->word, tux->s_choice) == 0)
     {
@@ -243,7 +242,7 @@ int check_full_guess (struct Penguin *tux)
     return 0;
 }
 
-int add_score (struct Penguin *tux)
+int add_score (const struct Penguin *tux)
 {
     switch (tux->fails)
     {
@@ -264,7 +263,7 @@ int add_score (struct Penguin *tux)
     return 0;
 }
 
-void print_str (char *str, int color)
+void print_str (const char *str, const int color)
 {
     int length = strlen (str);
     int x = 0;
@@ -343,7 +342,7 @@ void print_str (char *str, int color)
     attron (COLOR_PAIR (5));
 }
 
-void print_game_scr (long unsigned int *score, long unsigned int *lives, char *screen, int *color_option)
+void print_game_scr (const long unsigned int *score, const long unsigned int *lives, const char *screen, const int *color_option)
 {
     clear ();
     attron (COLOR_PAIR (1));

@@ -1,13 +1,13 @@
 #include "../include/game_loop.h"
 #include "../include/menu_system.h"
 
-void reset_game (struct Penguin *tux, struct Game_States *screen_data, char **words, int *pickLine, int *wordCount)
+void reset_game (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info)
 {
     strcpy (screen_data->screen, "");
     if (tux->option == '1')
     {
-        *pickLine = rand () % *wordCount;
-        strcpy (tux->word, words[*pickLine]);
+        game_info->pickLine = rand () % game_info->wordCount;
+        strcpy (tux->word, tux->words[game_info->pickLine]);
         strtok (tux->word, "\n");
         tux->wordLength = strlen (tux->word);
         tux->indexLength = 0;
@@ -19,7 +19,7 @@ void reset_game (struct Penguin *tux, struct Game_States *screen_data, char **wo
     }
 }
 
-void game_loop (struct Penguin *tux, struct Game_States *screen_data, WINDOW *tux_win, int *color_option)
+void game_loop (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info)
 {
     while ( (tux->option == '1') && (tux->fails != 7) && (tux->win == 0))            // game loop
     {
@@ -30,7 +30,7 @@ void game_loop (struct Penguin *tux, struct Game_States *screen_data, WINDOW *tu
             tux->lives--;
         }
 
-        get_screen_by_fails (screen_data, &tux->fails, color_option);
+        get_screen_by_fails (screen_data, &tux->fails, &game_info->color_option);
 
         correct_guesses_to_str (tux, screen_data->screen);
         failed_guesses_to_str (tux, screen_data->screen);
@@ -39,17 +39,17 @@ void game_loop (struct Penguin *tux, struct Game_States *screen_data, WINDOW *tu
         {
             if (tux->choice == '@')                   // GUESS ENTIRE WORD
             {
-                guess_entire_word (tux, screen_data->screen, color_option, tux_win);
+                guess_entire_word (tux, screen_data->screen, &game_info->color_option, game_info->tux_win);
             }
             else                                    // NORMAL TURN
             {
-                guess_single_char (tux, screen_data->screen, color_option, tux_win);
+                guess_single_char (tux, screen_data->screen, &game_info->color_option, game_info->tux_win);
                 check_exit_game (&tux->choice, &tux->fails, &tux->option);
             }
 
             if (tux->win == 1)                        // PLAYER WINS
             {
-                set_win (tux, screen_data, color_option);
+                set_win (tux, screen_data, &game_info->color_option);
             }
         }
     }
@@ -86,7 +86,7 @@ void get_screen_by_fails (struct Game_States *screen_data, long unsigned int *fa
     }
 }
 
-void guess_entire_word (struct Penguin *tux, char *screen, int *color_option, WINDOW *tux_win)
+void guess_entire_word (struct Penguin *tux, const char *screen, int *color_option, WINDOW *tux_win)
 {
     *color_option = 1;
     print_game_scr (&tux->score, &tux->lives, screen, color_option);
@@ -127,7 +127,7 @@ void guess_entire_word (struct Penguin *tux, char *screen, int *color_option, WI
     }
 }
 
-void guess_single_char (struct Penguin *tux, char *screen, int *color_option, WINDOW *tux_win)
+void guess_single_char (struct Penguin *tux, const char *screen, int *color_option, WINDOW *tux_win)
 {
     *color_option = 1;
     print_game_scr (&tux->score, &tux->lives, screen, color_option);
@@ -164,7 +164,7 @@ void guess_single_char (struct Penguin *tux, char *screen, int *color_option, WI
     }
 }
 
-void check_exit_game (char *choice, long unsigned int *fails, char *option)
+void check_exit_game (const char *choice, long unsigned int *fails, char *option)
 {
     if (*choice == '^')                // ENDS GAME
     {
