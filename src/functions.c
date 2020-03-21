@@ -6,7 +6,7 @@ void file_to_str (const char *filename, char *file_data, int *did_open)
 
     char buff[SIZE];
 
-    char dir[DATA_SIZE];
+    char dir[NAME_SIZE];
     strcpy (dir, DIR);
     strcat (dir, filename);
 
@@ -34,7 +34,7 @@ int get_file_length (const char *filename, int *did_open)
 {
     FILE *file;
 
-    char dir[DATA_SIZE];
+    char dir[NAME_SIZE];
     strcpy (dir, DIR);
     strcat (dir, filename);
 
@@ -64,7 +64,7 @@ void get_words (const char *filename, char **words, int *wordCount, int *did_ope
 {
     FILE *file;
 
-    char dir[DATA_SIZE];
+    char dir[NAME_SIZE];
     strcpy (dir, DIR);
     strcat (dir, filename);
 

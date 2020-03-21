@@ -6,6 +6,7 @@
 #define DIR "/usr/share/Tuxman/"
 
 #define SIZE 256
+#define NAME_SIZE 512
 #define DATA_SIZE 12800
 #define WORD_SIZE 12800
 #define INPUT_SIZE 2
