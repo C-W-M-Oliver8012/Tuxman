@@ -7,7 +7,7 @@
  |                                                                            |
  |   This is so that the window is big enough to show the entire game.        |
  |   Alternatively, set your terminal window to at least 80 columns by 29     |
- |   rows.                                                                    |
+ |   rows by default.                                                         |
  |                                                                            |
  |                                                                            |
  |                                                                            |

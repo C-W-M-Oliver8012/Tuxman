@@ -7,5 +7,5 @@
    | word, press @ on the input. To quit at anytime, press ^  |
    | on the input. Thanks for playing!                        |
    |                                                          |
-   | Current Version: 0.1.10-beta                             |
+   | Current Version: 0.1.11-beta                             |
    ============================================================
