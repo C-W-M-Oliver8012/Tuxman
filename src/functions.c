@@ -297,15 +297,15 @@ void print_str (const char *str, const int color)
                 x++;
             }
 
-            if ( (y > 2) && (y < 14) && (x > 7) && (x < 40) && (color == 1))                        // penguin
+            if ( (y > 2) && (y < 14) && (x > 7) && (x < 40) && (color == BLUE_FOR_PENGUIN))                        // penguin
             {
                 attron (COLOR_PAIR (BLUE_PAIR));
             }
-            else if ( (y > 2) && (y < 14) && (x > 7) && (x < 40) && (color == 3))                   // green for win
+            else if ( (y > 2) && (y < 14) && (x > 7) && (x < 40) && (color == GREEN_FOR_WIN_SCREEN))                   // green for win
             {
                 attron (COLOR_PAIR (GREEN_PAIR));
             }
-            else if ( (y > 2) && (y < 14) && (x > 7) && (x < 40) && (color == 4))                   // red for lose
+            else if ( (y > 2) && (y < 14) && (x > 7) && (x < 40) && (color == RED_FOR_LOSS_SCREEN))                   // red for lose
             {
                 attron (COLOR_PAIR (RED_PAIR));
             }
@@ -339,7 +339,7 @@ void print_str (const char *str, const int color)
                 attron (COLOR_PAIR (WHITE_PAIR));
             }
         }
-        else if (color == 2)
+        else if (color == BROWN_FOR_MENU_SCREENS)
         {
             if ((str[i] == '=') || (str[i] == '|'))
             {

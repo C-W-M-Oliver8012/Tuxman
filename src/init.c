@@ -35,3 +35,23 @@ void get_screen_data (struct Game_States *screen_data, int *open)
     file_to_str ("graphics/about.txt", screen_data->str10, open);
     file_to_str ("graphics/win_resize.txt", screen_data->str11, open);
 }
+
+void prompt_to_change_screen_size (char *win_resize_screen)
+{
+    char input[SIZE];
+    do
+        {
+            clear ();
+            print_str (win_resize_screen, BROWN_FOR_MENU_SCREENS);
+            attron (COLOR_PAIR (GREEN_PAIR));
+            printw (" Enter 'y' here: ");
+            attron (COLOR_PAIR (WHITE_PAIR));
+            getstr (input);
+            refresh ();
+            if (strlen (input) > INPUT_SIZE)
+            {
+                strcpy (input, " ");
+            }
+        }
+    while(input[0] != 'y');
+}

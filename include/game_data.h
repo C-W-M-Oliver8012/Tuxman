@@ -31,6 +31,11 @@
 #define WHITE_PAIR 5
 #define BROWN_PAIR 6
 
+#define BLUE_FOR_PENGUIN 1
+#define BROWN_FOR_MENU_SCREENS 2
+#define GREEN_FOR_WIN_SCREEN 3
+#define RED_FOR_LOSS_SCREEN 4
+
 
 struct Penguin
 {

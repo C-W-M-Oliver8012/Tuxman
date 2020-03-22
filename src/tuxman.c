@@ -32,22 +32,7 @@ int main ()
         game_info.welcome = TRUE;
         srand ( (time (NULL)));                                                                     // seeds random number generator
 
-        char temp[SIZE];
-        do
-            {
-                clear ();
-                print_str (screen_data.str11, 2);
-                attron (COLOR_PAIR (GREEN_PAIR));
-                printw (" Enter 'y' here: ");
-                attron (COLOR_PAIR (WHITE_PAIR));
-                getstr (temp);
-                refresh ();
-                if (strlen (temp) > INPUT_SIZE)
-                {
-                    strcpy (temp, " ");
-                }
-            }
-        while(temp[0] != 'y');
+        prompt_to_change_screen_size (screen_data.str11);
 
         while (game_info.play == TRUE)                                                              // menu loop
         {

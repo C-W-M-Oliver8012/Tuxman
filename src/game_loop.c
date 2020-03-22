@@ -88,7 +88,7 @@ void get_screen_by_fails (struct Game_States *screen_data, long unsigned int *fa
 
 void guess_entire_word (struct Penguin *tux, const char *screen, int *color_option)
 {
-    *color_option = 1;
+    *color_option = BLUE_FOR_PENGUIN;
     print_game_scr (&tux->score, &tux->lives, screen, color_option);
     attron (COLOR_PAIR (GREEN_PAIR));
     printw ("\n   Guess the word: ");
@@ -128,7 +128,7 @@ void guess_entire_word (struct Penguin *tux, const char *screen, int *color_opti
 
 void guess_single_char (struct Penguin *tux, const char *screen, int *color_option)
 {
-    *color_option = 1;
+    *color_option = BLUE_FOR_PENGUIN;
     print_game_scr (&tux->score, &tux->lives, screen, color_option);
     attron (COLOR_PAIR (GREEN_PAIR));
     printw ("\n   Pick a letter: ");
