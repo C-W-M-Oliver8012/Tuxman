@@ -3,7 +3,7 @@
 
 #include <curses.h>
 
-#define DIR "/usr/share/Tuxman/"
+#define DIR "/usr/share/tuxman/"
 
 #define SIZE 256
 #define NAME_SIZE 512

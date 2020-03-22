@@ -1,11 +1,11 @@
 #!/bin/bash
 
 cp Tuxman.desktop /usr/share/applications/
-cp Tuxman /usr/bin/
-cp -r ../Tuxman/ /usr/share/
+cp tuxman /usr/bin/
+cp -r ../tuxman/ /usr/share/
 
-rm /usr/share/Tuxman/Tuxman
-rm /usr/share/Tuxman/Tuxman.desktop
-rm /usr/share/Tuxman/Makefile
-rm /usr/share/Tuxman/install.sh
-rm /usr/share/Tuxman/Tuxman_logo.xcf
+rm /usr/share/tuxman/tuxman
+rm /usr/share/tuxman/Tuxman.desktop
+rm /usr/share/tuxman/Makefile
+rm /usr/share/tuxman/install.sh
+rm /usr/share/tuxman/tuxman_logo.xcf
