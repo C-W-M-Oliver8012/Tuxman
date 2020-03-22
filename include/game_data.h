@@ -39,8 +39,22 @@
 
 struct Penguin
 {
-    char word[SIZE], index[SIZE], failedGuesses[SIZE], s_option[SIZE], s_choice[SIZE], choice, **words;
-    unsigned long int wordLength, fails, indexLength, win, letters_guessed, score, max_score, lives, option;
+    char word[SIZE];
+    char index[SIZE];
+    char failedGuesses[SIZE];
+    char s_option[SIZE];
+    char s_choice[SIZE];
+    char choice;
+    char **words;
+    unsigned long int wordLength;
+    unsigned long int fails;
+    unsigned long int indexLength;
+    unsigned long int win;
+    unsigned long int letters_guessed;
+    unsigned long int score;
+    unsigned long int max_score;
+    unsigned long int lives;
+    unsigned long int option;
 };
 
 struct Game_States
@@ -63,7 +77,13 @@ struct Game_States
 struct Game_Options
 {
     char s_play[SIZE];
-    int did_open, wordCount, pickLine, color_option, play, welcome, set_color;
+    int did_open;
+    int wordCount;
+    int pickLine;
+    int color_option;
+    int play;
+    int welcome;
+    int set_color;
 };
 
 #endif
