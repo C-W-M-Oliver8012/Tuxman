@@ -28,10 +28,24 @@ int main ()
     if (game_info.did_open == TRUE)
     {
         game_info.tux_win = newwin (28, 80, 0, 0);                                            // creates window but this is honestly pointless as I only use one in the entire program
+        refresh ();
         tux.option = GAME_SCREEN;
         game_info.play = TRUE;
         game_info.welcome = TRUE;
         srand ( (time (NULL)));                                                     // seeds random number generator
+
+        char temp[SIZE];
+        do
+            {
+                clear ();
+                print_str (screen_data.str11, 2);
+                getstr (temp);
+                if (strlen (temp) > INPUT_SIZE)
+                {
+                    strcpy (temp, " ");
+                }
+            }
+        while(temp[0] != 'y');
 
         while (game_info.play == TRUE)                                  // menu loop
         {

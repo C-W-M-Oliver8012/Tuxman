@@ -52,6 +52,7 @@ struct Game_States
     char str8[DATA_SIZE];
     char str9[DATA_SIZE];
     char str10[DATA_SIZE];
+    char str11[DATA_SIZE];
 };
 
 struct Game_Options

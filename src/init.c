@@ -33,4 +33,5 @@ void get_screen_data (struct Game_States *screen_data, int *open)
     file_to_str ("graphics/tuxman7.txt", screen_data->str8, open);
     file_to_str ("graphics/tuxman8.txt", screen_data->str9, open);
     file_to_str ("graphics/about.txt", screen_data->str10, open);
+    file_to_str ("graphics/win_resize.txt", screen_data->str11, open);
 }
