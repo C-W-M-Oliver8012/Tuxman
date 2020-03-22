@@ -57,7 +57,6 @@ struct Game_States
 
 struct Game_Options
 {
-    WINDOW *tux_win;
     char s_play[SIZE];
     int did_open, wordCount, pickLine, color_option, play, welcome;
 };

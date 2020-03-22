@@ -16,7 +16,6 @@ void welcome_screen (struct Penguin *tux, struct Game_States *screen_data, const
                 attron (COLOR_PAIR (WHITE_PAIR));
                 print_str (screen_data->screen, 2);
                 getstr (tux->s_option);
-                wrefresh (game_info->tux_win);
 
                 if (strlen (tux->s_option) < INPUT_SIZE)
                 {
@@ -85,7 +84,6 @@ void game_over_screen (struct Penguin *tux, struct Game_States *screen_data, str
             printw ("\n   Return to menu? (Y/n): ");
             attron (COLOR_PAIR (WHITE_PAIR));
             getstr (game_info->s_play);
-            wrefresh (game_info->tux_win);
 
             check_response (game_info->s_play, &game_info->play, &game_info->welcome, TRUE, TRUE);
         }
@@ -102,7 +100,6 @@ void play_again_prompt (struct Penguin *tux, struct Game_States *screen_data, st
             printw ("\n   Press 'y' to get new word: ");
             attron (COLOR_PAIR (WHITE_PAIR));
             getstr (game_info->s_play);
-            wrefresh (game_info->tux_win);
 
             check_response (game_info->s_play, &game_info->play, &game_info->welcome, FALSE, FALSE);
         }
@@ -120,7 +117,6 @@ void about_screen (struct Game_States *screen_data, struct Game_Options *game_in
             print_str (screen_data->screen, 2);
             printw ("\n   Press 'y' to return to menu: ");
             getstr (game_info->s_play);
-            wrefresh (game_info->tux_win);
 
             check_response (game_info->s_play, &game_info->play, &game_info->welcome, TRUE, FALSE);
         }
@@ -137,7 +133,6 @@ void return_to_menu_screen (struct Penguin *tux, char *screen, struct Game_Optio
             printw ("\n   Return to menu? (Y/n): ");
             attron (COLOR_PAIR (WHITE_PAIR));
             getstr (game_info->s_play);
-            wrefresh (game_info->tux_win);
 
             check_response (game_info->s_play, &game_info->play, &game_info->welcome, TRUE, TRUE);
         }

@@ -20,7 +20,6 @@ void file_to_str (const char *filename, char *file_data, int *did_open)
         {
             strcat (file_data, buff);
         }
-        strcat (file_data, "\n");
 
         fclose (file);
     }
@@ -91,7 +90,7 @@ void get_words (const char *filename, char **words, int *wordCount, int *did_ope
 
 void correct_guesses_to_str (const struct Penguin *tux, char *screen)
 {
-    strcat (screen, "\n   ");
+    strcat (screen, "\n\n   ");
     char formated_letters[SIZE];
 
     for (int i = 0; i < tux->wordLength; i++)

@@ -39,11 +39,11 @@ void game_loop (struct Penguin *tux, struct Game_States *screen_data, struct Gam
         {
             if (tux->choice == '@')                   // GUESS ENTIRE WORD
             {
-                guess_entire_word (tux, screen_data->screen, &game_info->color_option, game_info->tux_win);
+                guess_entire_word (tux, screen_data->screen, &game_info->color_option);
             }
             else                                    // NORMAL TURN
             {
-                guess_single_char (tux, screen_data->screen, &game_info->color_option, game_info->tux_win);
+                guess_single_char (tux, screen_data->screen, &game_info->color_option);
                 check_exit_game (&tux->choice, &tux->fails, &tux->option);
             }
 
@@ -86,7 +86,7 @@ void get_screen_by_fails (struct Game_States *screen_data, long unsigned int *fa
     }
 }
 
-void guess_entire_word (struct Penguin *tux, const char *screen, int *color_option, WINDOW *tux_win)
+void guess_entire_word (struct Penguin *tux, const char *screen, int *color_option)
 {
     *color_option = 1;
     print_game_scr (&tux->score, &tux->lives, screen, color_option);
@@ -94,7 +94,6 @@ void guess_entire_word (struct Penguin *tux, const char *screen, int *color_opti
     printw ("\n   Guess the word: ");
     attron (COLOR_PAIR (WHITE_PAIR));
     getstr (tux->s_choice);
-    wrefresh (tux_win);
 
     tux->win = check_full_guess (tux);
     if (tux->win == FALSE)                    // wrong guess
@@ -127,7 +126,7 @@ void guess_entire_word (struct Penguin *tux, const char *screen, int *color_opti
     }
 }
 
-void guess_single_char (struct Penguin *tux, const char *screen, int *color_option, WINDOW *tux_win)
+void guess_single_char (struct Penguin *tux, const char *screen, int *color_option)
 {
     *color_option = 1;
     print_game_scr (&tux->score, &tux->lives, screen, color_option);
@@ -135,7 +134,6 @@ void guess_single_char (struct Penguin *tux, const char *screen, int *color_opti
     printw ("\n   Pick a letter: ");
     attron (COLOR_PAIR (WHITE_PAIR));
     getstr (tux->s_choice);
-    wrefresh (tux_win);
 
     if (strlen (tux->s_choice) < INPUT_SIZE)
     {

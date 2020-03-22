@@ -12,8 +12,8 @@ int main ()
 
     struct Game_Options game_info;
     struct Penguin tux;
-    struct Game_States screen_data;                                             // data the gets displayed to screen
-    game_info.did_open = TRUE;                                                               // used to insure the data is there
+    struct Game_States screen_data;                                                                 // data the gets displayed to screen
+    game_info.did_open = TRUE;                                                                      // used to insure the data is there
 
     get_screen_data (&screen_data, &game_info.did_open);
 
@@ -27,12 +27,10 @@ int main ()
 
     if (game_info.did_open == TRUE)
     {
-        game_info.tux_win = newwin (28, 80, 0, 0);                                            // creates window but this is honestly pointless as I only use one in the entire program
-        refresh ();
         tux.option = GAME_SCREEN;
         game_info.play = TRUE;
         game_info.welcome = TRUE;
-        srand ( (time (NULL)));                                                     // seeds random number generator
+        srand ( (time (NULL)));                                                                     // seeds random number generator
 
         char temp[SIZE];
         do
@@ -40,18 +38,18 @@ int main ()
                 clear ();
                 print_str (screen_data.str11, 2);
                 attron (COLOR_PAIR (GREEN_PAIR));
-                printw ("Enter 'y' here: ");
+                printw ("   Enter 'y' here: ");
                 attron (COLOR_PAIR (WHITE_PAIR));
                 getstr (temp);
+                refresh ();
                 if (strlen (temp) > INPUT_SIZE)
                 {
                     strcpy (temp, " ");
                 }
             }
         while(temp[0] != 'y');
-        refresh ();
 
-        while (game_info.play == TRUE)                                  // menu loop
+        while (game_info.play == TRUE)                                                              // menu loop
         {
             reset_game (&tux, &screen_data, &game_info);
             welcome_screen (&tux, &screen_data, &game_info);
