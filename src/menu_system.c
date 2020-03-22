@@ -13,8 +13,11 @@ void welcome_screen (struct Penguin *tux, struct Game_States *screen_data, const
         do
             {
                 clear ();
-                attron (COLOR_PAIR (WHITE_PAIR));
-                print_str (screen_data->screen, BROWN_FOR_MENU_SCREENS);
+                if (game_info->set_color == TRUE)
+                {
+                    attron (COLOR_PAIR (WHITE_PAIR));
+                }
+                print_str (screen_data->screen, BROWN_FOR_MENU_SCREENS, &game_info->set_color);
                 getstr (tux->s_option);
 
                 if (strlen (tux->s_option) < INPUT_SIZE)
@@ -78,11 +81,16 @@ void game_over_screen (struct Penguin *tux, struct Game_States *screen_data, str
     do
         {
             clear ();
-            game_info->color_option = RED_FOR_LOSS_SCREEN;
-            print_game_scr (&tux->score, &tux->lives, screen_data->screen, &game_info->color_option);
-            attron (COLOR_PAIR (GREEN_PAIR));
+            print_game_scr (&tux->score, &tux->lives, screen_data->screen, RED_FOR_LOSS_SCREEN, &game_info->set_color);
+            if (game_info->set_color == TRUE)
+            {
+                attron (COLOR_PAIR (GREEN_PAIR));
+            }
             printw ("\n   Return to menu? (Y/n): ");
-            attron (COLOR_PAIR (WHITE_PAIR));
+            if (game_info->set_color == TRUE)
+            {
+                attron (COLOR_PAIR (WHITE_PAIR));
+            }
             getstr (game_info->s_play);
 
             check_response (game_info->s_play, &game_info->play, &game_info->welcome, TRUE, TRUE);
@@ -95,10 +103,16 @@ void play_again_prompt (struct Penguin *tux, struct Game_States *screen_data, st
     do
         {
             clear ();
-            print_game_scr (&tux->score, &tux->lives, screen_data->screen, &game_info->color_option);
-            attron (COLOR_PAIR (GREEN_PAIR));
+            print_game_scr (&tux->score, &tux->lives, screen_data->screen, game_info->color_option, &game_info->set_color);
+            if (game_info->set_color == TRUE)
+            {
+                attron (COLOR_PAIR (GREEN_PAIR));
+            }
             printw ("\n   Press 'y' to get new word: ");
-            attron (COLOR_PAIR (WHITE_PAIR));
+            if (game_info->set_color == TRUE)
+            {
+                attron (COLOR_PAIR (WHITE_PAIR));
+            }
             getstr (game_info->s_play);
 
             check_response (game_info->s_play, &game_info->play, &game_info->welcome, FALSE, FALSE);
@@ -114,7 +128,7 @@ void about_screen (struct Game_States *screen_data, struct Game_Options *game_in
     do
         {
             clear ();
-            print_str (screen_data->screen, BROWN_FOR_MENU_SCREENS);
+            print_str (screen_data->screen, BROWN_FOR_MENU_SCREENS, &game_info->set_color);
             printw ("\n   Press 'y' to return to menu: ");
             getstr (game_info->s_play);
 
@@ -127,11 +141,16 @@ void return_to_menu_screen (struct Penguin *tux, char *screen, struct Game_Optio
 {
     do
         {
-            game_info->color_option = BLUE_FOR_PENGUIN;
-            print_game_scr (&tux->score, &tux->lives, screen, &game_info->color_option);
-            attron (COLOR_PAIR (GREEN_PAIR));
+            print_game_scr (&tux->score, &tux->lives, screen, BLUE_FOR_PENGUIN, &game_info->set_color);
+            if (game_info->set_color == TRUE)
+            {
+                attron (COLOR_PAIR (GREEN_PAIR));
+            }
             printw ("\n   Return to menu? (Y/n): ");
-            attron (COLOR_PAIR (WHITE_PAIR));
+            if (game_info->set_color == TRUE)
+            {
+                attron (COLOR_PAIR (WHITE_PAIR));
+            }
             getstr (game_info->s_play);
 
             check_response (game_info->s_play, &game_info->play, &game_info->welcome, TRUE, TRUE);

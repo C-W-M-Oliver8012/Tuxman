@@ -39,11 +39,11 @@ void game_loop (struct Penguin *tux, struct Game_States *screen_data, struct Gam
         {
             if (tux->choice == '@')                   // GUESS ENTIRE WORD
             {
-                guess_entire_word (tux, screen_data->screen, &game_info->color_option);
+                guess_entire_word (tux, screen_data->screen, &game_info->set_color);
             }
             else                                    // NORMAL TURN
             {
-                guess_single_char (tux, screen_data->screen, &game_info->color_option);
+                guess_single_char (tux, screen_data->screen, &game_info->set_color);
                 check_exit_game (&tux->choice, &tux->fails, &tux->option);
             }
 
@@ -86,13 +86,18 @@ void get_screen_by_fails (struct Game_States *screen_data, long unsigned int *fa
     }
 }
 
-void guess_entire_word (struct Penguin *tux, const char *screen, int *color_option)
+void guess_entire_word (struct Penguin *tux, const char *screen, const int *set_color)
 {
-    *color_option = BLUE_FOR_PENGUIN;
-    print_game_scr (&tux->score, &tux->lives, screen, color_option);
-    attron (COLOR_PAIR (GREEN_PAIR));
+    print_game_scr (&tux->score, &tux->lives, screen, BLUE_FOR_PENGUIN, set_color);
+    if (*set_color == TRUE)
+    {
+        attron (COLOR_PAIR (GREEN_PAIR));
+    }
     printw ("\n   Guess the word: ");
-    attron (COLOR_PAIR (WHITE_PAIR));
+    if (*set_color == TRUE)
+    {
+        attron (COLOR_PAIR (WHITE_PAIR));
+    }
     getstr (tux->s_choice);
 
     tux->win = check_full_guess (tux);
@@ -126,13 +131,18 @@ void guess_entire_word (struct Penguin *tux, const char *screen, int *color_opti
     }
 }
 
-void guess_single_char (struct Penguin *tux, const char *screen, int *color_option)
+void guess_single_char (struct Penguin *tux, const char *screen, const int *set_color)
 {
-    *color_option = BLUE_FOR_PENGUIN;
-    print_game_scr (&tux->score, &tux->lives, screen, color_option);
-    attron (COLOR_PAIR (GREEN_PAIR));
+    print_game_scr (&tux->score, &tux->lives, screen, BLUE_FOR_PENGUIN, set_color);
+    if (*set_color == TRUE)
+    {
+        attron (COLOR_PAIR (GREEN_PAIR));
+    }
     printw ("\n   Pick a letter: ");
-    attron (COLOR_PAIR (WHITE_PAIR));
+    if (*set_color == TRUE)
+    {
+        attron (COLOR_PAIR (WHITE_PAIR));
+    }
     getstr (tux->s_choice);
 
     if (strlen (tux->s_choice) < INPUT_SIZE)

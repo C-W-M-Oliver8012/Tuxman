@@ -277,7 +277,7 @@ int add_score (const struct Penguin *tux)
     return 0;
 }
 
-void print_str (const char *str, const int color)
+void print_str (const char *str, const int color, const int *set_color)
 {
     int length = strlen (str);
     int x = 0;
@@ -285,88 +285,106 @@ void print_str (const char *str, const int color)
 
     for (int i = 0; i < length; i++)
     {
-        if ((color == 1) || (color == 3) || (color == 4))
+        if (*set_color == TRUE)
         {
-            if (str[i] == '\n')
+            if ((color == 1) || (color == 3) || (color == 4))
             {
-                y++;
-                x = 0;
-            }
-            else
-            {
-                x++;
-            }
+                if (str[i] == '\n')
+                {
+                    y++;
+                    x = 0;
+                }
+                else
+                {
+                    x++;
+                }
 
-            if ( (y > 2) && (y < 14) && (x > 7) && (x < 40) && (color == BLUE_FOR_PENGUIN))                        // penguin
-            {
-                attron (COLOR_PAIR (BLUE_PAIR));
-            }
-            else if ( (y > 2) && (y < 14) && (x > 7) && (x < 40) && (color == GREEN_FOR_WIN_SCREEN))                   // green for win
-            {
-                attron (COLOR_PAIR (GREEN_PAIR));
-            }
-            else if ( (y > 2) && (y < 14) && (x > 7) && (x < 40) && (color == RED_FOR_LOSS_SCREEN))                   // red for lose
-            {
-                attron (COLOR_PAIR (RED_PAIR));
-            }
-            else if ( (y == 23) && (x < 17))                                                        // red for bad guesses
-            {
-                attron (COLOR_PAIR (RED_PAIR));
-            }
-            else if (y < 17)                                                                        // brown for everything else
-            {
-                attron (COLOR_PAIR (BROWN_PAIR));
-            }
-            else
-            {
-                attron (COLOR_PAIR (WHITE_PAIR));
-            }
+                if ( (y > 2) && (y < 14) && (x > 7) && (x < 40) && (color == BLUE_FOR_PENGUIN))                        // penguin
+                {
+                    attron (COLOR_PAIR (BLUE_PAIR));
+                }
+                else if ( (y > 2) && (y < 14) && (x > 7) && (x < 40) && (color == GREEN_FOR_WIN_SCREEN))                   // green for win
+                {
+                    attron (COLOR_PAIR (GREEN_PAIR));
+                }
+                else if ( (y > 2) && (y < 14) && (x > 7) && (x < 40) && (color == RED_FOR_LOSS_SCREEN))                   // red for lose
+                {
+                    attron (COLOR_PAIR (RED_PAIR));
+                }
+                else if ( (y == 23) && (x < 17))                                                        // red for bad guesses
+                {
+                    attron (COLOR_PAIR (RED_PAIR));
+                }
+                else if (y < 17)                                                                        // brown for everything else
+                {
+                    attron (COLOR_PAIR (BROWN_PAIR));
+                }
+                else
+                {
+                    attron (COLOR_PAIR (WHITE_PAIR));
+                }
 
-            if ( (y > 4) && (y < 7) && (x > 14) && (x < 18))                                        // yellow for beak
-            {
-                attron (COLOR_PAIR (YELLOW_PAIR));
+                if ( (y > 4) && (y < 7) && (x > 14) && (x < 18))                                        // yellow for beak
+                {
+                    attron (COLOR_PAIR (YELLOW_PAIR));
+                }
+                if ( ((y == 11) && (x > 10) && (x < 13)) || ((y == 11) && (x > 19) && (x < 22)))        // yellow for top of feet
+                {
+                    attron (COLOR_PAIR (YELLOW_PAIR));
+                }
+                if ( (y == 12) && (x > 10) && (x < 22))                                                 // yellow for bottom of feet
+                {
+                    attron (COLOR_PAIR (YELLOW_PAIR));
+                }
+                if ((str[i] == 'o') && (y < 17))                                                        // white for the eyes
+                {
+                    attron (COLOR_PAIR (WHITE_PAIR));
+                }
             }
-            if ( ((y == 11) && (x > 10) && (x < 13)) || ((y == 11) && (x > 19) && (x < 22)))        // yellow for top of feet
+            else if (color == BROWN_FOR_MENU_SCREENS)
             {
-                attron (COLOR_PAIR (YELLOW_PAIR));
-            }
-            if ( (y == 12) && (x > 10) && (x < 22))                                                 // yellow for bottom of feet
-            {
-                attron (COLOR_PAIR (YELLOW_PAIR));
-            }
-            if ((str[i] == 'o') && (y < 17))                                                        // white for the eyes
-            {
-                attron (COLOR_PAIR (WHITE_PAIR));
-            }
-        }
-        else if (color == BROWN_FOR_MENU_SCREENS)
-        {
-            if ((str[i] == '=') || (str[i] == '|'))
-            {
-                attron (COLOR_PAIR (BROWN_PAIR));
-            }
-            else
-            {
-                attron (COLOR_PAIR (WHITE_PAIR));
+                if ((str[i] == '=') || (str[i] == '|'))
+                {
+                    attron (COLOR_PAIR (BROWN_PAIR));
+                }
+                else
+                {
+                    attron (COLOR_PAIR (WHITE_PAIR));
+                }
             }
         }
 
         addch (str[i]);
     }
 
-    attron (COLOR_PAIR (WHITE_PAIR));
+    if (*set_color == TRUE)
+    {
+        attron (COLOR_PAIR (WHITE_PAIR));
+    }
 }
 
-void print_game_scr (const long unsigned int *score, const long unsigned int *lives, const char *screen, const int *color_option)
+void print_game_scr (const long unsigned int *score, const long unsigned int *lives, const char *screen, const int color_option, const int *set_color)
 {
     clear ();
-    attron (COLOR_PAIR (GREEN_PAIR));
+    if (*set_color == TRUE)
+    {
+        attron (COLOR_PAIR (GREEN_PAIR));
+    }
     printw ("\n   Score: ");
-    attron (COLOR_PAIR (WHITE_PAIR));
+    if (*set_color == TRUE)
+    {
+        attron (COLOR_PAIR (WHITE_PAIR));
+    }
     printw ("%d", *score);
-    attron (COLOR_PAIR (RED_PAIR));
+    if (*set_color == TRUE)
+    {
+        attron (COLOR_PAIR (RED_PAIR));
+    }
     printw ("                     Lives: ");
-    attron (COLOR_PAIR (WHITE_PAIR));
+    if (*set_color == TRUE)
+    {
+        attron (COLOR_PAIR (WHITE_PAIR));
+    }
     printw ("%d\n", *lives);
-    print_str (screen, *color_option);
+    print_str (screen, color_option, set_color);
 }

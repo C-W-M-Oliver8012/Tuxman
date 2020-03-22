@@ -63,7 +63,7 @@ struct Game_States
 struct Game_Options
 {
     char s_play[SIZE];
-    int did_open, wordCount, pickLine, color_option, play, welcome;
+    int did_open, wordCount, pickLine, color_option, play, welcome, set_color;
 };
 
 #endif
