@@ -39,6 +39,9 @@ int main ()
             {
                 clear ();
                 print_str (screen_data.str11, 2);
+                attron (COLOR_PAIR (GREEN_PAIR));
+                printw ("Enter 'y' here: ");
+                attron (COLOR_PAIR (WHITE_PAIR));
                 getstr (temp);
                 if (strlen (temp) > INPUT_SIZE)
                 {
@@ -46,6 +49,7 @@ int main ()
                 }
             }
         while(temp[0] != 'y');
+        refresh ();
 
         while (game_info.play == TRUE)                                  // menu loop
         {

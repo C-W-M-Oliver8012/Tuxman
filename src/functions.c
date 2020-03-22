@@ -70,11 +70,14 @@ void get_words (const char *filename, char **words, int *wordCount, int *did_ope
 
     file = fopen (dir, "r");
 
+    char buff[SIZE];
+
     if (file != NULL)
     {
         int i = 0;
-        while (fgets (words[i], SIZE, (FILE*)file) && (i < *wordCount))
+        while (fgets (buff, SIZE, (FILE*)file) && (i < *wordCount))
         {
+            strcpy (words[i], buff);
             i++;
         }
 
@@ -348,6 +351,7 @@ void print_str (const char *str, const int color)
                 attron (COLOR_PAIR (WHITE_PAIR));
             }
         }
+
         addch (str[i]);
     }
 
