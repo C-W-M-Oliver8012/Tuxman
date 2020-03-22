@@ -8,16 +8,17 @@ void welcome_screen (struct Penguin *tux, struct Game_States *screen_data, const
         tux->lives = 5;
         tux->max_score = 10;
         strcat (screen_data->screen, screen_data->str0);
-        strcat (screen_data->screen, "\n   Option: ");
 
         do
             {
                 clear ();
+                print_str (screen_data->screen, BROWN_FOR_MENU_SCREENS, &game_info->set_color);
                 if (game_info->set_color == TRUE)
                 {
+                    attron (COLOR_PAIR (GREEN_PAIR));
+                    printw ("%s", "\n   Option: ");
                     attron (COLOR_PAIR (WHITE_PAIR));
                 }
-                print_str (screen_data->screen, BROWN_FOR_MENU_SCREENS, &game_info->set_color);
                 getstr (tux->s_option);
 
                 if (strlen (tux->s_option) < INPUT_SIZE)
@@ -129,7 +130,12 @@ void about_screen (struct Game_States *screen_data, struct Game_Options *game_in
         {
             clear ();
             print_str (screen_data->screen, BROWN_FOR_MENU_SCREENS, &game_info->set_color);
-            printw ("\n   Press 'y' to return to menu: ");
+            if (game_info->set_color == TRUE)
+            {
+                attron (COLOR_PAIR (GREEN_PAIR));
+                printw ("\n   Press 'y' to return to menu: ");
+                attron (COLOR_PAIR (WHITE_PAIR));
+            }
             getstr (game_info->s_play);
 
             check_response (game_info->s_play, &game_info->play, &game_info->welcome, TRUE, FALSE);
