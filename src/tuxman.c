@@ -38,7 +38,7 @@ int main ()
                 clear ();
                 print_str (screen_data.str11, 2);
                 attron (COLOR_PAIR (GREEN_PAIR));
-                printw ("   Enter 'y' here: ");
+                printw (" Enter 'y' here: ");
                 attron (COLOR_PAIR (WHITE_PAIR));
                 getstr (temp);
                 refresh ();

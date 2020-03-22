@@ -1,28 +1,28 @@
 
-   ============================================================================
-   |                                                                          |
-   |   Please resize window so that all of the box is shown as well as the    |
-   |   green dialog prompt and then enter 'y' in the green prompt below.      |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   |                                                                          |
-   ============================================================================
+ ==============================================================================
+ |                                                                            |
+ |   **PLEASE RESIZE THE WINDOW AS NEEDED** so that all of the box is shown   |
+ |   as well as the green dialog prompt and then enter 'y' in the green       |
+ |   prompt below.                                                            |
+ |                                                                            |
+ |   This is so that the window is big enough to show the entire game.        |
+ |   Alternatively, set your terminal window to at least 80 columns by 29     |
+ |   rows.                                                                    |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ ==============================================================================
