@@ -5,7 +5,7 @@
 #include "../include/game_data.h"
 
 
-int main ()
+int main (void)
 {
     initscr ();
 
