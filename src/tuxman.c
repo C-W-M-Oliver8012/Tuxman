@@ -11,35 +11,31 @@ int main (void)
 
     struct Game_Options game_info;
     struct Penguin tux;
-    struct Game_States screen_data;                                                                 // data the gets displayed to screen
+    struct Game_States screen_data;
+    struct Categories categories;
 
     set_all_colors (&game_info.set_color);
 
-    game_info.did_open = TRUE;                                                                      // used to insure the data is there
+    game_info.did_open = TRUE;
 
     get_screen_data (&screen_data, &game_info.did_open);
 
-    game_info.wordCount = get_file_length ("data/words.txt", &game_info.did_open);                  //gets words used in program
-    tux.words = (char**)malloc (game_info.wordCount * sizeof (char*));
-    for (int i = 0; i < game_info.wordCount; i++)
-    {
-        tux.words[i] = malloc (SIZE * sizeof (char));
-    }
-    get_words ("data/words.txt", tux.words, &game_info.wordCount, &game_info.did_open);
+    init_words (&tux, &screen_data, &game_info, &categories);
 
     if (game_info.did_open == TRUE)
     {
         tux.option = GAME_SCREEN;
         game_info.play = TRUE;
         game_info.welcome = TRUE;
-        srand ( (time (NULL)));                                                                     // seeds random number generator
+        srand ( (time (NULL)));
 
         prompt_to_change_screen_size (screen_data.str11, &game_info.set_color);
 
-        while (game_info.play == TRUE)                                                              // menu loop
+        while (game_info.play == TRUE)
         {
-            reset_game (&tux, &screen_data, &game_info);
             welcome_screen (&tux, &screen_data, &game_info);
+            set_category (&tux, &screen_data, &game_info, &categories);
+            reset_game (&tux, &screen_data, &game_info, &categories);
             game_loop (&tux, &screen_data, &game_info);
             menu_system (&tux, &screen_data, &game_info);
         }
@@ -55,6 +51,9 @@ int main (void)
     }
 
     free (tux.words);
+    free (categories.filename);
+    free (categories.description);
+    free (categories.word_count);
 
     endwin ();
 

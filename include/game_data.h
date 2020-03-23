@@ -45,7 +45,10 @@ struct Penguin
     char s_option[SIZE];
     char s_choice[SIZE];
     char choice;
-    char **words;
+    char ***words;
+    char s_category_choice[SIZE];
+    int category_has_been_set;
+    long int category_choice;
     unsigned long int wordLength;
     unsigned long int fails;
     unsigned long int indexLength;
@@ -72,18 +75,27 @@ struct Game_States
     char str9[DATA_SIZE];
     char str10[DATA_SIZE];
     char str11[DATA_SIZE];
+    char str12[DATA_SIZE];
 };
 
 struct Game_Options
 {
     char s_play[SIZE];
     int did_open;
-    int wordCount;
     int pickLine;
     int color_option;
     int play;
     int welcome;
     int set_color;
+};
+
+struct Categories
+{
+    int category_count;
+    int *word_count;
+    int max_word_count;
+    char **filename;
+    char **description;
 };
 
 #endif

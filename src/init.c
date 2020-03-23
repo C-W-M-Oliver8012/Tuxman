@@ -52,6 +52,54 @@ void get_screen_data (struct Game_States *screen_data, int *open)
     file_to_str ("graphics/tuxman8.txt", screen_data->str9, open);
     file_to_str ("graphics/about.txt", screen_data->str10, open);
     file_to_str ("graphics/win_resize.txt", screen_data->str11, open);
+    file_to_str ("graphics/choose_categories.txt", screen_data->str12, open);
+}
+
+
+
+void init_words (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info, struct Categories *categories)
+{
+    categories->category_count = get_file_length ("data/categories.txt", &game_info->did_open);
+    categories->filename = (char**)malloc (categories->category_count * sizeof (char*));
+    categories->description = (char**)malloc (categories->category_count * sizeof (char*));
+    categories->word_count = (int*)malloc (categories->category_count * sizeof (int));
+    for (int i = 0; i < categories->category_count; i++)
+    {
+        categories->filename[i] = malloc (SIZE * sizeof (char));
+        categories->description[i] = malloc (SIZE * sizeof (char));
+    }
+    get_categories_filename_description (categories, &game_info->did_open);
+    categories->max_word_count = 0;
+    for (int i = 0; i < categories->category_count; i++)
+    {
+        char temp_dir[NAME_SIZE];
+        strcpy (temp_dir, "data/");
+        strcat (temp_dir, categories->filename[i]);
+        strcat (temp_dir, ".txt");
+        categories->word_count[i] = get_file_length (temp_dir, &game_info->did_open);
+        if (categories->word_count[i] > categories->max_word_count)
+        {
+            categories->max_word_count = categories->word_count[i];
+        }
+    }
+
+    tux->words = (char***)malloc (categories->category_count * sizeof (char**));
+    for (int i = 0; i < categories->category_count; i++)
+    {
+        tux->words[i] = (char**)malloc (categories->max_word_count * sizeof (char*));
+        for (int j = 0; j < categories->max_word_count; j++)
+        {
+            tux->words[i][j] = malloc (SIZE * sizeof (char));
+        }
+    }
+    for (int i = 0; i < categories->category_count; i++)
+    {
+        char temp_dir[NAME_SIZE];
+        strcpy (temp_dir, "data/");
+        strcat (temp_dir, categories->filename[i]);
+        strcat (temp_dir, ".txt");
+        get_words (temp_dir, tux->words[i], &categories->word_count[i], &game_info->did_open);
+    }
 }
 
 

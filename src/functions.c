@@ -64,6 +64,41 @@ int get_file_length (const char *filename, int *did_open)
 
 
 
+void get_categories_filename_description (struct Categories *categories, int *did_open)
+{
+    FILE *file;
+
+    char dir[NAME_SIZE];
+    strcpy (dir, DIR);
+    strcat (dir, "data/categories.txt");
+
+    file = fopen (dir, "r");
+
+    char buff[SIZE];
+
+    if (file != NULL)
+    {
+        int i = 0;
+        char *token;
+        while ((fgets (buff, SIZE, (FILE*)file)) && (i < categories->category_count))
+        {
+            token = strtok (buff, "-");
+            strcpy (categories->filename[i], token);
+            token = strtok (NULL, "-");
+            strcpy (categories->description[i], token);
+            i++;
+        }
+
+        fclose (file);
+    }
+    else
+    {
+        *did_open = FALSE;
+    }
+}
+
+
+
 void get_words (const char *filename, char **words, int *wordCount, int *did_open)
 {
     FILE *file;
@@ -91,6 +126,45 @@ void get_words (const char *filename, char **words, int *wordCount, int *did_ope
     {
         *did_open = FALSE;
     }
+}
+
+
+
+int str_is_int (char *str)
+{
+    int length = strlen (str);
+    int match = TRUE;
+
+    for (int i = 0; i < length; i++)
+    {
+        switch (str[i])
+        {
+            case '1':
+                break;
+            case '2':
+                break;
+            case '3':
+                break;
+            case '4':
+                break;
+            case '5':
+                break;
+            case '6':
+                break;
+            case '7':
+                break;
+            case '8':
+                break;
+            case '9':
+                break;
+            case '0':
+                break;
+            default:
+                match = FALSE;
+        }
+    }
+
+    return match;
 }
 
 

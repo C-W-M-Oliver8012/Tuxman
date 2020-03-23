@@ -10,7 +10,9 @@
 
 void file_to_str (const char *filename, char *file_data, int *open);
 int get_file_length (const char *filename, int *open);
+void get_categories_filename_description (struct Categories *categories, int *did_open);
 void get_words (const char *filename, char **words, int *wordCount, int *open);
+int str_is_int (char *str);
 void correct_guesses_to_str (const struct Penguin *tux, char *screen);
 void failed_guesses_to_str (const struct Penguin *tux, char *screen);
 int check_guess_is_valid (const struct Penguin *tux);

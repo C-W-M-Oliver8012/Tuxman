@@ -4,7 +4,8 @@
 #include "functions.h"
 #include "game_data.h"
 
-void reset_game (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info);
+void set_category (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info, struct Categories *categories);
+void reset_game (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info, struct Categories *categories);
 void game_loop (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info);
 void get_screen_by_fails (struct Game_States *screen_data, long unsigned int *fails, int *color_option);
 void guess_entire_word (struct Penguin *tux, const char *screen, const int *set_color);

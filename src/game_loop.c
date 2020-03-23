@@ -1,14 +1,84 @@
 #include "../include/game_loop.h"
 #include "../include/menu_system.h"
+#include "../include/functions.h"
 
 
-void reset_game (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info)
+void set_category (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info, struct Categories *categories)
+{
+    if ((tux->option == GAME_SCREEN) && (tux->category_has_been_set == FALSE))
+    {
+        do
+            {
+                tux->category_choice = -1;
+
+                clear ();
+                print_str (screen_data->str12, BROWN_FOR_MENU_SCREENS, &game_info->set_color);
+                if (game_info->set_color == TRUE)
+                {
+                    attron (COLOR_PAIR (WHITE_PAIR));
+                }
+                for (int i = 0; i < categories->category_count; i++)
+                {
+                    if (game_info->set_color == TRUE)
+                    {
+                        attron (COLOR_PAIR (BROWN_PAIR));
+                    }
+                    printw ("   |");
+                    if (game_info->set_color == TRUE)
+                    {
+                        attron (COLOR_PAIR (WHITE_PAIR));
+                    }
+                    printw (" %2d) %-15s - %-30s", i+1, categories->filename[i], categories->description[i]);
+                    if (game_info->set_color == TRUE)
+                    {
+                        attron (COLOR_PAIR (BROWN_PAIR));
+                    }
+                    printw (" |\n");
+                }
+                if (game_info->set_color == TRUE)
+                {
+                    attron (COLOR_PAIR (BROWN_PAIR));
+                }
+                printw ("   ========================================================\n");
+                if (game_info->set_color == TRUE)
+                {
+                    attron (COLOR_PAIR (GREEN_PAIR));
+                }
+                printw ("\n   Category option: ");
+                if (game_info->set_color == TRUE)
+                {
+                    attron (COLOR_PAIR (WHITE_PAIR));
+                }
+                getstr (tux->s_category_choice);
+                if (strlen (tux->s_category_choice) < 4)
+                {
+                    if (str_is_int (tux->s_category_choice) == TRUE)
+                    {
+                        tux->category_choice = strtol (tux->s_category_choice, NULL, 10);
+                    }
+                }
+                else
+                {
+                    tux->category_choice = -1;
+                }
+
+                tux->category_choice--;
+            }
+        while((tux->category_choice < 0) || (tux->category_choice > 24) || (tux->category_choice >= categories->category_count));
+
+        tux->category_has_been_set = TRUE;
+    }
+}
+
+
+
+void reset_game (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info, struct Categories *categories)
 {
     strcpy (screen_data->screen, "");
     if (tux->option == GAME_SCREEN)
     {
-        game_info->pickLine = rand () % game_info->wordCount;
-        strcpy (tux->word, tux->words[game_info->pickLine]);
+        game_info->pickLine = rand () % categories->word_count[tux->category_choice];
+        strcpy (tux->word, tux->words[tux->category_choice][game_info->pickLine]);
         strtok (tux->word, "\n");
         tux->wordLength = strlen (tux->word);
         tux->indexLength = 0;
