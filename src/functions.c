@@ -1,5 +1,6 @@
 #include "../include/functions.h"
 
+
 void file_to_str (const char *filename, char *file_data, int *did_open)
 {
     FILE *file;
@@ -28,6 +29,8 @@ void file_to_str (const char *filename, char *file_data, int *did_open)
         *did_open = FALSE;
     }
 }
+
+
 
 int get_file_length (const char *filename, int *did_open)
 {
@@ -59,6 +62,8 @@ int get_file_length (const char *filename, int *did_open)
     return wordCount;
 }
 
+
+
 void get_words (const char *filename, char **words, int *wordCount, int *did_open)
 {
     FILE *file;
@@ -87,6 +92,8 @@ void get_words (const char *filename, char **words, int *wordCount, int *did_ope
         *did_open = FALSE;
     }
 }
+
+
 
 void correct_guesses_to_str (const struct Penguin *tux, char *screen)
 {
@@ -152,6 +159,8 @@ void correct_guesses_to_str (const struct Penguin *tux, char *screen)
     }
 }
 
+
+
 void failed_guesses_to_str (const struct Penguin *tux, char *screen)
 {
     char formated_letters[SIZE];
@@ -166,6 +175,8 @@ void failed_guesses_to_str (const struct Penguin *tux, char *screen)
         strcat (screen, formated_letters);
     }
 }
+
+
 
 int check_guess_is_valid (const struct Penguin *tux)
 {
@@ -195,6 +206,8 @@ int check_guess_is_valid (const struct Penguin *tux)
     return matched;
 }
 
+
+
 int check_guess (const struct Penguin *tux)
 {
     int matched = 0;
@@ -213,6 +226,8 @@ int check_guess (const struct Penguin *tux)
 
     return matched;
 }
+
+
 
 int has_won (const struct Penguin *tux)
 {
@@ -246,6 +261,8 @@ int has_won (const struct Penguin *tux)
     return 0;
 }
 
+
+
 int check_full_guess (const struct Penguin *tux)
 {
     if (strcmp (tux->word, tux->s_choice) == 0)
@@ -255,6 +272,8 @@ int check_full_guess (const struct Penguin *tux)
 
     return 0;
 }
+
+
 
 int add_score (const struct Penguin *tux)
 {
@@ -276,6 +295,8 @@ int add_score (const struct Penguin *tux)
 
     return 0;
 }
+
+
 
 void print_str (const char *str, const int color, const int *set_color)
 {
@@ -362,6 +383,8 @@ void print_str (const char *str, const int color, const int *set_color)
         attron (COLOR_PAIR (WHITE_PAIR));
     }
 }
+
+
 
 void print_game_scr (const long unsigned int *score, const long unsigned int *lives, const char *screen, const int color_option, const int *set_color)
 {

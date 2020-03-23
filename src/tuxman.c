@@ -4,6 +4,7 @@
 #include "../include/init.h"
 #include "../include/game_data.h"
 
+
 int main ()
 {
     initscr ();

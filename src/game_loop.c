@@ -1,6 +1,7 @@
 #include "../include/game_loop.h"
 #include "../include/menu_system.h"
 
+
 void reset_game (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info)
 {
     strcpy (screen_data->screen, "");
@@ -18,6 +19,8 @@ void reset_game (struct Penguin *tux, struct Game_States *screen_data, struct Ga
         tux->win = FALSE;
     }
 }
+
+
 
 void game_loop (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info)
 {
@@ -55,6 +58,8 @@ void game_loop (struct Penguin *tux, struct Game_States *screen_data, struct Gam
     }
 }
 
+
+
 void get_screen_by_fails (struct Game_States *screen_data, long unsigned int *fails, int *color_option)
 {
     switch (*fails)                          // GETS PROPER GRAPHIC TO PRINT
@@ -85,6 +90,8 @@ void get_screen_by_fails (struct Game_States *screen_data, long unsigned int *fa
             break;
     }
 }
+
+
 
 void guess_entire_word (struct Penguin *tux, const char *screen, const int *set_color)
 {
@@ -131,6 +138,8 @@ void guess_entire_word (struct Penguin *tux, const char *screen, const int *set_
     }
 }
 
+
+
 void guess_single_char (struct Penguin *tux, const char *screen, const int *set_color)
 {
     print_game_scr (&tux->score, &tux->lives, screen, BLUE_FOR_PENGUIN, set_color);
@@ -172,6 +181,8 @@ void guess_single_char (struct Penguin *tux, const char *screen, const int *set_
     }
 }
 
+
+
 void check_exit_game (const char *choice, long unsigned int *fails, long unsigned int *option)
 {
     if (*choice == '^')                // ENDS GAME
@@ -180,6 +191,8 @@ void check_exit_game (const char *choice, long unsigned int *fails, long unsigne
         *option = RETURN_TO_MENU_PROMPT;
     }
 }
+
+
 
 void set_win (struct Penguin *tux, struct Game_States *screen_data, int *color_option)
 {

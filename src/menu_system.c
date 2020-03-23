@@ -1,5 +1,6 @@
 #include "../include/menu_system.h"
 
+
 void welcome_screen (struct Penguin *tux, struct Game_States *screen_data, const struct Game_Options *game_info)
 {
     if (game_info->welcome == TRUE)
@@ -46,6 +47,8 @@ void welcome_screen (struct Penguin *tux, struct Game_States *screen_data, const
     }
 }
 
+
+
 void menu_system (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info)
 {
     if ( (tux->lives == 0) && (tux->option == 1))                              // PLAYER LOST ENTIRE GAME
@@ -71,6 +74,8 @@ void menu_system (struct Penguin *tux, struct Game_States *screen_data, struct G
         }
     }
 }
+
+
 
 void game_over_screen (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info)
 {
@@ -99,6 +104,8 @@ void game_over_screen (struct Penguin *tux, struct Game_States *screen_data, str
     while ( (game_info->play != FALSE) && (game_info->play != TRUE));
 }
 
+
+
 void play_again_prompt (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info)
 {
     do
@@ -120,6 +127,8 @@ void play_again_prompt (struct Penguin *tux, struct Game_States *screen_data, st
         }
     while ( (game_info->play != FALSE) && (game_info->play != TRUE));
 }
+
+
 
 void about_screen (struct Game_States *screen_data, struct Game_Options *game_info)
 {
@@ -143,6 +152,8 @@ void about_screen (struct Game_States *screen_data, struct Game_Options *game_in
     while( (game_info->play != FALSE) && (game_info->play != TRUE));
 }
 
+
+
 void return_to_menu_screen (struct Penguin *tux, char *screen, struct Game_Options *game_info)
 {
     do
@@ -164,6 +175,8 @@ void return_to_menu_screen (struct Penguin *tux, char *screen, struct Game_Optio
     while ( (game_info->play != FALSE) && (game_info->play != TRUE));
     tux->option = GAME_SCREEN;
 }
+
+
 
 void check_response (char *s_play, int *play, int *welcome, int display_welcome_screen, int no_option)
 {

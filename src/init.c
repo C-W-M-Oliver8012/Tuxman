@@ -1,5 +1,6 @@
 #include "../include/init.h"
 
+
 void set_all_colors (int *set_color)
 {
     if (has_colors () == TRUE)
@@ -35,6 +36,8 @@ void set_all_colors (int *set_color)
     }
 }
 
+
+
 void get_screen_data (struct Game_States *screen_data, int *open)
 {
     file_to_str ("graphics/welcome.txt", screen_data->str0, open);              // gets screen data from files
@@ -50,6 +53,8 @@ void get_screen_data (struct Game_States *screen_data, int *open)
     file_to_str ("graphics/about.txt", screen_data->str10, open);
     file_to_str ("graphics/win_resize.txt", screen_data->str11, open);
 }
+
+
 
 void prompt_to_change_screen_size (char *win_resize_screen, const int *set_color)
 {
