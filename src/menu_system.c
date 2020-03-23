@@ -16,10 +16,9 @@ void welcome_screen (struct Penguin *tux, struct Game_States *screen_data, const
                 print_str (screen_data->screen, BROWN_FOR_MENU_SCREENS, &game_info->set_color);
                 if (game_info->set_color == TRUE)
                 {
-                    attron (COLOR_PAIR (GREEN_PAIR));
-                    printw ("%s", "\n   Option: ");
                     attron (COLOR_PAIR (WHITE_PAIR));
                 }
+                printw ("%s", "\n   Option: ");
                 getstr (tux->s_option);
 
                 if (strlen (tux->s_option) < INPUT_SIZE)
@@ -141,10 +140,9 @@ void about_screen (struct Game_States *screen_data, struct Game_Options *game_in
             print_str (screen_data->screen, BROWN_FOR_MENU_SCREENS, &game_info->set_color);
             if (game_info->set_color == TRUE)
             {
-                attron (COLOR_PAIR (GREEN_PAIR));
-                printw ("\n   Press 'y' to return to menu: ");
                 attron (COLOR_PAIR (WHITE_PAIR));
             }
+            printw ("\n   Press 'y' to return to menu: ");
             getstr (game_info->s_play);
 
             check_response (game_info->s_play, &game_info->play, &game_info->welcome, TRUE, FALSE);
