@@ -3,3 +3,48 @@ forrest gump
 star wars
 star trek
 1917
+lord of the rings
+guardians of the galaxy
+the avengers
+end game
+infinity war
+phantom menace
+attack of the clones
+revenge of the sith
+new hope
+empire strikes back
+return of the jedi
+force awakens
+the last jedi
+rise of skywalker
+the fellowship of the ring
+the two towers
+the return of the king
+the mummy
+the mummy returns
+the mummy: tomb of the dragon emperor
+the conjuring
+insidious
+a christmas story
+toy story
+the lion king
+the emperor's new groove
+men in black
+titanic
+x-men
+the matrix
+avatar
+harry potter
+armageddon
+the dark knight
+the dark knight rises
+the polar express
+back to the future
+mad max
+die hard
+the exorcist
+the texas chain saw massacre
+rocky
+saving private ryan
+the purge
+a beautiful mind
