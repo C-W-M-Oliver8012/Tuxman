@@ -254,18 +254,18 @@ void failed_guesses_to_str (const Penguin *tux, char *screen)
 
 int check_guess_is_valid (const Penguin *tux)
 {
-    int matched = 0;
+    int matched = TRUE;
 
     if ( (tux->choice == '\0') || (tux->choice == ' ') || (tux->choice == '@') || (tux->choice == '^') || (strlen(tux->input) > INPUT_SIZE) || (tux->choice == '\n'))
     {
-        matched = 1;
+        matched = FALSE;
     }
 
     for (int i = 0; i < tux->indexLength; i++)
     {
         if (tux->choice == tux->index[i])
         {
-            matched = 1;
+            matched = FALSE;
         }
     }
 
@@ -273,7 +273,7 @@ int check_guess_is_valid (const Penguin *tux)
     {
         if (tux->choice == tux->failedGuesses[i])
         {
-            matched = 1;
+            matched = FALSE;
         }
     }
 
@@ -284,7 +284,7 @@ int check_guess_is_valid (const Penguin *tux)
 
 int check_guess (const Penguin *tux)
 {
-    int matched = 0;
+    int matched = FALSE;
 
     for (int i = 0; i <= tux->indexLength; i++)
     {
@@ -292,8 +292,7 @@ int check_guess (const Penguin *tux)
         {
             if (tux->choice == tux->word[j])
             {
-                matched = 1;
-                return matched;
+                return TRUE;
             }
         }
     }
@@ -322,17 +321,17 @@ int has_won (const Penguin *tux)
         }
     }
 
-    if (tux->win == 1)
+    if (tux->win == TRUE)
     {
-        return 1;
+        return TRUE;
     }
 
     if (letters_guessed == tux->wordLength)
     {
-        return 1;
+        return TRUE;
     }
 
-    return 0;
+    return FALSE;
 }
 
 
@@ -457,13 +456,13 @@ void print_str (const char *str, const int color, const int *set_color)
 
 
 
-void print_game_scr (const long unsigned int *score, const long unsigned int *lives, const char *screen, const int color_option, const int *set_color)
+void print_game_scr (const Penguin *tux, const char *screen, const int color_option, const int *set_color)
 {
     clear ();
     print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Score: ", set_color);
-    printw ("%d", *score);
+    printw ("%d", tux->score);
     print_str_between_two_colors (RED_PAIR, WHITE_PAIR, "                     Lives: ", set_color);
-    printw ("%d\n", *lives);
+    printw ("%d\n", tux->lives);
     print_str (screen, color_option, set_color);
 }
 

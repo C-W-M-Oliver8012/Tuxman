@@ -4,7 +4,7 @@
 #include "functions.h"
 #include "game_data.h"
 
-void set_category (Penguin *tux, Game_States *screen_data, Game_Options *game_info, Categories *categories);
+void set_category (Penguin *tux, const Game_States *screen_data, Game_Options *game_info, Categories *categories);
 void reset_game (Penguin *tux, Game_States *screen_data, Game_Options *game_info, Categories *categories);
 void game_loop (Penguin *tux, Game_States *screen_data, Game_Options *game_info);
 void get_screen_by_fails (Game_States *screen_data, long unsigned int *fails, int *color_option);

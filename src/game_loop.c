@@ -3,7 +3,7 @@
 #include "../include/functions.h"
 
 
-void set_category (Penguin *tux, Game_States *screen_data, Game_Options *game_info, Categories *categories)
+void set_category (Penguin *tux, const Game_States *screen_data, Game_Options *game_info, Categories *categories)
 {
     if ((tux->option == GAME_SCREEN) && (tux->category_has_been_set == FALSE))
     {
@@ -27,7 +27,7 @@ void set_category (Penguin *tux, Game_States *screen_data, Game_Options *game_in
                 printw ("\n   Category option: ");
                 set_color_if_possible (WHITE_PAIR, &game_info->set_color);
                 getstr (tux->input);
-                
+
                 if (strlen (tux->input) < 4)
                 {
                     if (str_is_int (tux->input) == TRUE)
@@ -61,7 +61,6 @@ void reset_game (Penguin *tux, Game_States *screen_data, Game_Options *game_info
         tux->wordLength = strlen (tux->word);
         tux->indexLength = 0;
         tux->letters_guessed = 0;
-        strcpy (tux->input, "");
         tux->choice = ' ';
         tux->fails = 0;
         tux->win = FALSE;
@@ -143,7 +142,7 @@ void get_screen_by_fails (Game_States *screen_data, long unsigned int *fails, in
 
 void guess_entire_word (Penguin *tux, const char *screen, const int *set_color)
 {
-    print_game_scr (&tux->score, &tux->lives, screen, BLUE_FOR_PENGUIN, set_color);
+    print_game_scr (tux, screen, BLUE_FOR_PENGUIN, set_color);
     print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Guess the word: ", set_color);
     getstr (tux->input);
 
@@ -152,8 +151,7 @@ void guess_entire_word (Penguin *tux, const char *screen, const int *set_color)
     {
         tux->failedGuesses[tux->fails] = '@';
         tux->fails = tux->fails + 1;
-        tux->choice = '^';
-        strcpy (tux->input, "");
+        tux->choice = ' ';
     }
     else                                // you win and all letters in word are added to index
     {
@@ -182,7 +180,7 @@ void guess_entire_word (Penguin *tux, const char *screen, const int *set_color)
 
 void guess_single_char (Penguin *tux, const char *screen, const int *set_color)
 {
-    print_game_scr (&tux->score, &tux->lives, screen, BLUE_FOR_PENGUIN, set_color);
+    print_game_scr (tux, screen, BLUE_FOR_PENGUIN, set_color);
     print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Pick a letter: ", set_color);
     getstr (tux->input);
 
@@ -190,20 +188,20 @@ void guess_single_char (Penguin *tux, const char *screen, const int *set_color)
     {
         tux->choice = tux->input[0];
         int valid;
-        if (check_guess_is_valid (tux) == 0)
+        if (check_guess_is_valid (tux) == TRUE)
         {
             valid = check_guess (tux);
         }
         else
         {
-            valid = 3;
+            valid = NOT_FALSE_OR_TRUE;
         }
-        if (valid == 0)
+        if (valid == FALSE)
         {
             tux->failedGuesses[tux->fails] = tux->choice;
             tux->fails++;
         }
-        else if (valid == 1)
+        else if (valid == TRUE)
         {
             tux->index[tux->indexLength] = tux->choice;
             tux->indexLength++;

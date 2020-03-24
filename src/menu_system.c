@@ -1,7 +1,7 @@
 #include "../include/menu_system.h"
 
 
-void welcome_screen (Penguin *tux, Game_States *screen_data, const Game_Options *game_info)
+void welcome_screen (Penguin *tux, const Game_States *screen_data, const Game_Options *game_info)
 {
     if (game_info->welcome == TRUE)
     {
@@ -9,12 +9,11 @@ void welcome_screen (Penguin *tux, Game_States *screen_data, const Game_Options 
         tux->lives = 5;
         tux->max_score = 10;
         tux->category_has_been_set = FALSE;
-        strcpy (screen_data->screen, screen_data->str0);
 
         do
             {
                 clear ();
-                print_str (screen_data->screen, BROWN_FOR_MENU_SCREENS, &game_info->set_color);
+                print_str (screen_data->str0, BROWN_FOR_MENU_SCREENS, &game_info->set_color);
                 print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Option: ", &game_info->set_color);
                 getstr (tux->input);
 
@@ -74,7 +73,7 @@ void menu_system (Penguin *tux, Game_States *screen_data, Game_Options *game_inf
 
 
 
-void game_over_screen (Penguin *tux, Game_States *screen_data, Game_Options *game_info)
+void game_over_screen (const Penguin *tux, Game_States *screen_data, Game_Options *game_info)
 {
     strcpy (screen_data->screen, "");
     strcat (screen_data->screen, screen_data->str9);
@@ -84,27 +83,27 @@ void game_over_screen (Penguin *tux, Game_States *screen_data, Game_Options *gam
     do
         {
             clear ();
-            print_game_scr (&tux->score, &tux->lives, screen_data->screen, RED_FOR_LOSS_SCREEN, &game_info->set_color);
+            print_game_scr (tux, screen_data->screen, RED_FOR_LOSS_SCREEN, &game_info->set_color);
             print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Return to menu? (Y/n): ", &game_info->set_color);
             getstr (game_info->input);
 
-            check_response (game_info->input, &game_info->play, &game_info->welcome, TRUE, TRUE);
+            check_response (game_info, TRUE, TRUE);
         }
     while ( (game_info->play != FALSE) && (game_info->play != TRUE));
 }
 
 
 
-void play_again_prompt (Penguin *tux, Game_States *screen_data, Game_Options *game_info)
+void play_again_prompt (const Penguin *tux, const Game_States *screen_data, Game_Options *game_info)
 {
     do
         {
             clear ();
-            print_game_scr (&tux->score, &tux->lives, screen_data->screen, game_info->color_option, &game_info->set_color);
+            print_game_scr (tux, screen_data->screen, game_info->color_option, &game_info->set_color);
             print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Press 'y' to get new word: ", &game_info->set_color);
             getstr (game_info->input);
 
-            check_response (game_info->input, &game_info->play, &game_info->welcome, FALSE, FALSE);
+            check_response (game_info, FALSE, FALSE);
         }
     while ( (game_info->play != FALSE) && (game_info->play != TRUE));
 }
@@ -113,59 +112,55 @@ void play_again_prompt (Penguin *tux, Game_States *screen_data, Game_Options *ga
 
 void about_screen (Game_States *screen_data, Game_Options *game_info)
 {
-    strcpy (screen_data->screen, "");
-    strcat (screen_data->screen, screen_data->str10);
-
     do
         {
             clear ();
-            print_str (screen_data->screen, BROWN_FOR_MENU_SCREENS, &game_info->set_color);
+            print_str (screen_data->str10, BROWN_FOR_MENU_SCREENS, &game_info->set_color);
             print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Press 'y' to return to menu: ", &game_info->set_color);
             getstr (game_info->input);
 
-            check_response (game_info->input, &game_info->play, &game_info->welcome, TRUE, FALSE);
+            check_response (game_info, TRUE, FALSE);
         }
     while( (game_info->play != FALSE) && (game_info->play != TRUE));
 }
 
 
 
-void return_to_menu_screen (Penguin *tux, char *screen, Game_Options *game_info)
+void return_to_menu_screen (const Penguin *tux, char *screen, Game_Options *game_info)
 {
     do
         {
-            print_game_scr (&tux->score, &tux->lives, screen, BLUE_FOR_PENGUIN, &game_info->set_color);
+            print_game_scr (tux, screen, BLUE_FOR_PENGUIN, &game_info->set_color);
             print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Return to menu? (Y/n): ", &game_info->set_color);
             getstr (game_info->input);
 
-            check_response (game_info->input, &game_info->play, &game_info->welcome, TRUE, TRUE);
+            check_response (game_info, TRUE, TRUE);
         }
     while ( (game_info->play != FALSE) && (game_info->play != TRUE));
-    tux->option = GAME_SCREEN;
 }
 
 
 
-void check_response (char *input, int *play, int *welcome, int display_welcome_screen, int no_option)
+void check_response (Game_Options *game_info, const int display_welcome_screen, const int no_option)
 {
-    if (strlen(input) < INPUT_SIZE)
+    if (strlen(game_info->input) < INPUT_SIZE)
     {
-        if ( (input[0] == 'y') || (input[0] == 'Y'))
+        if ( (game_info->input[0] == 'y') || (game_info->input[0] == 'Y'))
         {
-            *play = TRUE;
-            *welcome = display_welcome_screen;
+            game_info->play = TRUE;
+            game_info->welcome = display_welcome_screen;
         }
-        else if ( ((input[0] == 'n') || (input[0] == 'N')) && (no_option == TRUE))
+        else if ( ((game_info->input[0] == 'n') || (game_info->input[0] == 'N')) && (no_option == TRUE))
         {
-            *play = FALSE;
+            game_info->play = FALSE;
         }
         else
         {
-            *play = NOT_FALSE_OR_TRUE;
+            game_info->play = NOT_FALSE_OR_TRUE;
         }
     }
     else
     {
-        *play = NOT_FALSE_OR_TRUE;
+        game_info->play = NOT_FALSE_OR_TRUE;
     }
 }

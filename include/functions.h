@@ -21,7 +21,7 @@ int has_won (const Penguin *tux);
 int check_full_guess (const Penguin *tux);
 int add_score (const Penguin *tux);
 void print_str (const char *str, const int color, const int *set_color);
-void print_game_scr (const long unsigned int *score, const long unsigned int *lives, const char *screen, const int color_option, const int *set_color);
+void print_game_scr (const Penguin *tux, const char *screen, const int color_option, const int *set_color);
 void set_color_if_possible (const int color, const int *set_color);
 void print_str_between_two_colors (const int first_color, const int second_color, const char *str, const int *set_color);
 
