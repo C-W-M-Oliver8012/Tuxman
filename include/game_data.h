@@ -42,11 +42,9 @@ typedef struct Penguin
     char word[SIZE];
     char index[SIZE];
     char failedGuesses[SIZE];
-    char s_option[SIZE];
-    char s_choice[SIZE];
+    char input[SIZE];
     char choice;
     char ***words;
-    char s_category_choice[SIZE];
     int category_has_been_set;
     long int category_choice;
     unsigned long int wordLength;
@@ -84,7 +82,7 @@ typedef struct Game_States
 
 typedef struct Game_Options
 {
-    char s_play[SIZE];
+    char input[SIZE];
     int did_open;
     int pickLine;
     int color_option;

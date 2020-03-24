@@ -256,7 +256,7 @@ int check_guess_is_valid (const Penguin *tux)
 {
     int matched = 0;
 
-    if ( (tux->choice == '\0') || (tux->choice == ' ') || (tux->choice == '@') || (tux->choice == '^') || (strlen(tux->s_choice) > INPUT_SIZE) || (tux->choice == '\n'))
+    if ( (tux->choice == '\0') || (tux->choice == ' ') || (tux->choice == '@') || (tux->choice == '^') || (strlen(tux->input) > INPUT_SIZE) || (tux->choice == '\n'))
     {
         matched = 1;
     }
@@ -339,12 +339,12 @@ int has_won (const Penguin *tux)
 
 int check_full_guess (const Penguin *tux)
 {
-    if (strcmp (tux->word, tux->s_choice) == 0)
+    if (strcmp (tux->word, tux->input) == 0)
     {
-        return 1;
+        return TRUE;
     }
 
-    return 0;
+    return FALSE;
 }
 
 
@@ -452,10 +452,7 @@ void print_str (const char *str, const int color, const int *set_color)
         addch (str[i]);
     }
 
-    if (*set_color == TRUE)
-    {
-        attron (COLOR_PAIR (WHITE_PAIR));
-    }
+    set_color_if_possible (WHITE_PAIR, set_color);
 }
 
 
@@ -463,25 +460,34 @@ void print_str (const char *str, const int color, const int *set_color)
 void print_game_scr (const long unsigned int *score, const long unsigned int *lives, const char *screen, const int color_option, const int *set_color)
 {
     clear ();
-    if (*set_color == TRUE)
-    {
-        attron (COLOR_PAIR (GREEN_PAIR));
-    }
-    printw ("\n   Score: ");
-    if (*set_color == TRUE)
-    {
-        attron (COLOR_PAIR (WHITE_PAIR));
-    }
+    print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Score: ", set_color);
     printw ("%d", *score);
-    if (*set_color == TRUE)
-    {
-        attron (COLOR_PAIR (RED_PAIR));
-    }
-    printw ("                     Lives: ");
-    if (*set_color == TRUE)
-    {
-        attron (COLOR_PAIR (WHITE_PAIR));
-    }
+    print_str_between_two_colors (RED_PAIR, WHITE_PAIR, "                     Lives: ", set_color);
     printw ("%d\n", *lives);
     print_str (screen, color_option, set_color);
+}
+
+
+
+void set_color_if_possible (const int color, const int *set_color)
+{
+    if (*set_color == TRUE)
+    {
+        attron (COLOR_PAIR (color));
+    }
+}
+
+
+
+void print_str_between_two_colors (const int first_color, const int second_color, const char *str, const int *set_color)
+{
+    if (*set_color == TRUE)
+    {
+        attron (COLOR_PAIR (first_color));
+    }
+    printw ("%s", str);
+    if (*set_color == TRUE)
+    {
+        attron (COLOR_PAIR (second_color));
+    }
 }

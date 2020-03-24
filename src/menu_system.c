@@ -15,20 +15,12 @@ void welcome_screen (Penguin *tux, Game_States *screen_data, const Game_Options 
             {
                 clear ();
                 print_str (screen_data->screen, BROWN_FOR_MENU_SCREENS, &game_info->set_color);
-                if (game_info->set_color == TRUE)
-                {
-                    attron (COLOR_PAIR (GREEN_PAIR));
-                }
-                printw ("%s", "\n   Option: ");
-                if (game_info->set_color == TRUE)
-                {
-                    attron (COLOR_PAIR (WHITE_PAIR));
-                }
-                getstr (tux->s_option);
+                print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Option: ", &game_info->set_color);
+                getstr (tux->input);
 
-                if (strlen (tux->s_option) < INPUT_SIZE)
+                if (strlen (tux->input) < INPUT_SIZE)
                 {
-                    switch (tux->s_option[0])
+                    switch (tux->input[0])
                     {
                         case '1':
                             tux->option = GAME_SCREEN;
@@ -93,18 +85,10 @@ void game_over_screen (Penguin *tux, Game_States *screen_data, Game_Options *gam
         {
             clear ();
             print_game_scr (&tux->score, &tux->lives, screen_data->screen, RED_FOR_LOSS_SCREEN, &game_info->set_color);
-            if (game_info->set_color == TRUE)
-            {
-                attron (COLOR_PAIR (GREEN_PAIR));
-            }
-            printw ("\n   Return to menu? (Y/n): ");
-            if (game_info->set_color == TRUE)
-            {
-                attron (COLOR_PAIR (WHITE_PAIR));
-            }
-            getstr (game_info->s_play);
+            print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Return to menu? (Y/n): ", &game_info->set_color);
+            getstr (game_info->input);
 
-            check_response (game_info->s_play, &game_info->play, &game_info->welcome, TRUE, TRUE);
+            check_response (game_info->input, &game_info->play, &game_info->welcome, TRUE, TRUE);
         }
     while ( (game_info->play != FALSE) && (game_info->play != TRUE));
 }
@@ -117,18 +101,10 @@ void play_again_prompt (Penguin *tux, Game_States *screen_data, Game_Options *ga
         {
             clear ();
             print_game_scr (&tux->score, &tux->lives, screen_data->screen, game_info->color_option, &game_info->set_color);
-            if (game_info->set_color == TRUE)
-            {
-                attron (COLOR_PAIR (GREEN_PAIR));
-            }
-            printw ("\n   Press 'y' to get new word: ");
-            if (game_info->set_color == TRUE)
-            {
-                attron (COLOR_PAIR (WHITE_PAIR));
-            }
-            getstr (game_info->s_play);
+            print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Press 'y' to get new word: ", &game_info->set_color);
+            getstr (game_info->input);
 
-            check_response (game_info->s_play, &game_info->play, &game_info->welcome, FALSE, FALSE);
+            check_response (game_info->input, &game_info->play, &game_info->welcome, FALSE, FALSE);
         }
     while ( (game_info->play != FALSE) && (game_info->play != TRUE));
 }
@@ -144,18 +120,10 @@ void about_screen (Game_States *screen_data, Game_Options *game_info)
         {
             clear ();
             print_str (screen_data->screen, BROWN_FOR_MENU_SCREENS, &game_info->set_color);
-            if (game_info->set_color == TRUE)
-            {
-                attron (COLOR_PAIR (GREEN_PAIR));
-            }
-            printw ("\n   Press 'y' to return to menu: ");
-            if (game_info->set_color == TRUE)
-            {
-                attron (COLOR_PAIR (WHITE_PAIR));
-            }
-            getstr (game_info->s_play);
+            print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Press 'y' to return to menu: ", &game_info->set_color);
+            getstr (game_info->input);
 
-            check_response (game_info->s_play, &game_info->play, &game_info->welcome, TRUE, FALSE);
+            check_response (game_info->input, &game_info->play, &game_info->welcome, TRUE, FALSE);
         }
     while( (game_info->play != FALSE) && (game_info->play != TRUE));
 }
@@ -167,18 +135,10 @@ void return_to_menu_screen (Penguin *tux, char *screen, Game_Options *game_info)
     do
         {
             print_game_scr (&tux->score, &tux->lives, screen, BLUE_FOR_PENGUIN, &game_info->set_color);
-            if (game_info->set_color == TRUE)
-            {
-                attron (COLOR_PAIR (GREEN_PAIR));
-            }
-            printw ("\n   Return to menu? (Y/n): ");
-            if (game_info->set_color == TRUE)
-            {
-                attron (COLOR_PAIR (WHITE_PAIR));
-            }
-            getstr (game_info->s_play);
+            print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Return to menu? (Y/n): ", &game_info->set_color);
+            getstr (game_info->input);
 
-            check_response (game_info->s_play, &game_info->play, &game_info->welcome, TRUE, TRUE);
+            check_response (game_info->input, &game_info->play, &game_info->welcome, TRUE, TRUE);
         }
     while ( (game_info->play != FALSE) && (game_info->play != TRUE));
     tux->option = GAME_SCREEN;
@@ -186,16 +146,16 @@ void return_to_menu_screen (Penguin *tux, char *screen, Game_Options *game_info)
 
 
 
-void check_response (char *s_play, int *play, int *welcome, int display_welcome_screen, int no_option)
+void check_response (char *input, int *play, int *welcome, int display_welcome_screen, int no_option)
 {
-    if (strlen(s_play) < INPUT_SIZE)
+    if (strlen(input) < INPUT_SIZE)
     {
-        if ( (s_play[0] == 'y') || (s_play[0] == 'Y'))
+        if ( (input[0] == 'y') || (input[0] == 'Y'))
         {
             *play = TRUE;
             *welcome = display_welcome_screen;
         }
-        else if ( ((s_play[0] == 'n') || (s_play[0] == 'N')) && (no_option == TRUE))
+        else if ( ((input[0] == 'n') || (input[0] == 'N')) && (no_option == TRUE))
         {
             *play = FALSE;
         }

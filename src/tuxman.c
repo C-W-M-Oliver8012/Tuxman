@@ -39,12 +39,9 @@ int main (void)
     }
     else
     {
-        if (game_info.set_color == TRUE)
-        {
-            attron (COLOR_PAIR (RED_PAIR));
-        }
+        set_color_if_possible (RED_PAIR, &game_info.set_color);
         printw ("\n   **ERROR**: The game files could not be found. Please reinstall the program.\n\n\n   Press enter to close the program...");
-        getstr (tux.s_option);
+        getstr (tux.input);
     }
 
     free (tux.words);

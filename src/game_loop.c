@@ -13,48 +13,26 @@ void set_category (Penguin *tux, Game_States *screen_data, Game_Options *game_in
 
                 clear ();
                 print_str (screen_data->str12, BROWN_FOR_MENU_SCREENS, &game_info->set_color);
-                if (game_info->set_color == TRUE)
-                {
-                    attron (COLOR_PAIR (WHITE_PAIR));
-                }
+                set_color_if_possible (WHITE_PAIR, &game_info->set_color);
+
                 for (int i = 0; i < categories->category_count; i++)
                 {
-                    if (game_info->set_color == TRUE)
-                    {
-                        attron (COLOR_PAIR (BROWN_PAIR));
-                    }
-                    printw ("   |");
-                    if (game_info->set_color == TRUE)
-                    {
-                        attron (COLOR_PAIR (WHITE_PAIR));
-                    }
+                    print_str_between_two_colors (BROWN_PAIR, WHITE_PAIR, "   |", &game_info->set_color);
                     printw (" %2d) %-15s - %-30s", i+1, categories->filename[i], categories->description[i]);
-                    if (game_info->set_color == TRUE)
-                    {
-                        attron (COLOR_PAIR (BROWN_PAIR));
-                    }
+                    set_color_if_possible (BROWN_PAIR, &game_info->set_color);
                     printw (" |\n");
                 }
-                if (game_info->set_color == TRUE)
-                {
-                    attron (COLOR_PAIR (BROWN_PAIR));
-                }
-                printw ("   ========================================================\n");
-                if (game_info->set_color == TRUE)
-                {
-                    attron (COLOR_PAIR (GREEN_PAIR));
-                }
+
+                print_str_between_two_colors (BROWN_PAIR, GREEN_PAIR, "   ========================================================\n", &game_info->set_color);
                 printw ("\n   Category option: ");
-                if (game_info->set_color == TRUE)
+                set_color_if_possible (WHITE_PAIR, &game_info->set_color);
+                getstr (tux->input);
+                
+                if (strlen (tux->input) < 4)
                 {
-                    attron (COLOR_PAIR (WHITE_PAIR));
-                }
-                getstr (tux->s_category_choice);
-                if (strlen (tux->s_category_choice) < 4)
-                {
-                    if (str_is_int (tux->s_category_choice) == TRUE)
+                    if (str_is_int (tux->input) == TRUE)
                     {
-                        tux->category_choice = strtol (tux->s_category_choice, NULL, 10);
+                        tux->category_choice = strtol (tux->input, NULL, 10);
                     }
                 }
                 else
@@ -83,7 +61,7 @@ void reset_game (Penguin *tux, Game_States *screen_data, Game_Options *game_info
         tux->wordLength = strlen (tux->word);
         tux->indexLength = 0;
         tux->letters_guessed = 0;
-        strcpy (tux->s_choice, "");
+        strcpy (tux->input, "");
         tux->choice = ' ';
         tux->fails = 0;
         tux->win = FALSE;
@@ -166,16 +144,8 @@ void get_screen_by_fails (Game_States *screen_data, long unsigned int *fails, in
 void guess_entire_word (Penguin *tux, const char *screen, const int *set_color)
 {
     print_game_scr (&tux->score, &tux->lives, screen, BLUE_FOR_PENGUIN, set_color);
-    if (*set_color == TRUE)
-    {
-        attron (COLOR_PAIR (GREEN_PAIR));
-    }
-    printw ("\n   Guess the word: ");
-    if (*set_color == TRUE)
-    {
-        attron (COLOR_PAIR (WHITE_PAIR));
-    }
-    getstr (tux->s_choice);
+    print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Guess the word: ", set_color);
+    getstr (tux->input);
 
     tux->win = check_full_guess (tux);
     if (tux->win == FALSE)                    // wrong guess
@@ -183,7 +153,7 @@ void guess_entire_word (Penguin *tux, const char *screen, const int *set_color)
         tux->failedGuesses[tux->fails] = '@';
         tux->fails = tux->fails + 1;
         tux->choice = '^';
-        strcpy (tux->s_choice, "");
+        strcpy (tux->input, "");
     }
     else                                // you win and all letters in word are added to index
     {
@@ -213,20 +183,12 @@ void guess_entire_word (Penguin *tux, const char *screen, const int *set_color)
 void guess_single_char (Penguin *tux, const char *screen, const int *set_color)
 {
     print_game_scr (&tux->score, &tux->lives, screen, BLUE_FOR_PENGUIN, set_color);
-    if (*set_color == TRUE)
-    {
-        attron (COLOR_PAIR (GREEN_PAIR));
-    }
-    printw ("\n   Pick a letter: ");
-    if (*set_color == TRUE)
-    {
-        attron (COLOR_PAIR (WHITE_PAIR));
-    }
-    getstr (tux->s_choice);
+    print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Pick a letter: ", set_color);
+    getstr (tux->input);
 
-    if (strlen (tux->s_choice) < INPUT_SIZE)
+    if (strlen (tux->input) < INPUT_SIZE)
     {
-        tux->choice = tux->s_choice[0];
+        tux->choice = tux->input[0];
         int valid;
         if (check_guess_is_valid (tux) == 0)
         {

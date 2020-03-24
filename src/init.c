@@ -111,17 +111,9 @@ void prompt_to_change_screen_size (char *win_resize_screen, const int *set_color
         {
             clear ();
             print_str (win_resize_screen, BROWN_FOR_MENU_SCREENS, set_color);
-            if (*set_color == TRUE)
-            {
-                attron (COLOR_PAIR (GREEN_PAIR));
-            }
-            printw (" Enter 'y' here: ");
-            if (*set_color == TRUE)
-            {
-                attron (COLOR_PAIR (WHITE_PAIR));
-            }
+            print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, " Enter 'y' here: ", set_color);
             getstr (input);
-            refresh ();
+            
             if (strlen (input) > INPUT_SIZE)
             {
                 strcpy (input, " ");
