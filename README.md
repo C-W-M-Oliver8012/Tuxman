@@ -1,24 +1,38 @@
 # Tuxman
 Hangman for linux and windows (maybe mac os? but I don't have any way to develop for this platform)
 
-## Installing on Linux
+# Installing on Linux
 
-* Instructions
-    * First make sure that you have make, gcc, bash, and ncurses installed on your distro
-    * Download the latest release
-    * Run the 'make linux' command in the Tuxman directory
-    * (Optional) Add the directory to your bash path and run the Tuxman bash package from any directory
+## Install dependencies
 
-## Installing on Windows
+### Debian
+```sudo apt install git make gcc libncurses6```
+
+### Ubuntu
+```sudo apt install git make gcc libncurses6```
+
+### Fedora
+```sudo dnf install git make gcc libncurses```
+
+### Arch
+```sudo pacman -S git make gcc ncurses```
+
+## Build Instructions
+* First make sure that you have make, gcc, bash, and ncurses installed on your distro
+* Download the latest release
+* Run the 'make linux' command in the Tuxman directory
+* (Optional) Add the directory to your bash path and run the Tuxman bash package from any directory
+
+# Installing on Windows
 
 * Download the latest release
 * Run the Tuxman.exe file (you may be prompted to not run the program but ignore as the program is not malware)
 
-## Compiling on Linux
+# Compiling on Linux
 
 Refer to the same instructions for Installing
 
-## Compiling on Windows
+# Compiling on Windows
 
 * Instructions
     * Properly install and setup msys2 on Windows (be sure to add Mingw64 to path)(it is found in the msys64 folder in the C Directory
