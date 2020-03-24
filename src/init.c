@@ -15,7 +15,6 @@ void set_all_colors (int *set_color)
             init_color (COLOR_YELLOW, 882, 835, 333);
             init_color (COLOR_WHITE, 850, 850, 850);
             init_color (COLOR_BROWN, 600, 400, 50);
-            init_pair (BROWN_PAIR, COLOR_BROWN, COLOR_BLACK);
         }
         else
         {
@@ -27,6 +26,7 @@ void set_all_colors (int *set_color)
         init_pair (BLUE_PAIR, COLOR_BLUE, COLOR_BLACK);
         init_pair (YELLOW_PAIR, COLOR_YELLOW, COLOR_BLACK);
         init_pair (WHITE_PAIR, COLOR_WHITE, COLOR_BLACK);
+        init_pair (BROWN_PAIR, COLOR_BROWN, COLOR_BLACK);
 
         *set_color = TRUE;
     }
