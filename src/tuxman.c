@@ -7,19 +7,16 @@
 
 int main (void)
 {
-    initscr ();
-
-    struct Game_Options game_info;
-    struct Penguin tux;
-    struct Game_States screen_data;
-    struct Categories categories;
-
-    set_all_colors (&game_info.set_color);
+    Game_Options game_info;
+    Penguin tux;
+    Game_States screen_data;
+    Categories categories;
 
     game_info.did_open = TRUE;
 
+    initscr ();
+    set_all_colors (&game_info.set_color);
     get_screen_data (&screen_data, &game_info.did_open);
-
     init_words (&tux, &screen_data, &game_info, &categories);
 
     if (game_info.did_open == TRUE)

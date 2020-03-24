@@ -64,7 +64,7 @@ int get_file_length (const char *filename, int *did_open)
 
 
 
-void get_categories_filename_description (struct Categories *categories, int *did_open)
+void get_categories_filename_description (Categories *categories, int *did_open)
 {
     FILE *file;
 
@@ -130,7 +130,7 @@ void get_words (const char *filename, char **words, int *wordCount, int *did_ope
 
 
 
-int str_is_int (char *str)
+int str_is_int (const char *str)
 {
     int length = strlen (str);
     int match = TRUE;
@@ -169,7 +169,7 @@ int str_is_int (char *str)
 
 
 
-void correct_guesses_to_str (const struct Penguin *tux, char *screen)
+void correct_guesses_to_str (const Penguin *tux, char *screen)
 {
     strcat (screen, "\n\n   ");
     char formated_letters[SIZE];
@@ -235,7 +235,7 @@ void correct_guesses_to_str (const struct Penguin *tux, char *screen)
 
 
 
-void failed_guesses_to_str (const struct Penguin *tux, char *screen)
+void failed_guesses_to_str (const Penguin *tux, char *screen)
 {
     char formated_letters[SIZE];
 
@@ -252,7 +252,7 @@ void failed_guesses_to_str (const struct Penguin *tux, char *screen)
 
 
 
-int check_guess_is_valid (const struct Penguin *tux)
+int check_guess_is_valid (const Penguin *tux)
 {
     int matched = 0;
 
@@ -282,7 +282,7 @@ int check_guess_is_valid (const struct Penguin *tux)
 
 
 
-int check_guess (const struct Penguin *tux)
+int check_guess (const Penguin *tux)
 {
     int matched = 0;
 
@@ -303,7 +303,7 @@ int check_guess (const struct Penguin *tux)
 
 
 
-int has_won (const struct Penguin *tux)
+int has_won (const Penguin *tux)
 {
     int letters_guessed = 0;
 
@@ -337,7 +337,7 @@ int has_won (const struct Penguin *tux)
 
 
 
-int check_full_guess (const struct Penguin *tux)
+int check_full_guess (const Penguin *tux)
 {
     if (strcmp (tux->word, tux->s_choice) == 0)
     {
@@ -349,7 +349,7 @@ int check_full_guess (const struct Penguin *tux)
 
 
 
-int add_score (const struct Penguin *tux)
+int add_score (const Penguin *tux)
 {
     switch (tux->fails)
     {

@@ -38,7 +38,7 @@ void set_all_colors (int *set_color)
 
 
 
-void get_screen_data (struct Game_States *screen_data, int *open)
+void get_screen_data (Game_States *screen_data, int *open)
 {
     file_to_str ("graphics/welcome.txt", screen_data->str0, open);              // gets screen data from files
     file_to_str ("graphics/tuxman0.txt", screen_data->str1, open);
@@ -57,7 +57,7 @@ void get_screen_data (struct Game_States *screen_data, int *open)
 
 
 
-void init_words (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info, struct Categories *categories)
+void init_words (Penguin *tux, Game_States *screen_data, Game_Options *game_info, Categories *categories)
 {
     categories->category_count = get_file_length ("data/categories.txt", &game_info->did_open);
     categories->filename = (char**)malloc (categories->category_count * sizeof (char*));

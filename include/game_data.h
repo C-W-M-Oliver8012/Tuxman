@@ -37,7 +37,7 @@
 #define RED_FOR_LOSS_SCREEN 4
 
 
-struct Penguin
+typedef struct Penguin
 {
     char word[SIZE];
     char index[SIZE];
@@ -58,9 +58,11 @@ struct Penguin
     unsigned long int max_score;
     unsigned long int lives;
     unsigned long int option;
-};
+} Penguin;
 
-struct Game_States
+
+
+typedef struct Game_States
 {
     char screen[DATA_SIZE];
     char str0[DATA_SIZE];
@@ -76,9 +78,11 @@ struct Game_States
     char str10[DATA_SIZE];
     char str11[DATA_SIZE];
     char str12[DATA_SIZE];
-};
+} Game_States;
 
-struct Game_Options
+
+
+typedef struct Game_Options
 {
     char s_play[SIZE];
     int did_open;
@@ -87,15 +91,19 @@ struct Game_Options
     int play;
     int welcome;
     int set_color;
-};
+} Game_Options;
 
-struct Categories
+
+
+typedef struct Categories
 {
     int category_count;
     int *word_count;
     int max_word_count;
     char **filename;
     char **description;
-};
+} Categories;
+
+
 
 #endif

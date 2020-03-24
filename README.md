@@ -6,10 +6,10 @@ Hangman for linux and windows (maybe mac os? but I don't have any way to develop
 ## Install dependencies
 
 ### Debian
-```sudo apt install git make gcc libncurses6```
+```sudo apt install git make gcc libncurses6 libncurses-dev```
 
 ### Ubuntu
-```sudo apt install git make gcc libncurses6```
+```sudo apt install git make gcc libncurses6 libncurses-dev```
 
 ### Fedora
 ```sudo dnf install git make gcc libncurses```

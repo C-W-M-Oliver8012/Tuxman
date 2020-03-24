@@ -3,7 +3,7 @@
 #include "../include/functions.h"
 
 
-void set_category (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info, struct Categories *categories)
+void set_category (Penguin *tux, Game_States *screen_data, Game_Options *game_info, Categories *categories)
 {
     if ((tux->option == GAME_SCREEN) && (tux->category_has_been_set == FALSE))
     {
@@ -72,7 +72,7 @@ void set_category (struct Penguin *tux, struct Game_States *screen_data, struct 
 
 
 
-void reset_game (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info, struct Categories *categories)
+void reset_game (Penguin *tux, Game_States *screen_data, Game_Options *game_info, Categories *categories)
 {
     strcpy (screen_data->screen, "");
     if (tux->option == GAME_SCREEN)
@@ -92,7 +92,7 @@ void reset_game (struct Penguin *tux, struct Game_States *screen_data, struct Ga
 
 
 
-void game_loop (struct Penguin *tux, struct Game_States *screen_data, struct Game_Options *game_info)
+void game_loop (Penguin *tux, Game_States *screen_data, Game_Options *game_info)
 {
     while ( (tux->option == GAME_SCREEN) && (tux->fails != 7) && (tux->win == FALSE))            // game loop
     {
@@ -130,7 +130,7 @@ void game_loop (struct Penguin *tux, struct Game_States *screen_data, struct Gam
 
 
 
-void get_screen_by_fails (struct Game_States *screen_data, long unsigned int *fails, int *color_option)
+void get_screen_by_fails (Game_States *screen_data, long unsigned int *fails, int *color_option)
 {
     switch (*fails)                          // GETS PROPER GRAPHIC TO PRINT
     {
@@ -163,7 +163,7 @@ void get_screen_by_fails (struct Game_States *screen_data, long unsigned int *fa
 
 
 
-void guess_entire_word (struct Penguin *tux, const char *screen, const int *set_color)
+void guess_entire_word (Penguin *tux, const char *screen, const int *set_color)
 {
     print_game_scr (&tux->score, &tux->lives, screen, BLUE_FOR_PENGUIN, set_color);
     if (*set_color == TRUE)
@@ -210,7 +210,7 @@ void guess_entire_word (struct Penguin *tux, const char *screen, const int *set_
 
 
 
-void guess_single_char (struct Penguin *tux, const char *screen, const int *set_color)
+void guess_single_char (Penguin *tux, const char *screen, const int *set_color)
 {
     print_game_scr (&tux->score, &tux->lives, screen, BLUE_FOR_PENGUIN, set_color);
     if (*set_color == TRUE)
@@ -264,7 +264,7 @@ void check_exit_game (const char *choice, long unsigned int *fails, long unsigne
 
 
 
-void set_win (struct Penguin *tux, struct Game_States *screen_data, int *color_option)
+void set_win (Penguin *tux, Game_States *screen_data, int *color_option)
 {
     strcpy (screen_data->screen, "");
     int add = add_score (tux);
