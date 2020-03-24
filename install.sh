@@ -10,3 +10,9 @@ cp -r src/ /usr/share/tuxman/
 cp README.md /usr/share/tuxman/
 cp LICENSE.md /usr/share/tuxman/
 cp tuxman_logo.png /usr/share/tuxman/
+
+chmod 755 /usr/share/tuxman/
+chmod 755 /usr/share/tuxman/data/
+chmod 755 /usr/share/tuxman/graphics/
+chmod 755 /usr/share/tuxman/include/
+chmod 755 /usr/share/tuxman/src/

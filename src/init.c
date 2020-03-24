@@ -113,7 +113,7 @@ void prompt_to_change_screen_size (char *win_resize_screen, const int *set_color
             print_str (win_resize_screen, BROWN_FOR_MENU_SCREENS, set_color);
             print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, " Enter 'y' here: ", set_color);
             getstr (input);
-            
+
             if (strlen (input) > INPUT_SIZE)
             {
                 strcpy (input, " ");
