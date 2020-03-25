@@ -24,7 +24,6 @@ SOFTWARE.
 
 #include "../include/functions.h"
 #include "../include/macros.h"
-#include "../include/init.h"
 #include "../include/game_data.h"
 
 
