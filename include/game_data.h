@@ -79,6 +79,11 @@ typedef struct Penguin
     int max_score;
     int lives;
     int option;
+    int did_open;
+    int pickLine;
+    int color_option;
+    int play;
+    int set_color;
 } Penguin;
 
 
@@ -100,18 +105,6 @@ typedef struct Game_States
     char str11[DATA_SIZE];
     char str12[DATA_SIZE];
 } Game_States;
-
-
-
-typedef struct Game_Options
-{
-    char input[SIZE];
-    int did_open;
-    int pickLine;
-    int color_option;
-    int play;
-    int set_color;
-} Game_Options;
 
 
 

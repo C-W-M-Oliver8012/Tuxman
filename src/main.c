@@ -22,8 +22,104 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "../include/macros.h"
+#include "../include/functions.h"
+#include "../include/game_data.h"
 
+
+void set_all_colors (int *set_color);
+void get_screen_data (Game_States *screen, int *open);
+void init_words (Penguin *tux, Game_States *screen_data, Categories *categories);
+void prompt_to_change_screen_size (char *win_resize_screen, const int *set_color);
+void welcome_screen (Penguin *tux, const Game_States *screen_data);
+void set_category (Penguin *tux, const Game_States *screen_data, Categories *categories);
+void reset_game (Penguin *tux, Game_States *screen_data, Categories *categories);
+void game_loop (Penguin *tux, Game_States *screen_data);
+void get_screen_by_fails (Game_States *screen_data, int *fails, int *color_option);
+void guess_entire_word (Penguin *tux, const int *set_color);
+void guess_single_char (Penguin *tux, const int *set_color);
+void check_if_player_has_lost (int *fails, int *win, int *option);
+void check_exit_game (const char *choice, int *win, int *option);
+void set_win (Penguin *tux, Game_States *screen_data, int *color_option);
+void game_over_screen (Penguin *tux, Game_States *screen_data);
+void play_again_prompt (Penguin *tux, const Game_States *screen_data);
+void about_screen (Game_States *screen_data, Penguin *tux);
+void return_to_menu_screen (Penguin *tux, char *screen);
+void check_response (Penguin *tux, const int no_option);
+
+
+
+int main (void)
+{
+    Penguin tux;
+    Game_States screen_data;
+    Categories categories;
+
+    tux.did_open = TRUE;
+
+    initscr ();
+    set_all_colors (&tux.set_color);
+    get_screen_data (&screen_data, &tux.did_open);
+    init_words (&tux, &screen_data, &categories);
+
+    if (tux.did_open == TRUE)
+    {
+        tux.option = WELCOME_SCREEN;
+        tux.play = TRUE;
+        srand ( (time (NULL)));
+
+        prompt_to_change_screen_size (screen_data.str11, &tux.set_color);
+
+        while (tux.play == TRUE)
+        {
+            switch (tux.option)
+            {
+                case WELCOME_SCREEN:
+                    welcome_screen (&tux, &screen_data);
+                    break;
+                case GAME_SCREEN:
+                    set_category (&tux, &screen_data, &categories);
+                    reset_game (&tux, &screen_data, &categories);
+                    game_loop (&tux, &screen_data);
+                    if (tux.lives == 0)
+                    {
+                        game_over_screen (&tux, &screen_data);
+                        tux.option = WELCOME_SCREEN;
+                    }
+                    else if (tux.option == GAME_SCREEN)
+                    {
+                        play_again_prompt (&tux, &screen_data);
+                        tux.option = GAME_SCREEN;
+                    }
+                    break;
+                case ABOUT_SCREEN:
+                    about_screen (&screen_data, &tux);
+                    tux.option = WELCOME_SCREEN;
+                    break;
+                case QUIT_GAME:
+                    tux.play = FALSE;
+                    break;
+                case RETURN_TO_MENU_PROMPT:
+                    return_to_menu_screen (&tux, screen_data.screen);
+                    tux.option = WELCOME_SCREEN;
+            }
+        }
+    }
+    else
+    {
+        set_color_if_possible (RED_PAIR, &tux.set_color);
+        printw ("\n   **ERROR**: The game files could not be found. Please reinstall the program.\n\n\n   Press enter to close the program...");
+        getstr (tux.input);
+    }
+
+    free (tux.words);
+    free (categories.filename);
+    free (categories.description);
+    free (categories.word_count);
+
+    endwin ();
+
+    return 0;
+}
 
 void set_all_colors (int *set_color)
 {
@@ -81,9 +177,9 @@ void get_screen_data (Game_States *screen_data, int *open)
 
 
 
-void init_words (Penguin *tux, Game_States *screen_data, Game_Options *game_info, Categories *categories)
+void init_words (Penguin *tux, Game_States *screen_data, Categories *categories)
 {
-    categories->category_count = get_file_length ("data/categories.txt", &game_info->did_open);
+    categories->category_count = get_file_length ("data/categories.txt", &tux->did_open);
     categories->filename = (char**)malloc (categories->category_count * sizeof (char*));
     categories->description = (char**)malloc (categories->category_count * sizeof (char*));
     categories->word_count = (int*)malloc (categories->category_count * sizeof (int));
@@ -92,7 +188,7 @@ void init_words (Penguin *tux, Game_States *screen_data, Game_Options *game_info
         categories->filename[i] = malloc (SIZE * sizeof (char));
         categories->description[i] = malloc (SIZE * sizeof (char));
     }
-    get_categories_filename_description (categories, &game_info->did_open);
+    get_categories_filename_description (categories, &tux->did_open);
     categories->max_word_count = 0;
     for (int i = 0; i < categories->category_count; i++)
     {
@@ -100,7 +196,7 @@ void init_words (Penguin *tux, Game_States *screen_data, Game_Options *game_info
         strcpy (temp_dir, "data/");
         strcat (temp_dir, categories->filename[i]);
         strcat (temp_dir, ".txt");
-        categories->word_count[i] = get_file_length (temp_dir, &game_info->did_open);
+        categories->word_count[i] = get_file_length (temp_dir, &tux->did_open);
         if (categories->word_count[i] > categories->max_word_count)
         {
             categories->max_word_count = categories->word_count[i];
@@ -122,7 +218,7 @@ void init_words (Penguin *tux, Game_States *screen_data, Game_Options *game_info
         strcpy (temp_dir, "data/");
         strcat (temp_dir, categories->filename[i]);
         strcat (temp_dir, ".txt");
-        get_words (temp_dir, tux->words[i], &categories->word_count[i], &game_info->did_open);
+        get_words (temp_dir, tux->words[i], &categories->word_count[i], &tux->did_open);
     }
 }
 
@@ -148,7 +244,7 @@ void prompt_to_change_screen_size (char *win_resize_screen, const int *set_color
 
 
 
-void set_category (Penguin *tux, const Game_States *screen_data, Game_Options *game_info, Categories *categories)
+void set_category (Penguin *tux, const Game_States *screen_data, Categories *categories)
 {
     if (tux->category_has_been_set == FALSE)
     {
@@ -157,20 +253,20 @@ void set_category (Penguin *tux, const Game_States *screen_data, Game_Options *g
                 tux->category_choice = -1;
 
                 clear ();
-                print_str (screen_data->str12, BROWN_FOR_MENU_SCREENS, &game_info->set_color);
-                set_color_if_possible (WHITE_PAIR, &game_info->set_color);
+                print_str (screen_data->str12, BROWN_FOR_MENU_SCREENS, &tux->set_color);
+                set_color_if_possible (WHITE_PAIR, &tux->set_color);
 
                 for (int i = 0; i < categories->category_count; i++)
                 {
-                    print_str_between_two_colors (BROWN_PAIR, WHITE_PAIR, "   |", &game_info->set_color);
+                    print_str_between_two_colors (BROWN_PAIR, WHITE_PAIR, "   |", &tux->set_color);
                     printw (" %2d) %-15s - %-30s", i+1, categories->filename[i], categories->description[i]);
-                    set_color_if_possible (BROWN_PAIR, &game_info->set_color);
+                    set_color_if_possible (BROWN_PAIR, &tux->set_color);
                     printw (" |\n");
                 }
 
-                print_str_between_two_colors (BROWN_PAIR, GREEN_PAIR, "   ========================================================\n", &game_info->set_color);
+                print_str_between_two_colors (BROWN_PAIR, GREEN_PAIR, "   ========================================================\n", &tux->set_color);
                 printw ("\n   Category option: ");
-                set_color_if_possible (WHITE_PAIR, &game_info->set_color);
+                set_color_if_possible (WHITE_PAIR, &tux->set_color);
                 getstr (tux->input);
 
                 if (strlen (tux->input) < 4)
@@ -195,7 +291,7 @@ void set_category (Penguin *tux, const Game_States *screen_data, Game_Options *g
 
 
 
-void welcome_screen (Penguin *tux, const Game_States *screen_data, const Game_Options *game_info)
+void welcome_screen (Penguin *tux, const Game_States *screen_data)
 {
     tux->score = 0;
     tux->lives = 5;
@@ -205,8 +301,8 @@ void welcome_screen (Penguin *tux, const Game_States *screen_data, const Game_Op
     do
         {
             clear ();
-            print_str (screen_data->str0, BROWN_FOR_MENU_SCREENS, &game_info->set_color);
-            print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Option: ", &game_info->set_color);
+            print_str (screen_data->str0, BROWN_FOR_MENU_SCREENS, &tux->set_color);
+            print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Option: ", &tux->set_color);
             getstr (tux->input);
 
             if (strlen (tux->input) < INPUT_SIZE)
@@ -236,11 +332,11 @@ void welcome_screen (Penguin *tux, const Game_States *screen_data, const Game_Op
 
 
 
-void reset_game (Penguin *tux, Game_States *screen_data, Game_Options *game_info, Categories *categories)
+void reset_game (Penguin *tux, Game_States *screen_data, Categories *categories)
 {
     strcpy (screen_data->screen, "");
-    game_info->pickLine = rand () % categories->word_count[tux->category_choice];
-    strcpy (tux->word, tux->words[tux->category_choice][game_info->pickLine]);
+    tux->pickLine = rand () % categories->word_count[tux->category_choice];
+    strcpy (tux->word, tux->words[tux->category_choice][tux->pickLine]);
     strtok (tux->word, "\n");
     tux->wordLength = strlen (tux->word);
     tux->indexLength = 0;
@@ -252,30 +348,30 @@ void reset_game (Penguin *tux, Game_States *screen_data, Game_Options *game_info
 
 
 
-void game_loop (Penguin *tux, Game_States *screen_data, Game_Options *game_info)
+void game_loop (Penguin *tux, Game_States *screen_data)
 {
     while (tux->win == NOT_FALSE_OR_TRUE)
     {
         clear ();
         strcpy (screen_data->screen, "");
 
-        get_screen_by_fails (screen_data, &tux->fails, &game_info->color_option);
+        get_screen_by_fails (screen_data, &tux->fails, &tux->color_option);
 
         correct_guesses_to_str (tux, screen_data->screen);
         failed_guesses_to_str (tux, screen_data->screen);
 
         if (tux->win == NOT_FALSE_OR_TRUE)
         {
-            print_game_scr (tux, screen_data->screen, BLUE_FOR_PENGUIN, &game_info->set_color);
+            print_game_scr (tux, screen_data->screen, BLUE_FOR_PENGUIN, &tux->set_color);
 
             if (tux->choice == '@')
             {
-                guess_entire_word (tux, &game_info->set_color);
+                guess_entire_word (tux, &tux->set_color);
                 check_if_player_has_lost (&tux->fails, &tux->win, &tux->option);
             }
             else
             {
-                guess_single_char (tux, &game_info->set_color);
+                guess_single_char (tux, &tux->set_color);
                 check_if_player_has_lost (&tux->fails, &tux->win, &tux->option);
                 check_exit_game (&tux->choice, &tux->win, &tux->option);
             }
@@ -287,13 +383,13 @@ void game_loop (Penguin *tux, Game_States *screen_data, Game_Options *game_info)
             strcat (screen_data->screen, screen_data->str7);
             correct_guesses_to_str (tux, screen_data->screen);
             failed_guesses_to_str (tux, screen_data->screen);
-            game_info->color_option = 4;
+            tux->color_option = 4;
             tux->lives--;
         }
 
         if (tux->win == TRUE)
         {
-            set_win (tux, screen_data, &game_info->color_option);
+            set_win (tux, screen_data, &tux->color_option);
         }
     }
 }
@@ -446,7 +542,7 @@ void set_win (Penguin *tux, Game_States *screen_data, int *color_option)
 
 
 
-void game_over_screen (Penguin *tux, Game_States *screen_data, Game_Options *game_info)
+void game_over_screen (Penguin *tux, Game_States *screen_data)
 {
     strcpy (screen_data->screen, "");
     strcat (screen_data->screen, screen_data->str9);
@@ -456,83 +552,83 @@ void game_over_screen (Penguin *tux, Game_States *screen_data, Game_Options *gam
     do
         {
             clear ();
-            print_game_scr (tux, screen_data->screen, RED_FOR_LOSS_SCREEN, &game_info->set_color);
-            print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Return to menu? (Y/n): ", &game_info->set_color);
-            getstr (game_info->input);
+            print_game_scr (tux, screen_data->screen, RED_FOR_LOSS_SCREEN, &tux->set_color);
+            print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Return to menu? (Y/n): ", &tux->set_color);
+            getstr (tux->input);
 
-            check_response (game_info, TRUE);
+            check_response (tux, TRUE);
         }
-    while ( (game_info->play != FALSE) && (game_info->play != TRUE));
+    while ( (tux->play != FALSE) && (tux->play != TRUE));
 }
 
 
 
-void play_again_prompt (Penguin *tux, const Game_States *screen_data, Game_Options *game_info)
+void play_again_prompt (Penguin *tux, const Game_States *screen_data)
 {
     do
         {
             clear ();
-            print_game_scr (tux, screen_data->screen, game_info->color_option, &game_info->set_color);
-            print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Press 'y' to get new word: ", &game_info->set_color);
-            getstr (game_info->input);
+            print_game_scr (tux, screen_data->screen, tux->color_option, &tux->set_color);
+            print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Press 'y' to get new word: ", &tux->set_color);
+            getstr (tux->input);
 
-            check_response (game_info, FALSE);
+            check_response (tux, FALSE);
         }
-    while ( (game_info->play != FALSE) && (game_info->play != TRUE));
+    while ( (tux->play != FALSE) && (tux->play != TRUE));
 }
 
 
 
-void about_screen (Game_States *screen_data, Game_Options *game_info)
+void about_screen (Game_States *screen_data, Penguin *tux)
 {
     do
         {
             clear ();
-            print_str (screen_data->str10, BROWN_FOR_MENU_SCREENS, &game_info->set_color);
-            print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Press 'y' to return to menu: ", &game_info->set_color);
-            getstr (game_info->input);
+            print_str (screen_data->str10, BROWN_FOR_MENU_SCREENS, &tux->set_color);
+            print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Press 'y' to return to menu: ", &tux->set_color);
+            getstr (tux->input);
 
-            check_response (game_info, FALSE);
+            check_response (tux, FALSE);
         }
-    while( (game_info->play != FALSE) && (game_info->play != TRUE));
+    while( (tux->play != FALSE) && (tux->play != TRUE));
 }
 
 
 
-void return_to_menu_screen (Penguin *tux, char *screen, Game_Options *game_info)
+void return_to_menu_screen (Penguin *tux, char *screen)
 {
     do
         {
-            print_game_scr (tux, screen, BLUE_FOR_PENGUIN, &game_info->set_color);
-            print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Return to menu? (Y/n): ", &game_info->set_color);
-            getstr (game_info->input);
+            print_game_scr (tux, screen, BLUE_FOR_PENGUIN, &tux->set_color);
+            print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Return to menu? (Y/n): ", &tux->set_color);
+            getstr (tux->input);
 
-            check_response (game_info, TRUE);
+            check_response (tux, TRUE);
         }
-    while ( (game_info->play != FALSE) && (game_info->play != TRUE));
+    while ( (tux->play != FALSE) && (tux->play != TRUE));
 }
 
 
 
-void check_response (Game_Options *game_info, const int no_option)
+void check_response (Penguin *tux, const int no_option)
 {
-    if (strlen(game_info->input) < INPUT_SIZE)
+    if (strlen(tux->input) < INPUT_SIZE)
     {
-        if ( (game_info->input[0] == 'y') || (game_info->input[0] == 'Y'))
+        if ( (tux->input[0] == 'y') || (tux->input[0] == 'Y'))
         {
-            game_info->play = TRUE;
+            tux->play = TRUE;
         }
-        else if ( ((game_info->input[0] == 'n') || (game_info->input[0] == 'N')) && (no_option == TRUE))
+        else if ( ((tux->input[0] == 'n') || (tux->input[0] == 'N')) && (no_option == TRUE))
         {
-            game_info->play = FALSE;
+            tux->play = FALSE;
         }
         else
         {
-            game_info->play = NOT_FALSE_OR_TRUE;
+            tux->play = NOT_FALSE_OR_TRUE;
         }
     }
     else
     {
-        game_info->play = NOT_FALSE_OR_TRUE;
+        tux->play = NOT_FALSE_OR_TRUE;
     }
 }
