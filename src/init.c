@@ -101,23 +101,3 @@ void init_words (Penguin *tux, Game_States *screen_data, Game_Options *game_info
         get_words (temp_dir, tux->words[i], &categories->word_count[i], &game_info->did_open);
     }
 }
-
-
-
-void prompt_to_change_screen_size (char *win_resize_screen, const int *set_color)
-{
-    char input[SIZE];
-    do
-        {
-            clear ();
-            print_str (win_resize_screen, BROWN_FOR_MENU_SCREENS, set_color);
-            print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, " Enter 'y' here: ", set_color);
-            getstr (input);
-
-            if (strlen (input) > INPUT_SIZE)
-            {
-                strcpy (input, " ");
-            }
-        }
-    while(input[0] != 'y');
-}

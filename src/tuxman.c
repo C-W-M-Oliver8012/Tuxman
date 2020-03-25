@@ -1,6 +1,5 @@
 #include "../include/functions.h"
-#include "../include/menu_system.h"
-#include "../include/game_loop.h"
+#include "../include/macros.h"
 #include "../include/init.h"
 #include "../include/game_data.h"
 
