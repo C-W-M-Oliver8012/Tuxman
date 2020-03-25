@@ -25,8 +25,6 @@ SOFTWARE.
 #ifndef GAME_DATA
 #define GAME_DATA
 
-#include <curses.h>
-
 #define DIR "/usr/share/tuxman/"
 
 #define SIZE 256
