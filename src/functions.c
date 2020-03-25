@@ -178,7 +178,7 @@ void correct_guesses_to_str (const Penguin *tux, char *screen)
     {
         int matched = 0;
 
-        if ( ( (tux->fails == 7) && (tux->word[i] != ' ')) || (tux->win == 1))
+        if ( ( (tux->fails == 6) && (tux->word[i] != ' ')) || (tux->win == 1))
         {
             strcpy (formated_letters, "");
             formated_letters[0] = tux->word[i];
@@ -187,13 +187,13 @@ void correct_guesses_to_str (const Penguin *tux, char *screen)
             strcat (screen, formated_letters);
             matched++;
         }
-        else if ( ( (tux->fails == 7) && (tux->word[i] == ' ')) || (tux->win == 1))
+        else if ( ( (tux->fails == 6) && (tux->word[i] == ' ')) || (tux->win == 1))
         {
             strcat (screen, "  ");
             matched++;
         }
 
-        if (tux->fails != 7 && tux->indexLength != 0 && (tux->word[i] != ' ') && (tux->win != 1))
+        if (tux->fails != 6 && tux->indexLength != 0 && (tux->word[i] != ' ') && (tux->win != 1))
         {
             for (int j = 0; j < tux->indexLength; j++)
             {
@@ -213,7 +213,7 @@ void correct_guesses_to_str (const Penguin *tux, char *screen)
                 strcat (screen, "  ");
             }
         }
-        else if ( (tux->word[i] == ' ') && (tux->fails != 7) && (tux->win != 1))
+        else if ( (tux->word[i] == ' ') && (tux->fails != 6) && (tux->win != 1))
         {
             strcat (screen, "  ");
         }
@@ -331,7 +331,7 @@ int has_won (const Penguin *tux)
         return TRUE;
     }
 
-    return FALSE;
+    return NOT_FALSE_OR_TRUE;
 }
 
 
@@ -343,7 +343,7 @@ int check_full_guess (const Penguin *tux)
         return TRUE;
     }
 
-    return FALSE;
+    return NOT_FALSE_OR_TRUE;
 }
 
 

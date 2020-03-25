@@ -21,20 +21,45 @@ int main (void)
 
     if (game_info.did_open == TRUE)
     {
-        tux.option = GAME_SCREEN;
+        tux.option = WELCOME_SCREEN;
         game_info.play = TRUE;
-        game_info.welcome = TRUE;
         srand ( (time (NULL)));
 
         prompt_to_change_screen_size (screen_data.str11, &game_info.set_color);
 
         while (game_info.play == TRUE)
         {
-            welcome_screen (&tux, &screen_data, &game_info);
-            set_category (&tux, &screen_data, &game_info, &categories);
-            reset_game (&tux, &screen_data, &game_info, &categories);
-            game_loop (&tux, &screen_data, &game_info);
-            menu_system (&tux, &screen_data, &game_info);
+            switch (tux.option)
+            {
+                case WELCOME_SCREEN:
+                    welcome_screen (&tux, &screen_data, &game_info);
+                    break;
+                case GAME_SCREEN:
+                    set_category (&tux, &screen_data, &game_info, &categories);
+                    reset_game (&tux, &screen_data, &game_info, &categories);
+                    game_loop (&tux, &screen_data, &game_info);
+                    if (tux.lives == 0)
+                    {
+                        game_over_screen (&tux, &screen_data, &game_info);
+                        tux.option = WELCOME_SCREEN;
+                    }
+                    else if (tux.option == GAME_SCREEN)
+                    {
+                        play_again_prompt (&tux, &screen_data, &game_info);
+                        tux.option = GAME_SCREEN;
+                    }
+                    break;
+                case ABOUT_SCREEN:
+                    about_screen (&screen_data, &game_info);
+                    tux.option = WELCOME_SCREEN;
+                    break;
+                case QUIT_GAME:
+                    game_info.play = FALSE;
+                    break;
+                case RETURN_TO_MENU_PROMPT:
+                    return_to_menu_screen (&tux, screen_data.screen, &game_info);
+                    tux.option = WELCOME_SCREEN;
+            }
         }
     }
     else

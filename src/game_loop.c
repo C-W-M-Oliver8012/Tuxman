@@ -5,7 +5,7 @@
 
 void set_category (Penguin *tux, const Game_States *screen_data, Game_Options *game_info, Categories *categories)
 {
-    if ((tux->option == GAME_SCREEN) && (tux->category_has_been_set == FALSE))
+    if (tux->category_has_been_set == FALSE)
     {
         do
             {
@@ -53,61 +53,68 @@ void set_category (Penguin *tux, const Game_States *screen_data, Game_Options *g
 void reset_game (Penguin *tux, Game_States *screen_data, Game_Options *game_info, Categories *categories)
 {
     strcpy (screen_data->screen, "");
-    if (tux->option == GAME_SCREEN)
-    {
-        game_info->pickLine = rand () % categories->word_count[tux->category_choice];
-        strcpy (tux->word, tux->words[tux->category_choice][game_info->pickLine]);
-        strtok (tux->word, "\n");
-        tux->wordLength = strlen (tux->word);
-        tux->indexLength = 0;
-        tux->letters_guessed = 0;
-        tux->choice = ' ';
-        tux->fails = 0;
-        tux->win = FALSE;
-    }
+    game_info->pickLine = rand () % categories->word_count[tux->category_choice];
+    strcpy (tux->word, tux->words[tux->category_choice][game_info->pickLine]);
+    strtok (tux->word, "\n");
+    tux->wordLength = strlen (tux->word);
+    tux->indexLength = 0;
+    tux->letters_guessed = 0;
+    tux->choice = ' ';
+    tux->fails = 0;
+    tux->win = NOT_FALSE_OR_TRUE;
 }
 
 
 
 void game_loop (Penguin *tux, Game_States *screen_data, Game_Options *game_info)
 {
-    while ( (tux->option == GAME_SCREEN) && (tux->fails != 7) && (tux->win == FALSE))            // game loop
+    while (tux->win == NOT_FALSE_OR_TRUE)
     {
         clear ();
         strcpy (screen_data->screen, "");
-        if (tux->fails == 6)                          // PLAYER LOST AND THEREFOR LOSES A LIFE
-        {
-            tux->lives--;
-        }
 
         get_screen_by_fails (screen_data, &tux->fails, &game_info->color_option);
 
         correct_guesses_to_str (tux, screen_data->screen);
         failed_guesses_to_str (tux, screen_data->screen);
 
-        if ( (tux->fails != 7) && (tux->win == FALSE))      // HASN'T LOST YET & HASN'T WON YET
+        if (tux->win == NOT_FALSE_OR_TRUE)
         {
-            if (tux->choice == '@')                   // GUESS ENTIRE WORD
-            {
-                guess_entire_word (tux, screen_data->screen, &game_info->set_color);
-            }
-            else                                    // NORMAL TURN
-            {
-                guess_single_char (tux, screen_data->screen, &game_info->set_color);
-                check_exit_game (&tux->choice, &tux->fails, &tux->option);
-            }
+            print_game_scr (tux, screen_data->screen, BLUE_FOR_PENGUIN, &game_info->set_color);
 
-            if (tux->win == TRUE)                        // PLAYER WINS
+            if (tux->choice == '@')
             {
-                set_win (tux, screen_data, &game_info->color_option);
+                guess_entire_word (tux, &game_info->set_color);
+                check_if_player_has_lost (&tux->fails, &tux->win, &tux->option);
             }
+            else
+            {
+                guess_single_char (tux, &game_info->set_color);
+                check_if_player_has_lost (&tux->fails, &tux->win, &tux->option);
+                check_exit_game (&tux->choice, &tux->win, &tux->option);
+            }
+        }
+
+        if ((tux->win == FALSE) && (tux->option == GAME_SCREEN))
+        {
+            strcpy (screen_data->screen, "");
+            strcat (screen_data->screen, screen_data->str7);
+            correct_guesses_to_str (tux, screen_data->screen);
+            failed_guesses_to_str (tux, screen_data->screen);
+            game_info->color_option = 4;
+            tux->lives--;
+        }
+
+        if (tux->win == TRUE)
+        {
+            set_win (tux, screen_data, &game_info->color_option);
         }
     }
 }
 
 
 
-void get_screen_by_fails (Game_States *screen_data, long unsigned int *fails, int *color_option)
+void get_screen_by_fails (Game_States *screen_data, int *fails, int *color_option)
 {
     switch (*fails)                          // GETS PROPER GRAPHIC TO PRINT
     {
@@ -130,30 +137,24 @@ void get_screen_by_fails (Game_States *screen_data, long unsigned int *fails, in
         case 5:
             strcat (screen_data->screen, screen_data->str6);
             break;
-        case 6:
-            strcat (screen_data->screen, screen_data->str7);
-            *fails = 7;
-            *color_option = 4;
-            break;
     }
 }
 
 
 
-void guess_entire_word (Penguin *tux, const char *screen, const int *set_color)
+void guess_entire_word (Penguin *tux, const int *set_color)
 {
-    print_game_scr (tux, screen, BLUE_FOR_PENGUIN, set_color);
     print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Guess the word: ", set_color);
     getstr (tux->input);
 
     tux->win = check_full_guess (tux);
-    if (tux->win == FALSE)                    // wrong guess
+    if (tux->win == NOT_FALSE_OR_TRUE)
     {
         tux->failedGuesses[tux->fails] = '@';
         tux->fails = tux->fails + 1;
         tux->choice = ' ';
     }
-    else                                // you win and all letters in word are added to index
+    else if (tux->win == TRUE)
     {
         for (int i = 0; i < tux->wordLength; i++)
         {
@@ -178,9 +179,8 @@ void guess_entire_word (Penguin *tux, const char *screen, const int *set_color)
 
 
 
-void guess_single_char (Penguin *tux, const char *screen, const int *set_color)
+void guess_single_char (Penguin *tux, const int *set_color)
 {
-    print_game_scr (tux, screen, BLUE_FOR_PENGUIN, set_color);
     print_str_between_two_colors (GREEN_PAIR, WHITE_PAIR, "\n   Pick a letter: ", set_color);
     getstr (tux->input);
 
@@ -213,11 +213,22 @@ void guess_single_char (Penguin *tux, const char *screen, const int *set_color)
 
 
 
-void check_exit_game (const char *choice, long unsigned int *fails, long unsigned int *option)
+void check_if_player_has_lost (int *fails, int *win, int *option)
 {
-    if (*choice == '^')                // ENDS GAME
+    if (*fails == 6)
     {
-        *fails = 7;
+        *win = FALSE;
+        *option = GAME_SCREEN;
+    }
+}
+
+
+
+void check_exit_game (const char *choice, int *win, int *option)
+{
+    if (*choice == '^')
+    {
+        *win = FALSE;
         *option = RETURN_TO_MENU_PROMPT;
     }
 }

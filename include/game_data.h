@@ -18,10 +18,11 @@
 #define FALSE 0
 #define NOT_FALSE_OR_TRUE 2
 
-#define GAME_SCREEN 1
-#define ABOUT_SCREEN 2
-#define QUIT_GAME 3
-#define RETURN_TO_MENU_PROMPT 4
+#define WELCOME_SCREEN 1
+#define GAME_SCREEN 2
+#define ABOUT_SCREEN 3
+#define QUIT_GAME 4
+#define RETURN_TO_MENU_PROMPT 5
 #define INCORRECT_INPUT 0
 
 #define GREEN_PAIR 1
@@ -46,16 +47,16 @@ typedef struct Penguin
     char choice;
     char ***words;
     int category_has_been_set;
-    long int category_choice;
-    unsigned long int wordLength;
-    unsigned long int fails;
-    unsigned long int indexLength;
-    unsigned long int win;
-    unsigned long int letters_guessed;
+    int category_choice;
+    int wordLength;
+    int fails;
+    int indexLength;
+    int win;
+    int letters_guessed;
     unsigned long int score;
-    unsigned long int max_score;
-    unsigned long int lives;
-    unsigned long int option;
+    int max_score;
+    int lives;
+    int option;
 } Penguin;
 
 
@@ -87,7 +88,6 @@ typedef struct Game_Options
     int pickLine;
     int color_option;
     int play;
-    int welcome;
     int set_color;
 } Game_Options;
 
