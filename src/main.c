@@ -121,6 +121,8 @@ int main (void)
     return 0;
 }
 
+
+
 void set_all_colors (int *set_color)
 {
     if (has_colors () == TRUE)
