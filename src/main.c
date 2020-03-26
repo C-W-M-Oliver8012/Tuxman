@@ -261,7 +261,7 @@ void set_category (Penguin *tux, const Game_States *screen_data, Categories *cat
                 for (int i = 0; i < categories->category_count; i++)
                 {
                     print_str_between_two_colors (BROWN_PAIR, WHITE_PAIR, "   |", &tux->set_color);
-                    printw (" %2d) %-10s - %-26s", i+1, categories->filename[i], categories->description[i]);
+                    printw (" %2d) %-39s", i+1, categories->description[i]);
                     set_color_if_possible (BROWN_PAIR, &tux->set_color);
                     printw (" |\n");
                 }
