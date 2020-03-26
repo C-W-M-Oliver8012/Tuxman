@@ -25,6 +25,31 @@ SOFTWARE.
 #include "../include/functions.h"
 
 
+static unsigned long int next = 1;
+
+void mysrand (unsigned long int seed)
+{
+    next = seed;
+}
+
+
+
+int myrand (void)
+{
+    next = next * 123456789 + 247813;
+    next = next / 7896 + 781265;
+    next = next * 987654321 + 318742;
+    next = next / 6987 + 562187;
+    next = next * 416870239 + 720168;
+    next = next / 19 + 471359;
+    next = next * 932078614 + 861027;
+    next = next / 1279 + 953174;
+    next = next * 135791357 + 135791;
+    return ((unsigned)(next/78156) % 32768);
+}
+
+
+
 void file_to_str (const char *filename, char *file_data, int *did_open)
 {
     FILE *file;

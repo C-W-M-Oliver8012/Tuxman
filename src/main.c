@@ -132,7 +132,7 @@ int main (void)
     {
         tux.option = WELCOME_SCREEN;
         tux.play = TRUE;
-        srand ( (time (NULL)));
+        mysrand ( (time (NULL)));
 
         char input[SIZE];
         do
@@ -239,7 +239,7 @@ int main (void)
 
 
                     strcpy (screen_data.screen, "");
-                    tux.pickLine = rand () % categories.word_count[tux.category_choice];
+                    tux.pickLine = myrand () % categories.word_count[tux.category_choice];
                     strcpy (tux.word, tux.words[tux.category_choice][tux.pickLine]);
                     strtok (tux.word, "\n");
                     tux.wordLength = strlen (tux.word);

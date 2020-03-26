@@ -32,6 +32,9 @@ SOFTWARE.
 #include "game_data.h"
 
 
+
+void mysrand (unsigned long int seed);
+int myrand (void);
 void file_to_str (const char *filename, char *file_data, int *open);
 int get_file_length (const char *filename, int *open);
 void get_categories_filename_description (Categories *categories, int *did_open);
