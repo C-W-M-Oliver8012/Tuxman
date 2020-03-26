@@ -31,6 +31,7 @@ SOFTWARE.
 #include <curses.h>
 #include "game_data.h"
 
+
 void file_to_str (const char *filename, char *file_data, int *open);
 int get_file_length (const char *filename, int *open);
 void get_categories_filename_description (Categories *categories, int *did_open);
@@ -47,5 +48,7 @@ void print_str (const char *str, const int color, const int *set_color);
 void print_game_scr (const Penguin *tux, const char *screen, const int color_option, const int *set_color);
 void set_color_if_possible (const int color, const int *set_color);
 void print_str_between_two_colors (const int first_color, const int second_color, const char *str, const int *set_color);
+
+
 
 #endif
